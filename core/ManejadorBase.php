@@ -34,7 +34,7 @@ class ManejadorBase{
             throw new Exception("Hubo un problema al consultar la base de datos.");
         }
     }
-
+    
     public function consultarRegistro($tabla, $condiciones = [], $params = []){
         $where = paresClaveValor(array_keys($condiciones));
         $sql = "SELECT * FROM $tabla $where";
