@@ -1,10 +1,11 @@
 <?php 
 class QueryBuilder {
-    protected $table;
-    protected $select = '*';
-    protected $where = [];
-    protected $orderBy = [];
-    protected $limit = null;
+    private $table;
+    private $select = '*';
+    private $where = [];
+    private $orderBy = [];
+    private $limit = null;
+    private $values = [];
     
     public function table($table) {
         $this->table = $table;
@@ -16,9 +17,7 @@ class QueryBuilder {
         return $this;
     }
 
-    public function where($column, $operator, $value) {
-        $this->where[] = "$column $operator ?";
-        $this->values[] = $value;
+    public function where($columns, $operators) {
         return $this;
     }
 
@@ -32,7 +31,7 @@ class QueryBuilder {
         return $this;
     }
 
-    public function getQuery() {
+    public function createQuery() {
         $query = "SELECT $this->select FROM $this->table";
         
         if (!empty($this->where)) {
@@ -47,11 +46,64 @@ class QueryBuilder {
             $query .= " LIMIT $this->limit";
         }
 
-        return $query;
+        return[
+            'query' => $query,
+            'values' => $this->values ?? []
+        ];
+    }
+
+    public function getQuery($table, $columns = '*', $where = [], $orderBy = '', $limit = '') {
+        return $this->table($table)
+                    ->select($columns)
+                    ->where($where)
+                    ->orderBy($orderBy)
+                    ->limit($limit)
+                    ->crearQuery();
     }
 
     public function getValues() {
         return $this->values ?? [];
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function paresClaveValor($condiciones = [],$registro = []){
+    $registroConstruido = "";
+    $whereConstruido = "";
+
+    if(!empty($registros)){
+        $registroConstruido = ' SET ' . implode(" , ",array_map(fn($col) => "$col = ?", $registro));
+    }
+
+    if (!empty($condiciones)){
+        $whereConstruido = ' WHERE ' . implode(" AND ",array_map(fn($col) => "$col = ?", $condiciones));
+    }
+
+    return ($registroConstruido . $whereConstruido);
+}
+
+
 ?>

@@ -1,0 +1,18 @@
+Corto Plazo:
+Principios SOLID - Inyeccion de dependencias
+Arquitectura de Software
+Diseño de Software 
+Patrones de Diseño  
+SQL:Triggers, Structured Procedures, Seguridad con SQL 
+Seguridad: OWASP TOP 10 
+ORM (Laravel - Eloquent) 
+Pruebas unitarias 
+Mediano Plazo:
+Jsonwebtoken (obligatorio), Oauth, OpenID, 
+NOSQL: MongoDB 
+Memoria Cache : Redis
+Reglas de Negocio. 
+Patrones de Resilencia 
+Saber de concurrencia
+Saber de algún cloud. 
+Docker 

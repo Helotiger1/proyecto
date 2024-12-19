@@ -1,9 +1,11 @@
 <?php 
 require_once "../auxiliares/autoloader.php";
 Autoloader("core","Conexion");
+Autoloader("core","QueryBuilder");
 
 class ManejadorBase{
     private $conector;
+    private $QueryBuilder;
 
     public function __construct(){
         $this->conector = new Conexion();
@@ -36,17 +38,12 @@ class ManejadorBase{
     }
     
     public function consultarRegistro($tabla, $condiciones = [], $params = []){
-        $where = paresClaveValor(array_keys($condiciones));
-        $sql = "SELECT * FROM $tabla $where";
-        $params = array_values($condiciones);
+        
         $this->consultarDB($sql, $params);
     }
 
     public function insertarRegistro($tabla, $registro){
-        $campos = implode(",", array_keys($registro));
-        $placeholders = array_map(fn() => '?', $registro);
-        $sql = "INSERT INTO $tabla ($campos) VALUES ($placeholders)";
-        $params = array_values($registro);
+        $QueryBuilder = New QueryBuilder();
         $this->modificarDB($sql, $pamams);
     }
 
@@ -63,29 +60,5 @@ class ManejadorBase{
         $params = array_values($condicion);
         this->modificarDB($sql, $params);
     }
-}
-
-//Aqui ira una opcion para poder usar joins.
-
-
-
-//y aqui una para usar joins y filtrado con having
-
-
-
-//TO-DO | Hacer que reciba un parametro "Tipo" para especificar si se usara AND o OR en el SQL
-function paresClaveValor($condiciones = [],$registro = []){
-    $registroConstruido = "";
-    $whereConstruido = "";
-
-    if(!empty($registros)){
-        $registroConstruido = ' SET ' . implode(" , ",array_map(fn($col) => "$col = ?", $registro));
-    }
-
-    if (!empty($condiciones)){
-        $whereConstruido = ' WHERE ' . implode(" AND ",array_map(fn($col) => "$col = ?", $condiciones));
-    }
-
-    return ($registroConstruido . $whereConstruido);
 }
 ?>
