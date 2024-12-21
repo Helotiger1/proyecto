@@ -1,30 +1,4 @@
 <?php 
-//TO-DO | Hacer que cargue dinamicamente, segun se pidan los controladores.
-require_once "../auxiliares/autoloader.php";
-Autoloader("controllers","PaisController");
-Autoloader("controllers","EstadoController");
-Autoloader("controllers","MunicipiosController");
-Autoloader("controllers","ParroquiasController");
-Autoloader("controllers","CiudadesController");
-Autoloader("controllers","BaseController");
-
-
-function crearRutasGenericas($api, $entidad) {
-    $controllerInstance = new BaseController();
-    $api->agregarRuta('GET', "/$entidad", [$controllerInstance, 'index']);
-    $api->agregarRuta('GET', "/$entidad/{id}", [$controllerInstance, 'show']);
-    $api->agregarRuta('POST', "/$entidad", [$controllerInstance, 'store']);
-    $api->agregarRuta('PUT', "/$entidad/{id}", [$controllerInstance, 'update']);
-    $api->agregarRuta('DELETE', "/$entidad/{id}", [$controllerInstance, 'destroy']);
-}
-
-
-function crearRutasEspecificas($api, $entidad){
-
-    
-}
-
-
 class API {
     private $routes = [];
 
@@ -73,12 +47,4 @@ class API {
         echo json_encode($data);
     }
 }
-$api = new API();
-crearRutasGenericas($api, 'Paises');
-crearRutasGenericas($api, 'Estados');
-crearRutasGenericas($api, 'Municipios');
-crearRutasGenericas($api, 'Parroquias');
-crearRutasGenericas($api, 'Ciudades');
-$api->manejarSolicitud();
-
 ?>

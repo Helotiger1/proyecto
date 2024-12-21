@@ -1,7 +1,4 @@
 <?php 
-require_once "../auxiliares/autoloader.php";
-Autoloader("core","ManejadorBase");
-
 class BaseModel{
     private $manejadorBase;
     
@@ -29,5 +26,4 @@ class BaseModel{
         $this->manejadorBase->insertarRegistro($tabla, $nuevoRegistro);
     }
 }
-
 ?>
