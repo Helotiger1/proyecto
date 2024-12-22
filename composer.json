@@ -2,7 +2,9 @@
     "name": "angheloaguilera/proyecto",
     "autoload": {
         "psr-4": {
-            "Angheloaguilera\\Proyecto\\": "src/"
+            "Proyecto\\Models\\": "models/",
+            "Proyecto\\Core\\": "core/",
+            "Proyecto\\": "core/"
         }
     },
     "require": {}

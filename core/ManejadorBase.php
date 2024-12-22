@@ -1,7 +1,5 @@
 <?php 
-require_once "../auxiliares/autoloader.php";
-Autoloader("core","Conexion");
-Autoloader("core","QueryBuilder");
+namespace Proyecto\Core;
 
 class ManejadorBase{
     private $Conexion;

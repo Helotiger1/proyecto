@@ -1,6 +1,6 @@
 <?php 
-require_once "../auxiliares/autoloader.php";
-Autoloader("configs","database_cfg");
+namespace Proyecto\Core;
+require "database_cfg.php";
 class Conexion{
     private $driver, $host, $user, $pass, $database, $charset;
     
@@ -33,4 +33,6 @@ class Conexion{
         }
     }
 }
+
+
 ?>
