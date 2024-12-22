@@ -1,4 +1,5 @@
 <?php 
+namespace Proyecto\Core;
 class QueryBuilder {
     private $table;
     private $select = '*';

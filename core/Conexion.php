@@ -1,6 +1,6 @@
 <?php 
 namespace Proyecto\Core;
-require "database_cfg.php";
+require "configs.php";
 class Conexion{
     private $driver, $host, $user, $pass, $database, $charset;
     

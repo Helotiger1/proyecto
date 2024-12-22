@@ -1,8 +1,4 @@
 <?php 
-//Esto se supone que recibia la dependencia, pero me canse.
-require_once "../auxiliares/autoloader.php";
-Autoloader("models","BaseModel");
-
 class BaseController{
     private $BaseModel;
 

@@ -1,6 +1,5 @@
 <?php 
 namespace Proyecto\Core;
-
 class ManejadorBase{
     private $Conexion;
     private $QueryBuilder;
