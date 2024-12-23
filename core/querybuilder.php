@@ -53,15 +53,6 @@ class QueryBuilder {
         ];
     }
 
-    public function getQuery($table, $columns = '*', $where = [], $orderBy = '', $limit = '') {
-        return $this->table($table)
-                    ->select($columns)
-                    ->where($where)
-                    ->orderBy($orderBy)
-                    ->limit($limit)
-                    ->crearQuery();
-    }
-
     public function getValues() {
         return $this->values ?? [];
     }
@@ -71,40 +62,6 @@ class QueryBuilder {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function paresClaveValor($condiciones = [],$registro = []){
-    $registroConstruido = "";
-    $whereConstruido = "";
-
-    if(!empty($registros)){
-        $registroConstruido = ' SET ' . implode(" , ",array_map(fn($col) => "$col = ?", $registro));
-    }
-
-    if (!empty($condiciones)){
-        $whereConstruido = ' WHERE ' . implode(" AND ",array_map(fn($col) => "$col = ?", $condiciones));
-    }
-
-    return ($registroConstruido . $whereConstruido);
-}
 
 
 ?>
