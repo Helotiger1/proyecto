@@ -34,6 +34,8 @@ class ManejadorBase{
             throw new Exception("Hubo un problema al consultar la base de datos.");
         }
     }
+
+    
     
 }
 ?>

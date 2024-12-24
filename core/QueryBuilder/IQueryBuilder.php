@@ -1,6 +1,6 @@
 <?php 
 
-interface IQueryBuilder {
+interface IQueryBuilders {
     public function table(string $table): self;
 
     public function select(array $columns): self;
