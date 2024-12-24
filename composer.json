@@ -2,9 +2,10 @@
     "name": "angheloaguilera/proyecto",
     "autoload": {
         "psr-4": {
-            "Proyecto\\Models\\": "models/",
-            "Proyecto\\Core\\": "core/",
-            "Proyecto\\": "core/"
+            "App\\Models\\": "models/",
+            "App\\Core\\": "core/",
+            "App\\": "core/",
+            "App\\nose": "core/QueryBuilder"
         }
     },
     "require": {}

@@ -1,7 +1,5 @@
 <?php 
-namespace Proyecto\Core;
-require_once "IQueryBuilders";
-class SelectQuery implements IQueryBuilder
+class SelectBuilder 
 {
     private $table;
     private $select = '*';
@@ -10,7 +8,6 @@ class SelectQuery implements IQueryBuilder
     private $limit = null;
     private $values = [];
     private $joins = [];
-    private $set = "";
     
     public function table(string $table): self {
         $this->table = $table;
@@ -70,42 +67,5 @@ class SelectQuery implements IQueryBuilder
             'values' => $this->values ?? []
         ];
     }
-    
-    
-    public function set($registro): self {
-        $this->set = ' SET ' . implode(" , ",array_map(fn($col) => "$col = ?", array_keys($registro)));
-        $this->values = [...$this->values,...array_values($registro)];
-        return $this;
-    }
-
-    // UPDATE users SET name = 'Nuevo Nombre', age = 25 WHERE id = 10;
-    public function update() {
-
-    if (!empty($this->set)) {
-        $query .= $this->set;
-    }
-    
-    if (!empty($this->where)) {
-            $query .= " WHERE " . implode(' AND ', $this->where);
-        }
-    }
-    
-    // DELETE FROM users WHERE id = 10 AND Country = "USA";
-    public function delete() {
-        $query = "DELETE FROM $this->table";
-        if (!empty($this->where)) {
-            $query .= " WHERE " . implode(' AND ', $this->where);
-        }
-    }
-    
-    
-    // INSERT INTO users (name, email, age) VALUES ('Anghelo', 'anghelo@example.com', 30);
-    public function create() {
-        $query = "INSERT INTO $this->table ($this->select) VALUES ()";
-    }
-    }
-
-
-
-
+}
 ?>
