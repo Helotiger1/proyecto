@@ -1,5 +1,5 @@
 <?php 
-class SelectBuilder
+class DeleteBuilder
 {
     private $table;
     private $select = '*';
