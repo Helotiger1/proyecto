@@ -1,4 +1,5 @@
 <?php 
+namespace App\Database\QueryBuilders;
 class UpdateBuilder 
 {
     private $table;
@@ -30,7 +31,7 @@ class UpdateBuilder
     }
 
     // UPDATE users SET name = 'Nuevo Nombre', age = 25 WHERE id = 10;
-    public function update() {
+    public function toSQL() {
 
     if (!empty($this->set)) {
         $query .= $this->set;

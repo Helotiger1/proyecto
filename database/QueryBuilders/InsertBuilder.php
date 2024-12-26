@@ -1,4 +1,5 @@
 <?php 
+namespace App\Database\QueryBuilders;
 class InsertBuilder
 {
     private $table;
@@ -24,7 +25,7 @@ class InsertBuilder
     }
     
     // INSERT INTO users (name, email, age) VALUES ('Anghelo', 'anghelo@example.com', 30);
-    public function create() {
+    public function toSQL() {
         $query = "INSERT INTO $this->table ($this->select) VALUES ()";
     }
     }

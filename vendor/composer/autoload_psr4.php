@@ -6,5 +6,11 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Angheloaguilera\\Proyecto\\' => array($baseDir . '/src'),
+    'App\\Models\\' => array($baseDir . '/models'),
+    'App\\Interfaces\\' => array($baseDir . '/interfaces'),
+    'App\\Helpers\\' => array($baseDir . '/helpers'),
+    'App\\Database\\QueryBuilders\\' => array($baseDir . '/database/QueryBuilders'),
+    'App\\Database\\' => array($baseDir . '/database'),
+    'App\\Controllers\\' => array($baseDir . '/controllers'),
+    'App\\Api\\' => array($baseDir . '/api'),
 );

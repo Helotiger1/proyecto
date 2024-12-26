@@ -1,7 +1,8 @@
 <?php 
+namespace App\Database\QueryBuilders;
 class SelectBuilder 
 {
-    private $table;
+    private $table = "";
     private $select = '*';
     private $where = [];
     private $orderBy = [];
@@ -14,12 +15,12 @@ class SelectBuilder
         return $this;
     }
 
-    public function select(array $columns = ['*']): self {
+    public function columns(array $columns = ['*']): self {
         $this->select = implode(', ', $columns);
         return $this;
     }
     public function join(string $table, string $first, string $operator, string $second, string $type = 'INNER'): self {
-        $this->joins[] = "$type JOIN $table ON $first $operator $second";
+        $this->joins[] = " $type JOIN $table ON $first $operator $second";
         return $this;
     }
     
@@ -39,7 +40,7 @@ class SelectBuilder
         return $this;
     }
     
-    public function get() {
+    public function toSQL(): array {
         $query = "SELECT $this->select FROM $this->table";
         
         if (!empty($this->joins)) {
@@ -58,9 +59,6 @@ class SelectBuilder
             $query .= " LIMIT $this->limit";
         }
         
-        if (!empty($this->limit)) {
-            $query .= " LIMIT $this->limit";
-        }
         
         return[
             'query' => $query,

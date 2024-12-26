@@ -1,4 +1,5 @@
 <?php 
+namespace App\Database\QueryBuilders;
 class DeleteBuilder
 {
     private $table;
@@ -23,7 +24,7 @@ class DeleteBuilder
     }
     
     // DELETE FROM users WHERE id = 10 AND Country = "USA";
-    public function delete() {
+    public function toSQL() {
         $query = "DELETE FROM $this->table";
         if (!empty($this->where)) {
             $query .= " WHERE " . implode(' AND ', $this->where);

@@ -9,14 +9,44 @@ class ComposerStaticInit2f2bac12c1ab791f72ba910c669b0601
     public static $prefixLengthsPsr4 = array (
         'A' => 
         array (
-            'Angheloaguilera\\Proyecto\\' => 25,
+            'App\\Models\\' => 11,
+            'App\\Interfaces\\' => 15,
+            'App\\Helpers\\' => 12,
+            'App\\Database\\QueryBuilders\\' => 27,
+            'App\\Database\\' => 13,
+            'App\\Controllers\\' => 16,
+            'App\\Api\\' => 8,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Angheloaguilera\\Proyecto\\' => 
+        'App\\Models\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src',
+            0 => __DIR__ . '/../..' . '/models',
+        ),
+        'App\\Interfaces\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/interfaces',
+        ),
+        'App\\Helpers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/helpers',
+        ),
+        'App\\Database\\QueryBuilders\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/database/QueryBuilders',
+        ),
+        'App\\Database\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/database',
+        ),
+        'App\\Controllers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/controllers',
+        ),
+        'App\\Api\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/api',
         ),
     );
 

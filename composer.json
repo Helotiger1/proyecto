@@ -5,8 +5,9 @@
             "App\\Api\\": "api/",
             "App\\Controllers\\": "controllers/",
             "App\\Database\\": "database/",
-            "App\\Database\\QueryBuilders": "database/QueryBuilders",
+            "App\\Database\\QueryBuilders\\": "database/QueryBuilders/",
             "App\\Helpers\\": "helpers/",
+            "App\\Interfaces\\": "interfaces/",
             "App\\Models\\": "models/"
         }
     },
