@@ -24,10 +24,8 @@ class QueryBuilder
     }
 }
 
-$query = QueryBuilder::select()
+$query = QueryBuilder::delete()
                     ->table("OrdenesMamadoras")
-                    ->columns(["mamador","xd"])
-                    ->join("tablaX","OrdenesMamadoras.xd","=","TablaX.xd")
                     ->where(["ID"=> 5,"CuloMamado" => 6],["=",">"])
                     ->toSQL();
 print_r($query);

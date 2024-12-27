@@ -12,11 +12,6 @@ class UpdateBuilder
         $this->table = $table;
         return $this;
     }
-
-    public function select(array $columns = ['*']): self {
-        $this->select = implode(', ', $columns);
-        return $this;
-    }
     
     public function where(array $columns, array $operators): self {
         $this->where = array_map(fn($col, $op) => "$col $op ?", array_keys($columns), $operators);
@@ -30,17 +25,26 @@ class UpdateBuilder
         return $this;
     }
 
-    // UPDATE users SET name = 'Nuevo Nombre', age = 25 WHERE id = 10;
-    public function toSQL() {
+    public function toSQL(): array  {
+        $query = "UPDATE $this->table";
 
-    if (!empty($this->set)) {
-        $query .= $this->set;
-    }
-    
-    if (!empty($this->where)) {
+        if (!empty($this->set)) {
+            $query .= $this->set;
+        }
+
+        if (!empty($this->where)) {
             $query .= " WHERE " . implode(' AND ', $this->where);
         }
+
+        return[
+            'query' => $query,
+            'values' => $this->values ?? []
+        ];
     }
+
+
+
+
 }
 
 
