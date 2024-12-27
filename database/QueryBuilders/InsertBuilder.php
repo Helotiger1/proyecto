@@ -28,7 +28,7 @@ class InsertBuilder
     public function toSQL() {
         $query = "INSERT INTO $this->table ($this->columns)";
 
-        if (!empty($this->)) {
+        if (!empty($this->values)) {
             $query .= implode(', ', $this->insert);
         }
     
