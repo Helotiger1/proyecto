@@ -3,7 +3,7 @@ namespace App\Database\QueryBuilders;
 class InsertBuilder
 {
     private $table = "";
-    private $placeholders = "";
+    private $placeholders = [];
     private $columns = "";
     private $values = [];
 
@@ -13,8 +13,8 @@ class InsertBuilder
     }
 
     public function values(array $values = []){
-        $this->placeholders = str_repeat('?, ', count($values) - 1) . '?';
-        $this->values[] = array_merge($this->values, $values);
+        $this->placeholders[] =  ' (' . str_repeat('?, ', count($values) - 1) . '?' . ') ';
+        $this->values = [...$this->values, ...$values];
         return $this;
     }
 
@@ -26,10 +26,10 @@ class InsertBuilder
     
     // INSERT INTO users (name, email, age) VALUES ('Anghelo', 'anghelo@example.com', 30);
     public function toSQL() {
-        $query = "INSERT INTO $this->table ($this->columns)";
+        $query = "INSERT INTO $this->table ($this->columns) VALUES";
 
-        if (!empty($this->values)) {
-            $query .= implode(', ', $this->values);
+        if (!empty($this->placeholders)) {
+            $query .= implode(", ", $this->placeholders);
         }
     
         return[
@@ -38,5 +38,15 @@ class InsertBuilder
         ];
     }
 }
+
+$nose = new InsertBuilder();
+$query = $nose->table('users')
+    ->columns(['name', 'email', 'age'])
+    ->values(['Anghelo','angheloaguiulera@gmail.com', 30])
+    ->toSQL();
+
+print_r($query);
+
+
 
 ?>
