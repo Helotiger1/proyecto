@@ -30,7 +30,7 @@ class SelectBuilder
         return $this;
     }
     
-    public function orderBy(string $columns, string $directions = 'ASC'): self {
+    public function orderBy(array $columns, array $directions = []): self {
         $this->orderBy[] = array_map(fn($col, $dir) => "$col $dir", $columns, $directions);
         return $this;
     }
