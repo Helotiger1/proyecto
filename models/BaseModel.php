@@ -3,7 +3,7 @@ class BaseModel{
     private $manejadorBase;
     
     public function __construct(){
-        $this->manejadorBase = new ManejadorBase();
+        #$this->manejadorBase = new ManejadorBase();
     }
 
     public function listar($tabla){

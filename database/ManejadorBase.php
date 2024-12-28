@@ -1,5 +1,9 @@
 <?php 
 namespace Proyecto\Core;
+use App\Database\QueryBuilders\QueryBuilder;
+use PDO;
+use Exception;
+
 class ManejadorBase{
     private $Conexion;
     private $QueryBuilder;
@@ -11,8 +15,8 @@ class ManejadorBase{
     
     public function modificarDB($sql, $params): void{
         try{
-            $stmt = $this->Conexion->prepare($sql);
-            $stmt->execute($params);
+            #$stmt = $this->Conexion->prepare($sql);
+            #$stmt->execute($params);
         }
 
         //TO-DO | Mejorar estos logs, hacerlos mas especificos.
@@ -24,9 +28,9 @@ class ManejadorBase{
 
     public function consultarDB($sql, $params){
         try{
-            $stmt = $this->Conexion->prepare($sql);
-            $stmt->execute($params);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            #$stmt = $this->Conexion->prepare($sql);
+            #$stmt->execute($params);
+            #return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         catch(Exception $e){

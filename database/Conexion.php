@@ -1,5 +1,7 @@
 <?php 
 namespace Proyecto\Core;
+use PDO;
+use PDOException;
 require "configs.php";
 class Conexion{
     private $driver, $host, $user, $pass, $database, $charset;

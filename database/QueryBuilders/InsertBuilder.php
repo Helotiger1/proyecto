@@ -29,7 +29,7 @@ class InsertBuilder
         $query = "INSERT INTO $this->table ($this->columns)";
 
         if (!empty($this->values)) {
-            $query .= implode(', ', $this->insert);
+            $query .= implode(', ', $this->values);
         }
     
         return[
@@ -37,9 +37,6 @@ class InsertBuilder
             'values' => $this->values ?? []
         ];
     }
-
-
-    
 }
 
 ?>

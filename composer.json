@@ -11,5 +11,7 @@
             "App\\Models\\": "models/"
         }
     },
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    }
 }
