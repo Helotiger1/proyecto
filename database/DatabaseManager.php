@@ -1,18 +1,26 @@
 <?php 
-namespace Proyecto\Core;
-use App\Database\QueryBuilders\QueryBuilder;
-use Exception;
 
-class DatabaseManager{
-    private $Connection;
-    private $QueryBuilder;
+class DatabaseManager {
+    public function __construct($connection){
 
-    public function __construct(){
-        $this->QueryBuilder = new QueryBuilder();
     }
-    
-   
-    
-    
+    public function getByID($table,$id){
+
+    }
+    public function getAll($table){
+
+    }
+    public function insert($table, $data){
+
+    }
+    public function update($table, $data, $constraint){
+        
+    }
+    public function delete($table, $id){
+
+    }
+    public function join($table, $joinTable, $joinColumn, $joinColumnTable, $columns){
+
+    }
 }
 ?>

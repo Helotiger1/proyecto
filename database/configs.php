@@ -1,4 +1,5 @@
 <?php
+namespace app\database;
 function getConfigs(){
     return [
         "driver"   => "mysql",

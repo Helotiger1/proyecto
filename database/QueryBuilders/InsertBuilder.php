@@ -39,14 +39,5 @@ class InsertBuilder
     }
 }
 
-$nose = new InsertBuilder();
-$query = $nose->table('users')
-    ->columns(['name', 'email', 'age'])
-    ->values(['Anghelo','angheloaguiulera@gmail.com', 30])
-    ->toSQL();
-
-print_r($query);
-
-
 
 ?>

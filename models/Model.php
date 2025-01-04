@@ -1,5 +1,5 @@
 <?php 
-class BaseModel{
+class Model{
     private $manejadorBase;
     
     public function __construct(){

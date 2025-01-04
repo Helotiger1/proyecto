@@ -3,10 +3,10 @@ namespace App\Database\QueryBuilders;
 class DeleteBuilder
 {
     private $table;
-    private $select = '*';
     private $where = [];
     private $values = [];
-    
+    private $query = "";
+
     public function table(string $table): self {
         $this->table = $table;
         return $this;
@@ -25,6 +25,8 @@ class DeleteBuilder
         if (!empty($this->where)) {
             $query .= " WHERE " . implode(' AND ', $this->where);
         }
+
+        $this->query = $query;
 
         return[
             'query' => $query,

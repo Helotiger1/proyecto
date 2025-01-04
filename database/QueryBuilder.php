@@ -23,12 +23,4 @@ class QueryBuilder
         return new DeleteBuilder();
     }
 }
-
-$query = QueryBuilder::delete()
-                    ->table("OrdenesMamadoras")
-                    ->where(["ID"=> 5,"CuloMamado" => 6],["=",">"])
-                    ->toSQL();
-print_r($query);
-
-
 ?>

@@ -1,13 +1,13 @@
 <?php 
-namespace Project\Core;
+namespace App\Database;
 use PDO;
 use PDOException;
-require "configs.php";
 
 class Connection {
     private $driver, $host, $user, $pass, $database, $charset;
+    private $pdo;
     
-    public function __construct() {
+    public function __construct($database_cfg) {
         $database_cfg = getConfigs();
         $this->driver  = $database_cfg["driver"];
         $this->host    = $database_cfg["host"];
@@ -15,6 +15,7 @@ class Connection {
         $this->pass    = $database_cfg["pass"];
         $this->database= $database_cfg["database"];
         $this->charset = $database_cfg["charset"];
+        $this->pdo = $this->connect();
     }
 
     public function connect() {
@@ -34,5 +35,26 @@ class Connection {
             throw new PDOException($e->getMessage(), $e->getCode());
         }
     }
+//deberia separarlo, pero estoy mamao de hacer 100 clases, si tuviera un orm hecho quizas, pero esto va pa largo.
+    public function save($query, $params) {
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute($params);
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function get($query, $params) {
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute($params);
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage(), $e->getCode());
+        }
+    }
+
 }
+
 ?>
