@@ -16,7 +16,7 @@ class API {
         $table = [];
         foreach ($this->routes as $route) {
             if ($route['method'] === $method && $this->encontrarRuta($route['route'], $path, $params, $resource)) {
-                if ($route['callback'][0] instanceof BaseController){
+                if ($route['callback'][0] instanceof int){
                     $table = ['tabla' => '$resource'];
                 }
                 return call_user_func_array($route['callback'], array_merge($table,$params));
