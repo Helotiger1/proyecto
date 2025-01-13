@@ -38,24 +38,31 @@ class Connection {
         }
     }
 
-    public function save($query, $params) {
-        try {
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute($params);
-        } catch (PDOException $e) {
-            throw new PDOException($e->getMessage(), $e->getCode());
-        }
+    public function execute($query, $params = []) {
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute($params);
+        return $stmt;
     }
 
-    public function get($query, $params) {
-        try {
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute($params);
-            return $stmt->fetchAll();
-        } catch (PDOException $e) {
-            throw new PDOException($e->getMessage(), $e->getCode());
-        }
+    public function fetchAll($query, $params = []) {
+        $stmt = $this->execute($query, $params);
+        return $stmt->fetchAll();
     }
+
+    public function fetchOne($query, $params = []) {
+        $stmt = $this->execute($query, $params);
+        return $stmt->fetch();
+    }
+
+
+
+
+
+
+
+
+    
+    //Aqui deberian ir transacciones, pero que dios lo haga.
 
 }
 ?>

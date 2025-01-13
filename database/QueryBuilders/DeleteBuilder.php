@@ -18,7 +18,6 @@ class DeleteBuilder
         return $this;
     }
     
-    // DELETE FROM users WHERE id = 10 AND Country = "USA";
     public function toSQL() {
         $query = "DELETE FROM $this->table";
 

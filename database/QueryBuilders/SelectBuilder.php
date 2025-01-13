@@ -19,6 +19,7 @@ class SelectBuilder
         $this->select = implode(', ', $columns);
         return $this;
     }
+    
     public function join(string $table, string $first, string $operator, string $second, string $type = 'INNER'): self {
         $this->joins[] = " $type JOIN $table ON $first $operator $second";
         return $this;
