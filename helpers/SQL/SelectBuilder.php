@@ -1,5 +1,5 @@
 <?php 
-namespace App\Database\QueryBuilders;
+namespace App\SQL;
 class SelectBuilder 
 {
     private $table = "";
@@ -7,7 +7,7 @@ class SelectBuilder
     private $where = [];
     private $orderBy = [];
     private $limit = null;
-    private $values = [];
+    private $params = [];
     private $joins = [];
     
     public function table(string $table): self {
@@ -27,7 +27,7 @@ class SelectBuilder
     
     public function where(array $columns, array $operators): self {
         $this->where = array_map(fn($col, $op) => "$col $op ?", array_keys($columns), $operators);
-        $this->values = [...$this->values,...array_values($columns)];
+        $this->params = [...$this->params,...array_values($columns)];
         return $this;
     }
     
@@ -63,7 +63,7 @@ class SelectBuilder
         
         return[
             'query' => $query,
-            'values' => $this->values ?? []
+            'params' => $this->params ?? []
         ];
     }
 }

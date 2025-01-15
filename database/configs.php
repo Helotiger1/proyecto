@@ -4,7 +4,7 @@ function getConfigs(){
         "driver"   => "mysql",
         "host"     => "localhost",
         "user"     => "root",
-        "pass"     => "",
+        "pass"     => "admin",
         "database" => "domicilios",
         "charset"  => "utf8mb4"
     ];

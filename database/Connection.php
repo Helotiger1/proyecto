@@ -53,16 +53,5 @@ class Connection {
         $stmt = $this->execute($query, $params);
         return $stmt->fetch();
     }
-
-
-
-
-
-
-
-
-    
-    //Aqui deberian ir transacciones, pero que dios lo haga.
-
 }
 ?>

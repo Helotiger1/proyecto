@@ -2,8 +2,8 @@
     "name": "angheloaguilera/proyecto",
     "autoload": {
         "psr-4": {
+            "App\\SQL\\": "helpers/SQL/",
             "App\\Database\\": "database/",
-            "App\\Database\\QueryBuilders\\": "database/querybuilders/",
             "App\\Models\\": "models/",
             "App\\Repositories\\": "repositories/"
         }

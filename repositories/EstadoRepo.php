@@ -1,22 +1,21 @@
 <?php 
-use App\Database\QueryBuilders\QueryBuilder;
+namespace App\Repositories;
+use App\SQL\QueryBuilder;
 use App\Database\Connection;
-use App\Models;
-
+use App\Models\EstadoModel;
+require_once __DIR__ . '/../vendor/autoload.php';
 class EstadoRepo{
-    private $db;
-    private $queryBuilder;
+    private $conn;
     public function __construct(){
-        $this->db = new Connection();
-        $this->queryBuilder = new QueryBuilder();
+        $this->conn = new Connection();
     }
 
     public function getAll(){
-        $query = queryBuilder::select()
+        $sql = queryBuilder::select()
                             ->table('estados')
                             ->columns(['CodEdo', 'Descripcion'])
                             ->toSQL();
-       $datosEstados = $this->db->fetchAll($query['query'], $query['values']);
+       $datosEstados = $this->conn->fetchAll($sql['query'], $sql['params']);
 
        foreach ($datosEstados as $key => $value) {
            $estados[] = new EstadoModel($value['CodEdo'], $value['Descripcion']);
@@ -24,9 +23,11 @@ class EstadoRepo{
 
        return $estados;
     }
-
-
 }
+
+$nose = new EstadoRepo();
+$data = $nose->getAll();
+print_r($data);
 
 
 ?>

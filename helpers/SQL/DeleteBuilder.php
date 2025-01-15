@@ -1,13 +1,12 @@
 <?php 
-namespace App\Database\QueryBuilders;
-class UpdateBuilder 
+namespace App\SQL;
+class DeleteBuilder
 {
     private $table;
-    private $select = '*';
     private $where = [];
     private $values = [];
-    private $set = "";
-    
+    private $query = "";
+
     public function table(string $table): self {
         $this->table = $table;
         return $this;
@@ -19,22 +18,14 @@ class UpdateBuilder
         return $this;
     }
     
-    public function set($registro): self {
-        $this->set = ' SET ' . implode(" , ",array_map(fn($col) => "$col = ?", array_keys($registro)));
-        $this->values = [...$this->values,...array_values($registro)];
-        return $this;
-    }
-
-    public function toSQL(): array  {
-        $query = "UPDATE $this->table";
-
-        if (!empty($this->set)) {
-            $query .= $this->set;
-        }
+    public function toSQL() {
+        $query = "DELETE FROM $this->table";
 
         if (!empty($this->where)) {
             $query .= " WHERE " . implode(' AND ', $this->where);
         }
+
+        $this->query = $query;
 
         return[
             'query' => $query,
@@ -42,10 +33,5 @@ class UpdateBuilder
         ];
     }
 
-
-
-
 }
-
-
 ?>

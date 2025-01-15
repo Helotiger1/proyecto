@@ -1,5 +1,5 @@
 <?php
-
+use App\Repositories\EstadoRepo;
 class EstadoController{
     private $estadoRepo;
     public function __construct(){

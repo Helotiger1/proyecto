@@ -1,5 +1,5 @@
 <?php 
-namespace App\Database\QueryBuilders;
+namespace App\SQL;
 class InsertBuilder
 {
     private $table = "";

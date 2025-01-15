@@ -1,5 +1,5 @@
 <?php 
-namespace App\Database\QueryBuilders;
+namespace App\SQL;
 require __DIR__ . '/../../vendor/autoload.php';
 class QueryBuilder
 {
