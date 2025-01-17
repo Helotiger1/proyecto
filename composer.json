@@ -5,7 +5,9 @@
             "App\\SQL\\": "helpers/SQL/",
             "App\\Database\\": "database/",
             "App\\Models\\": "models/",
-            "App\\Repositories\\": "repositories/"
+            "App\\Repositories\\": "repositories/",
+            "App\\Controllers\\": "controllers/",
+            "App\\HTTP\\": "HTTP/"
         }
     },
     "require-dev": {

@@ -1,4 +1,6 @@
 <?php 
+namespace App\HTTP;
+require_once __DIR__ . '/../vendor/autoload.php';
 class API {
     private static $routes = [];
 
@@ -22,18 +24,17 @@ class API {
      */
     public static function manejarSolicitud() {
         $method = $_SERVER['REQUEST_METHOD'];
-        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $baseUrl = str_replace('/proyecto', '', $_SERVER['REQUEST_URI']);
+        $path = parse_url($baseUrl, PHP_URL_PATH);
     
         foreach (self::$routes as $route) {
             $params = [];
-    
             if ($route['method'] === $method && self::encontrarRuta($route['route'], $path, $params)) {
                 $data = call_user_func_array($route['callback'], [$params]);
-                self::enviarRespuesta(200, $data);
-                
+                return self::enviarRespuesta(200, $data);
             }
         }
-        self::enviarRespuesta(404, ['error' => 'Ruta no encontrada']);
+        return self::enviarRespuesta(404, ['error' => 'Ruta no encontrada']);
     }
     
 

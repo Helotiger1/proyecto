@@ -4,6 +4,7 @@ use App\SQL\QueryBuilder;
 use App\Database\Connection;
 use App\Models\EstadoModel;
 require_once __DIR__ . '/../vendor/autoload.php';
+
 class EstadoRepo{
     private $conn;
     public function __construct(){
@@ -23,11 +24,31 @@ class EstadoRepo{
 
        return $estados;
     }
-}
 
+    public function getOne($id){
+        $sql = queryBuilder::select()
+                            ->table('estados')
+                            ->columns(['CodEdo', 'Descripcion'])
+                            ->where(["CodEdo" => $id], ["="])
+                            ->toSQL();
+        $datosEstados = $this->conn->fetchOne($sql['query'], $sql['params']);
+        return new EstadoModel($datosEstados['CodEdo'], $datosEstados['Descripcion']);
+    }
+
+    public function insert($codPais, $descripcion){
+        $sql = queryBuilder::insert()
+                            ->table('estados')
+                            ->columns(['CodPais', 'Descripcion'])
+                            ->values([$codPais, $descripcion])
+                            ->toSQL();
+        $this->conn->execute($sql['query'],$sql['params']);
+        return $sql;
+    }
+}
+/* 
 $nose = new EstadoRepo();
-$data = $nose->getAll();
-print_r($data);
+$data = $nose->insert(1 , 'Penelandia');
+print_r($data); */
 
 
 ?>
