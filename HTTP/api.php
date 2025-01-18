@@ -1,6 +1,7 @@
 <?php 
 namespace App\HTTP;
 require_once __DIR__ . '/../vendor/autoload.php';
+
 class API {
     private static $routes = [];
 
@@ -26,18 +27,19 @@ class API {
         $method = $_SERVER['REQUEST_METHOD'];
         $baseUrl = str_replace('/proyecto', '', $_SERVER['REQUEST_URI']);
         $path = parse_url($baseUrl, PHP_URL_PATH);
-    
+        $body = self::leerBody();
+
+
         foreach (self::$routes as $route) {
             $params = [];
             if ($route['method'] === $method && self::encontrarRuta($route['route'], $path, $params)) {
-                $data = call_user_func_array($route['callback'], [$params]);
+                $data = call_user_func_array($route['callback'], [$params, $body]);
                 return self::enviarRespuesta(200, $data);
             }
         }
         return self::enviarRespuesta(404, ['error' => 'Ruta no encontrada']);
     }
     
-
     /**
      * Encuentra una coincidencia entre la ruta registrada y la solicitada.
      *
@@ -58,6 +60,19 @@ class API {
         }
     
         return false;
+    }
+
+    public static function leerBody(){
+        $body = [];
+        $methods = ['POST', 'PUT', 'PATCH'];
+        $request = $_SERVER['REQUEST_METHOD'];
+
+        if (in_array($request, $methods)) {
+            $rawData = file_get_contents("php://input");
+            $body = json_decode($rawData, true);
+        }
+        
+        return $body;
     }
 
     /**

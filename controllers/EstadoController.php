@@ -13,5 +13,23 @@ class EstadoController{
         $estados = $this->estadoRepo->getAll();
         return $estados;
     }
+
+    public function show($id){
+        $estado = $this->estadoRepo->getOne($id);
+        return $estado;
+    }
+
+    public function store($codPais, $descripcion){
+  
+    }
+
+    public function update($id, $codPais, $descripcion){
+      
+    }
+
+    public function destroy($id){
+        
+    }
+
 }
 ?>

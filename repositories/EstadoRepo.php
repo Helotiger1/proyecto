@@ -29,7 +29,7 @@ class EstadoRepo{
         $sql = queryBuilder::select()
                             ->table('estados')
                             ->columns(['CodEdo', 'Descripcion'])
-                            ->where(["CodEdo" => $id], ["="])
+                            ->where(["CodEdo" => (int)$id], ["="])
                             ->toSQL();
         $datosEstados = $this->conn->fetchOne($sql['query'], $sql['params']);
         return new EstadoModel($datosEstados['CodEdo'], $datosEstados['Descripcion']);
@@ -42,13 +42,19 @@ class EstadoRepo{
                             ->values([$codPais, $descripcion])
                             ->toSQL();
         $this->conn->execute($sql['query'],$sql['params']);
+
+    }
+
+    public function update($id, $codPais, $descripcion){
+        $sql = queryBuilder::update()
+                            ->table('estados')
+                            ->set(['CodPais' => $codPais, 'Descripcion' => $descripcion])
+                            ->where(["CodEdo" => (int)$id], ["="])
+                            ->toSQL();
+        $this->conn->execute($sql['query'],$sql['params']);
         return $sql;
     }
 }
-/* 
-$nose = new EstadoRepo();
-$data = $nose->insert(1 , 'Penelandia');
-print_r($data); */
 
 
 ?>
