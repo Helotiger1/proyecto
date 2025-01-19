@@ -29,7 +29,6 @@ class API {
         $path = parse_url($baseUrl, PHP_URL_PATH);
         $body = self::leerBody();
 
-
         foreach (self::$routes as $route) {
             $params = [];
             if ($route['method'] === $method && self::encontrarRuta($route['route'], $path, $params)) {
@@ -64,14 +63,14 @@ class API {
 
     public static function leerBody(){
         $body = [];
-        $methods = ['POST', 'PUT', 'PATCH'];
         $request = $_SERVER['REQUEST_METHOD'];
+        $methods = ['POST', 'PUT', 'PATCH'];
+
 
         if (in_array($request, $methods)) {
             $rawData = file_get_contents("php://input");
             $body = json_decode($rawData, true);
         }
-        
         return $body;
     }
 
@@ -87,4 +86,5 @@ class API {
         echo json_encode($data);
     }
 }
+require_once "routes.php";
 ?>

@@ -60,7 +60,6 @@ class SelectBuilder
             $query .= " LIMIT $this->limit";
         }
         
-        
         return[
             'query' => $query,
             'params' => $this->params ?? []

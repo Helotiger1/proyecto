@@ -23,4 +23,5 @@ class QueryBuilder
         return new DeleteBuilder();
     }
 }
+
 ?>

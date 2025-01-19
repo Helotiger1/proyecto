@@ -38,7 +38,7 @@ class UpdateBuilder
 
         return[
             'query' => $query,
-            'values' => $this->values ?? []
+            'params' => $this->values ?? []
         ];
     }
 

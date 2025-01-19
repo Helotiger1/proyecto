@@ -14,45 +14,57 @@ class EstadoRepo{
     public function getAll(){
         $sql = queryBuilder::select()
                             ->table('estados')
-                            ->columns(['CodEdo', 'Descripcion'])
+                            ->columns(['paises.nombrePais', 'estados.codEdo', 'estados.nombreEstado'])
+                            ->join('paises', 'estados.codPais', '=', 'paises.codPais')
                             ->toSQL();
+
        $datosEstados = $this->conn->fetchAll($sql['query'], $sql['params']);
-
        foreach ($datosEstados as $key => $value) {
-           $estados[] = new EstadoModel($value['CodEdo'], $value['Descripcion']);
-       }    
-
+           $estados[] = new EstadoModel($value['codEdo'], $value['nombreEstado'], $value['nombrePais']);
+       }
+           
        return $estados;
     }
 
-    public function getOne($id){
+    public function getByPais($id){
         $sql = queryBuilder::select()
                             ->table('estados')
-                            ->columns(['CodEdo', 'Descripcion'])
-                            ->where(["CodEdo" => (int)$id], ["="])
+                            ->columns(['estados.codEdo', 'estados.nombreEstado','paises.nombrePais'])
+                            ->join('paises', 'estados.codPais','=', 'paises.codPais')
+                            ->where(["estados.codPais" => (int)$id], ["="])
                             ->toSQL();
-        $datosEstados = $this->conn->fetchOne($sql['query'], $sql['params']);
-        return new EstadoModel($datosEstados['CodEdo'], $datosEstados['Descripcion']);
+        $datosEstados = $this->conn->fetchAll($sql['query'], $sql['params']);
+        foreach ($datosEstados as $key => $value) {
+            $estados[] = new EstadoModel($value['codEdo'], $value['nombreEstado'], $value['nombrePais']);
+        }    
+        return $estados;
     }
 
-    public function insert($codPais, $descripcion){
+    public function insert($codPais, $nombreEstado){
         $sql = queryBuilder::insert()
                             ->table('estados')
-                            ->columns(['CodPais', 'Descripcion'])
-                            ->values([$codPais, $descripcion])
+                            ->columns(['CodPais', 'nombreEstado'])
+                            ->values([$codPais, $nombreEstado])
                             ->toSQL();
         $this->conn->execute($sql['query'],$sql['params']);
-
     }
 
-    public function update($id, $codPais, $descripcion){
+    public function update($codEdo, $codPais, $nombreEstado){
         $sql = queryBuilder::update()
                             ->table('estados')
-                            ->set(['CodPais' => $codPais, 'Descripcion' => $descripcion])
-                            ->where(["CodEdo" => (int)$id], ["="])
+                            ->set(['CodPais' => $codPais, 'nombreEstado' => $nombreEstado])
+                            ->where(["codEdo" => (int)$codEdo], ["="])
                             ->toSQL();
         $this->conn->execute($sql['query'],$sql['params']);
         return $sql;
+    }
+
+    public function delete($codEdo){
+        $sql = queryBuilder::delete()
+                            ->table('estados')
+                            ->where(["codEdo" => (int)$codEdo], ["="])
+                            ->toSQL();
+        $this->conn->execute($sql['query'],$sql['params']);
     }
 }
 

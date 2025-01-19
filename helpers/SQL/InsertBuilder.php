@@ -23,8 +23,6 @@ class InsertBuilder
         return $this;
     }
 
-    
-    // INSERT INTO users (name, email, age) VALUES ('Anghelo', 'anghelo@example.com', 30);
     public function toSQL() {
         $query = "INSERT INTO $this->table ($this->columns) VALUES";
 
@@ -34,7 +32,7 @@ class InsertBuilder
     
         return[
             'query' => $query,
-            'values' => $this->values ?? []
+            'params' => $this->values ?? []
         ];
     }
 }

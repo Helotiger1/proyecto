@@ -14,21 +14,24 @@ class EstadoController{
         return $estados;
     }
 
-    public function show($id){
-        $estado = $this->estadoRepo->getOne($id);
-        return $estado;
+    public function showByPais($params){
+        $estados = $this->estadoRepo->getByPais($params['id']);
+        return $estados;
     }
 
-    public function store($codPais, $descripcion){
-  
+    public function store($params, $body){
+        $this->estadoRepo->insert($body['codPais'], $body['nombreEstado']);
+        return ['message' => 'Estado creado exitosamente'];
     }
 
-    public function update($id, $codPais, $descripcion){
-      
+    public function update($params, $body){
+        $this->estadoRepo->update($params['id'], $body['codPais'], $body['nombreEstado']);
+        return ['message' => 'Estado actualizado exitosamente'];
     }
 
-    public function destroy($id){
-        
+    public function destroy($params){
+        $this->estadoRepo->delete($params['id']);
+        return ['message' => 'Estado eliminado exitosamente'];  
     }
 
 }
