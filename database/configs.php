@@ -8,5 +8,6 @@ function getConfigs(){
         "database" => "domicilios",
         "charset"  => "utf8mb4"
     ];
+    
 }
 ?>
