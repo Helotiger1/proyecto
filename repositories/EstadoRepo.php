@@ -19,6 +19,7 @@ class EstadoRepo{
                             ->toSQL();
 
        $datosEstados = $this->conn->fetchAll($sql['query'], $sql['params']);
+       
        foreach ($datosEstados as $key => $value) {
            $estados[] = new EstadoModel($value['codEstado'], $value['nombreEstado'], $value['nombrePais']);
        }
@@ -34,9 +35,11 @@ class EstadoRepo{
                             ->where(["estados.codPais" => (int)$id], ["="])
                             ->toSQL();
         $datosEstados = $this->conn->fetchAll($sql['query'], $sql['params']);
+
         foreach ($datosEstados as $key => $value) {
             $estados[] = new EstadoModel($value['codEstado'], $value['nombreEstado'], $value['nombrePais']);
         }    
+
         return $estados;
     }
 

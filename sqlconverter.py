@@ -8,15 +8,15 @@ def sqlconverter(data):
      global numEstado, numMunicipio, numParroquia, numCiudad
      if data.startswith("Municipio"):
          numMunicipio += 1
-         data = f"INSERT INTO Municipios (codMunicipio, CodEdo, Descripcion) VALUES ({numMunicipio}, {numEstado} , '{data}');"
+         data = f"INSERT INTO Municipios (codMunicipio, codEstado, nombreMunicipio) VALUES ({numMunicipio}, {numEstado} , '{data}');"
 
      elif data.startswith("Parroquia"):
             numParroquia += 1
-            data = f"INSERT INTO Parroquias (codParroquia, CodMunicipio, Descripcion) VALUES ({numParroquia}, {numMunicipio} , '{data}');"
+            data = f"INSERT INTO Parroquias (codParroquia, codMunicipio, nombreParroquia) VALUES ({numParroquia}, {numMunicipio} , '{data}');"
 
      elif data.startswith("Ciudad"):
             numCiudad += 1
-            data = f"INSERT INTO Ciudades (codCiudad, CodParroquia, Descripcion) VALUES ({numCiudad}, {numParroquia} , '{data}');"
+            data = f"INSERT INTO Ciudades (codCiudad, codParroquia, nombreCiudad) VALUES ({numCiudad}, {numParroquia} , '{data}');"
 
      else:
          data = "No se encontró el valor"
@@ -24,5 +24,6 @@ def sqlconverter(data):
      return data
 
 resultado = list(map(lambda x: sqlconverter(x), data))
-
+print("INSERT INTO Pais (codPais,nombrePais, estatus) VALUES (1, 'Venezuela', 'Activo')")
+print("INSERT INTO Estados (codEstado,nombreEstado,codPais) VALUES (1,'Nueva Esparta',1)")
 print(*resultado, sep = "\n")
