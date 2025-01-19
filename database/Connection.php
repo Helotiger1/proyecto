@@ -4,7 +4,6 @@ use PDO;
 use PDOException;
 require_once "configs.php";
 
-
 class Connection {
     private $driver, $host, $user, $pass, $database, $charset;
     private $pdo;
@@ -34,7 +33,10 @@ class Connection {
             $pdo = new PDO($dsn, $username, $password, $options);
             return $pdo;
         } catch (PDOException $e) {
-            throw new PDOException($e->getMessage(), $e->getCode());
+            // Handle the error gracefully
+            http_response_code(500);
+            echo json_encode(['error' => 'Database connection failed: ' . $e->getMessage()]);
+            exit;
         }
     }
 
