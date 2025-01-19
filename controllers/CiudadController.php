@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controllers;
-class CiudadController{
+class CiudadController {
+
     
 }
 ?>

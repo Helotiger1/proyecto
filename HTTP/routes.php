@@ -19,7 +19,7 @@ API::agregarRuta('POST', '/estados', [new EstadoController(), 'store']);
 API::agregarRuta('PUT', '/estados/{id}', [new EstadoController(), 'update']);
 api::agregarRuta('DELETE', '/estados/{id}', [new EstadoController(), 'destroy']);
 
-//Endpoints para Municipios | En desarollo
+//Endpoints para Municipios | Funcionando
 API::agregarRuta('GET', '/municipios', [new MunicipioController(), 'index']);
 API::agregarRuta('GET', '/estados/{id}/municipios', [new MunicipioController(), 'showByEstado']);
 API::agregarRuta('POST', '/municipios', [new MunicipioController(), 'store']);

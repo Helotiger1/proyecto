@@ -14,13 +14,13 @@ class EstadoRepo{
     public function getAll(){
         $sql = queryBuilder::select()
                             ->table('estados')
-                            ->columns(['paises.nombrePais', 'estados.codEdo', 'estados.nombreEstado'])
+                            ->columns(['paises.nombrePais', 'estados.codEstado', 'estados.nombreEstado'])
                             ->join('paises', 'estados.codPais', '=', 'paises.codPais')
                             ->toSQL();
 
        $datosEstados = $this->conn->fetchAll($sql['query'], $sql['params']);
        foreach ($datosEstados as $key => $value) {
-           $estados[] = new EstadoModel($value['codEdo'], $value['nombreEstado'], $value['nombrePais']);
+           $estados[] = new EstadoModel($value['codEstado'], $value['nombreEstado'], $value['nombrePais']);
        }
            
        return $estados;
@@ -29,13 +29,13 @@ class EstadoRepo{
     public function getByPais($id){
         $sql = queryBuilder::select()
                             ->table('estados')
-                            ->columns(['estados.codEdo', 'estados.nombreEstado','paises.nombrePais'])
+                            ->columns(['estados.codEstado', 'estados.nombreEstado','paises.nombrePais'])
                             ->join('paises', 'estados.codPais','=', 'paises.codPais')
                             ->where(["estados.codPais" => (int)$id], ["="])
                             ->toSQL();
         $datosEstados = $this->conn->fetchAll($sql['query'], $sql['params']);
         foreach ($datosEstados as $key => $value) {
-            $estados[] = new EstadoModel($value['codEdo'], $value['nombreEstado'], $value['nombrePais']);
+            $estados[] = new EstadoModel($value['codEstado'], $value['nombreEstado'], $value['nombrePais']);
         }    
         return $estados;
     }
@@ -49,20 +49,20 @@ class EstadoRepo{
         $this->conn->execute($sql['query'],$sql['params']);
     }
 
-    public function update($codEdo, $codPais, $nombreEstado){
+    public function update($codEstado, $codPais, $nombreEstado){
         $sql = queryBuilder::update()
                             ->table('estados')
                             ->set(['CodPais' => $codPais, 'nombreEstado' => $nombreEstado])
-                            ->where(["codEdo" => (int)$codEdo], ["="])
+                            ->where(["codEstado" => (int)$codEstado], ["="])
                             ->toSQL();
         $this->conn->execute($sql['query'],$sql['params']);
         return $sql;
     }
 
-    public function delete($codEdo){
+    public function delete($codEstado){
         $sql = queryBuilder::delete()
                             ->table('estados')
-                            ->where(["codEdo" => (int)$codEdo], ["="])
+                            ->where(["codEstado" => (int)$codEstado], ["="])
                             ->toSQL();
         $this->conn->execute($sql['query'],$sql['params']);
     }

@@ -1,17 +1,17 @@
 <?php 
 namespace App\Models;
 class EstadoModel implements \JsonSerializable{
-    private $codEdo, $nombrePais, $nombreEstado;
+    private $codEstado, $nombrePais, $nombreEstado;
 
-    public function __construct($codEdo, $nombreEstado, $nombrePais){
-        $this->codEdo = $codEdo;
+    public function __construct($codEstado, $nombreEstado, $nombrePais){
+        $this->codEstado = $codEstado;
         $this->nombreEstado = $nombreEstado;
         $this->nombrePais = $nombrePais;
     }
 
     public function jsonSerialize(): array {
         return [
-            'codEdo' => $this->codEdo,
+            'codEstado' => $this->codEstado,
             'nombreEstado' => $this->nombreEstado,
             'nombrePais' => $this->nombrePais
         ];

@@ -21,7 +21,6 @@ class PaisRepo{
        foreach ($datosPaises as $key => $value) {
            $paises[] = new PaisModel($value['codPais'], $value['nombrePais'], $value['estatus']);
        }    
-
        return $paises;
     }
 
