@@ -19,7 +19,7 @@ API::agregarRuta('GET', '/estados', [new EstadoController(), 'index']);         
 API::agregarRuta('GET', '/paises/{id}/estados', [new EstadoController(), 'showByPais']);                //Regresa los estados de un pais, segun el id del pais en la url
 API::agregarRuta('POST', '/estados', [new EstadoController(), 'store']);                                // Ingresa un estado, espera un body json con nombreEstado y codPais  
 API::agregarRuta('PUT', '/estados/{id}', [new EstadoController(), 'update']);                           // Actualiza un estado, espera un url con el id, y un body json con nombreEstado y codPais
-api::agregarRuta('DELETE', '/estados/{id}', [new EstadoController(), 'destroy']);                       // Elimina un estado, con el id en la url basta.
+API::agregarRuta('DELETE', '/estados/{id}', [new EstadoController(), 'destroy']);                       // Elimina un estado, con el id en la url basta.
 
 
 
@@ -27,6 +27,7 @@ API::agregarRuta('GET', '/municipios', [new MunicipioController(), 'index']);   
 API::agregarRuta('GET', '/estados/{id}/municipios', [new MunicipioController(), 'showByEstado']);       //Regresa los municipios de un estado, segun el id del Estado en la url
 API::agregarRuta('POST', '/municipios', [new MunicipioController(), 'store']);                          // Ingresa un municipio, espera un body json con nombreMunicipio y codEstado
 API::agregarRuta('PUT', '/municipios/{id}', [new MunicipioController(), 'update']);                     // Actualiza un municipio, espera un url con el id, y un body json con nombreMunicipio y codEstado
+API::agregarRuta('DELETE', '/municipios/{id}', [new MunicipioController(), 'destroy']);                 // Elimina un municipio, con el id en la url basta.
 
 
 
