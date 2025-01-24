@@ -9,7 +9,6 @@ $(function() {
         current.toggle();
         e.stopPropagation();
     });
-
     $(".dropdown-menu > li > a:not(.trigger)").on("click", function() {
         var root = $(this).closest('.dropdown');
         root.find('.left-caret').toggleClass('right-caret left-caret');

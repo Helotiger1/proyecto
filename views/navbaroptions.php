@@ -60,11 +60,11 @@
                     <i class="fa-solid fa-building-user icon ini" id="icon7"></i> Domicilio
                 </a>
                 <div id="Dom" class="d-none submenu-div">
-                    <a class="sub-menu-option" id="datatable1" onclick="fetchData('/paises', 'Paises')">País</a>
-                    <a class="sub-menu-option" id="datatable2" onclick="fetchData('/estados', 'Estados')">Estado</a>
-                    <a class="sub-menu-option" id="datatable3" onclick="fetchData('/ciudades', 'Ciudades')">Ciudad</a>
-                    <a class="sub-menu-option" id="datatable4" onclick="fetchData('/municipios', 'Municipios')">Municipio</a>
-                    <a class="sub-menu-option" id="datatable5" onclick="fetchData('/parroquias', 'Parroquias')">Parroquia</a>
+                    <a class="sub-menu-option" id="datatable1" onclick="loadLocationData('/paises', 'Paises')">País</a>
+                    <a class="sub-menu-option" id="datatable2" onclick="loadLocationData('/estados', 'Estados')">Estado</a>
+                    <a class="sub-menu-option" id="datatable3" onclick="loadLocationData('/ciudades', 'Ciudades')">Ciudad</a>
+                    <a class="sub-menu-option" id="datatable4" onclick="loadLocationData('/municipios', 'Municipios')">Municipio</a>
+                    <a class="sub-menu-option" id="datatable5" onclick="loadLocationData('/parroquias', 'Parroquias')">Parroquia</a>
                 </div>
             </li>
         </ul>
