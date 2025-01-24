@@ -2,6 +2,11 @@
 LAYAOUT STYLES
 */
 
+.login {
+  position: absolute;
+  right: 40px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;

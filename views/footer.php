@@ -1,6 +1,4 @@
 <div id="footer" align="center">
-    <br><br><br>
-    </b>
     <div class="container">
         <br>
         <div class="accordion" id="accordionFoot">
