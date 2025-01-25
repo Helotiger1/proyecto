@@ -14,9 +14,6 @@
                 <div id="collapseFoot" class="collapse" aria-labelledby="headingFoot" data-parent="#accordionFoot">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col" align="center">
-                                <img width="35%" src="../ejercicio/imagenes/Logo_UDO.png" alt="">
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col" align="center">

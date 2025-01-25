@@ -13,33 +13,6 @@ function loadLocationData(endpoint, option) {
   });
 }
 
-async function fetchRequest(endpoint, method = 'GET', body = null) {
-  url = `http://localhost/proyecto${endpoint}`;
-  const options = {
-    method,
-    headers: {
-      'Content-Type': 'application/json', 
-    },
-  };
-
-  if (body) {
-    options.body = JSON.stringify(body);
-  }
-
-  try {
-    const response = await fetch(url, options);
-
-    if (!response.ok) {
-      throw new Error(`Error ${response.status}: ${response.statusText}`);
-    }
-
-    return await response.json(); 
-  } catch (error) {
-    console.error('Fetch Error:', error.message);
-    throw error; // Lanza el error para que el catch lo maneje en la llamada
-  }
-}
-
 
 function updateTable(data, option) {
     const tableBody = $('#tabla1 tbody');
