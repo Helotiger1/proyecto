@@ -32,7 +32,9 @@
                 <span id="tableTitle">Domicilio / Estados Registrados</span>
             </div>
             <div class="agg">
-                <a class="btn btn-primary">Agregar</a>
+                <a class="btn btn-primary bttn-agregar"  onclick="window.location.href='formulario.php';">Agregar</a>
+                <a class="btn btn-primary bttn-eliminar" onclick="window.location.href='eliminar.php';">Eliminar</a>
+                <a class="btn btn-primary bttn-actualizar" onclick="window.location.href='actualizar.php';">Actualizar</a>
             </div>
         </div>
         <div class="input-options">
