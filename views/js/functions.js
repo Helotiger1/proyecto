@@ -1,43 +1,90 @@
+/******************************
+ * CONSTANTES Y CONFIGURACIONES
+ ******************************/
+const API_BASE_URL = 'http://localhost/proyecto/';
+const API_ENDPOINTS = { // Agregado para claridad
+    paises: 'paises',
+    estados: 'estados',
+    municipios: 'municipios',
+    parroquias: 'parroquias',
+    ciudades: 'ciudades'
+};
+
+const FIELD_NAMES = {
+    codPais: 'Código País',
+    nombrePais: 'País',
+    estatus: 'Estatus',
+    codEstado: 'Código Estado',
+    nombreEstado: 'Estado',
+    codMunicipio: 'Código Municipio',
+    nombreMunicipio: 'Municipio',
+    codParroquia: 'Código Parroquia',
+    nombreParroquia: 'Parroquia',
+    codCiudad: 'Código Ciudad',
+    nombreCiudad: 'Ciudad'
+};
+
+const FIELDS_CONFIG = {
+    paises: ['nombrePais', 'estatus'],
+    estados: ['nombreEstado', 'codPais'],
+    municipios: ['nombreMunicipio', 'codEstado'],
+    parroquias: ['nombreParroquia', 'codMunicipio'],
+    ciudades: ['nombreCiudad', 'codParroquia']
+};
+
+/******************************
+ * FUNCIONES DE API
+ ******************************/
 async function fetchRequest(endpoint, method = 'GET', body = null) {
-  let url = `http://localhost/proyecto/${endpoint}`;
-  const options = {
-    method,
-    headers: {
-      'Content-Type': 'application/json', 
-    },
-  };
+    const url = API_BASE_URL + endpoint;
+    const options = {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: body ? JSON.stringify(body) : null
+    };
 
-  if (body) {
-    options.body = JSON.stringify(body);
-  }
-
-  try {
-    const response = await fetch(url, options);
-
-    if (!response.ok) {
-      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    try {
+        const response = await fetch(url, options);
+        if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
+        return await response.json();
+    } catch (error) {
+        console.error('Fetch Error:', error.message);
+        throw error;
     }
-    return await response.json(); 
-  } catch (error) {
-    console.error('Fetch Error:', error.message);
-    throw error; 
-  }
 }
 
-// Mapeo de campos para los títulos de las tablas
-const FIELD_NAMES = {
-  codPais: 'Código',
-  nombrePais: 'País',
-  estatus: 'Estatus',
-  codEstado: 'Código',
-  nombreEstado: 'Estado',
-  codMunicipio: 'Código',
-  nombreMunicipio: 'Municipio',
-  codParroquia: 'Código',
-  nombreParroquia: 'Parroquia',
-  codCiudad: 'Código',
-  nombreCiudad: 'Ciudad'
-};
+/******************************
+ * FUNCIONES DE INTERFAZ
+ ******************************/
+function showLoading(show) {
+  document.getElementById('loading').classList.toggle('d-none', !show);
+}
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function getSectionId(section) {
+  return `cod${capitalize(section.replace(/s$/, ''))}`; // Corregido para singular correcto
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -45,15 +92,13 @@ const FIELD_NAMES = {
 async function loadData(section) {
   try {
       showLoading(true);
-  endpoint = section;
-  method = "GET";
-  let datos = await fetchRequest(endpoint, method);
-  entidades = {[section] : datos}
-  const data = entidades[section].data;
-  renderTable(data, section);
+      const response = await fetchRequest(section);
+      renderTable(response.data, section);
   } catch (error) {
       console.error('Error:', error);
-      mainContent.innerHTML = `<div class="alert alert-danger">Error cargando los datos</div>`;
+      document.getElementById('mainContent').innerHTML = `
+          <div class="alert alert-danger">Error cargando los datos</div>
+      `;
   } finally {
       showLoading(false);
   }
@@ -123,10 +168,6 @@ data.forEach(item => {
 }
 
 
-function showLoading(show) {
-  document.getElementById('loading').classList.toggle('d-none', !show);
-}
-
 // Event listeners para los enlaces
 document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', (e) => {
@@ -136,22 +177,11 @@ document.querySelectorAll('.nav-link').forEach(link => {
   });
 });
 
-
-const FIELDS_CONFIG = {
-paises: ['nombrePais', 'estatus'],
-estados: ['nombreEstado', 'nombrePais'],
-municipios: ['nombreMunicipio', 'nombreEstado'],
-parroquias: ['nombreParroquia', 'nombreMunicipio'],
-ciudades: ['nombreCiudad', 'nombreParroquia']
-};
-
 let currentSection = null;
 let currentId = null;
 
 // Funciones auxiliares
-function capitalize(str) {
-return str.charAt(0).toUpperCase() + str.slice(1);
-}
+
 
 // Mostrar formulario de agregar
 function showAddForm(section) {
@@ -166,7 +196,7 @@ const formHtml = fields.map(field => `
     </div>
 `).join('');
 
-document.getElementById('modalTitle').textContent = `Agregar ${section.slice(0, -1)}`;
+document.getElementById('modalTitle').textContent = `Agregar ${section}`;
 document.getElementById('modalBody').innerHTML = formHtml + `
     <button class="btn btn-primary" onclick="saveItem()">Guardar</button>
 `;
