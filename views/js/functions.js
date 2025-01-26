@@ -1,87 +1,112 @@
-function loadLocationData(endpoint, option) {
-    fetchRequest(endpoint, 'GET')
-  .then(response => {
-    if (response.data && Array.isArray(response.data)) {
-      updateTable(response.data, option);
-      updateHeading(option);
-    } else {
-      console.error('Expected an array in response.data but got:', response);
+async function fetchRequest(endpoint, method = 'GET', body = null) {
+    let url = `http://localhost/proyecto/${endpoint}`;
+    const options = {
+      method,
+      headers: {
+        'Content-Type': 'application/json', 
+      },
+    };
+  
+    if (body) {
+      options.body = JSON.stringify(body);
     }
-  })
-  .catch(error => {
-    console.error('Fetch error:', error);
-  });
-}
-
-
-function updateTable(data, option) {
-    const tableBody = $('#tabla1 tbody');
-    const tableHead = $('#tabla1 thead');
-    tableBody.empty();
-    tableHead.empty();
-    let headers = [];
-    let rows = [];
-    if (option === 'Paises') {
-        headers = ['ID', 'Nombre País', 'Estatus'];
-        rows = data.map(item => `
-            <tr>
-                <td>${item.codPais}</td>
-                <td>${item.nombrePais}</td>
-                <td>${item.estatus}</td>
-            </tr>
-        `);
-    } else if (option === 'Estados') {
-        headers = ['ID', 'Nombre Estado', 'Nombre País'];
-        rows = data.map(item => `
-            <tr>
-                <td>${item.codEstado}</td>
-                <td>${item.nombreEstado}</td>
-                <td>${item.nombrePais}</td>
-            </tr>
-        `);
-    } else if (option === 'Municipios') {
-        headers = ['ID', 'Nombre Municipio', 'Nombre Estado', 'Nombre País'];
-        rows = data.map(item => `
-            <tr>
-                <td>${item.codMunicipio}</td>
-                <td>${item.nombreMunicipio}</td>
-                <td>${item.nombreEstado}</td>
-                <td>${item.nombrePais}</td>
-            </tr>
-        `);
-    } else if (option === 'Parroquias') {
-        headers = ['ID', 'Nombre Parroquia', 'Nombre Municipio', 'Nombre Estado', 'Nombre País'];
-        rows = data.map(item => `
-            <tr>
-                <td>${item.codParroquia}</td>
-                <td>${item.nombreParroquia}</td>
-                <td>${item.nombreMunicipio}</td>
-                <td>${item.nombreEstado}</td>
-                <td>${item.nombrePais}</td>
-            </tr>
-        `);
-    } else if (option === 'Ciudades') {
-        headers = ['ID', 'Nombre Ciudad', 'Nombre Parroquia', 'Nombre Municipio', 'Nombre Estado', 'Nombre País'];
-        rows = data.map(item => `
-            <tr>
-                <td>${item.codCiudad}</td>
-                <td>${item.nombreCiudad}</td>
-                <td>${item.nombreParroquia}</td>
-                <td>${item.nombreMunicipio}</td>
-                <td>${item.nombreEstado}</td>
-                <td>${item.nombrePais}</td>
-            </tr>
-        `);
+  
+    try {
+      const response = await fetch(url, options);
+  
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+      return await response.json(); 
+    } catch (error) {
+      console.error('Fetch Error:', error.message);
+      throw error; 
     }
-    tableHead.append(`
-        <tr>
-            ${headers.map(header => `<th>${header}</th>`).join('')}
-        </tr>
-    `);
-    tableBody.append(rows.join(''));
+  }
+
+// Mapeo de campos para los títulos de las tablas
+const FIELD_NAMES = {
+    codPais: 'Código',
+    nombrePais: 'País',
+    estatus: 'Estatus',
+    codEstado: 'Código',
+    nombreEstado: 'Estado',
+    codMunicipio: 'Código',
+    nombreMunicipio: 'Municipio',
+    codParroquia: 'Código',
+    nombreParroquia: 'Parroquia',
+    codCiudad: 'Código',
+    nombreCiudad: 'Ciudad'
+};
+
+
+async function loadData(section) {
+    try {
+        showLoading(true);
+    //Esto es una cochinada pero fue como acople, jodanse.
+    endpoint = section;
+    method = "GET";
+    let datos = await fetchRequest(endpoint, method);
+    entidades = {[section] : datos}
+    const data = entidades[section].data;
+    renderTable(data, section);
+    } catch (error) {
+        console.error('Error:', error);
+        mainContent.innerHTML = `<div class="alert alert-danger">Error cargando los datos</div>`;
+    } finally {
+        showLoading(false);
+    }
 }
 
-function updateHeading(option) {
-    $('#selectedOption').text(option);
-    $('#tableTitle').text(`Domicilio / ${option} Registrados`);
+
+function renderTable(data, section) {
+    const table = document.getElementById('dataTable');
+    const thead = table.querySelector('thead');
+    const tbody = table.querySelector('tbody');
+    const title = document.getElementById('tableTitle');
+    
+    // Limpiar tabla
+    thead.innerHTML = '';
+    tbody.innerHTML = '';
+    
+    // Configurar título
+    title.textContent = `Tabla de ${section.charAt(0).toUpperCase() + section.slice(1)}`;
+    
+    // Crear headers
+    const headers = Object.keys(data[0]);
+    const headerRow = document.createElement('tr');
+    
+    headers.forEach(header => {
+        const th = document.createElement('th');
+        th.textContent = FIELD_NAMES[header] || header;
+        headerRow.appendChild(th);
+    });
+    
+    thead.appendChild(headerRow);
+    
+    // Llenar datos
+    data.forEach(item => {
+        const row = document.createElement('tr');
+        headers.forEach(header => {
+            const td = document.createElement('td');
+            td.textContent = item[header];
+            row.appendChild(td);
+        });
+        tbody.appendChild(row);
+    });
 }
+
+
+function showLoading(show) {
+    document.getElementById('loading').classList.toggle('d-none', !show);
+}
+
+
+// Event listeners para los enlaces
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = e.target.dataset.section;
+        loadData(section);
+    });
+});

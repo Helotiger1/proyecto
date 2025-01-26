@@ -17,9 +17,15 @@
                         <div class="row justify-content-center">
                             <div class="col-md-10 text-center">
                                 <p class="text-muted mb-0">
+                                    --Integrantes--<br>
+                                    Anghelo Aguilera<br>
+                                    Ami Roa<br>
+                                    Camila Cedeño<br>
+                                    Gabriel Lopez<br>
+                                    Jorge Rosas<br>
+                                    <br>
                                     Grupo de Estudiantes de la Carrera Licenciatura en Informática<br>
                                     Universidad de Oriente - Núcleo de Nueva Esparta (UDONE)<br>
-                                    Servicios de Asesoría, Consultoría y Desarrollo de Software.<br>
                                     Sector Guatamare - La Asunción - Isla de Margarita<br>
                                     Estado Nueva Esparta - Venezuela<br>
                                     Código Postal 6312<br>

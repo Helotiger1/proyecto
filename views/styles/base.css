@@ -26,3 +26,13 @@
 .accordion-button:not(.collapsed) {
     background-color: #e9ecef;
 }
+
+#mainNavAccordion {
+    position: fixed; /* Fija el elemento en la pantalla */
+    top: 0;          /* Lo coloca en la parte superior */
+    left: 0;         /* Alineado a la izquierda */
+    width: 100%;     /* Ancho completo */
+    z-index: 1000;   /* Asegura que esté por encima de otros elementos */
+    background: white; /* Fondo sólido (opcional) */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra para efecto visual (opcional) */
+}
