@@ -19,10 +19,10 @@
                                 <p class="text-muted mb-0">
                                     --Integrantes--<br>
                                     Anghelo Aguilera<br>
-                                    Ami Roa<br>
+                                    Amijoalian Roa<br>
                                     Camila Cedeño<br>
                                     Gabriel Lopez<br>
-                                    Jorge Rosas<br>
+                                    Jorge Rosa<br>
                                     <br>
                                     Grupo de Estudiantes de la Carrera Licenciatura en Informática<br>
                                     Universidad de Oriente - Núcleo de Nueva Esparta (UDONE)<br>

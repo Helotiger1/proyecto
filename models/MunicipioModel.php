@@ -1,12 +1,15 @@
 <?php
 namespace App\Models;
-class MunicipioModel implements \JsonSerializable{
-    private $codMunicipio, $nombreMunicipio, $nombreEstado, $nombrePais;
 
-    public function __construct($codMunicipio, $nombreMunicipio, $nombreEstado, $nombrePais){
+class MunicipioModel implements \JsonSerializable {
+    public $codMunicipio, $nombreMunicipio, $codEstado, $nombreEstado, $codPais, $nombrePais;
+
+    public function __construct($codMunicipio, $nombreMunicipio, $codEstado, $nombreEstado, $codPais, $nombrePais) {
         $this->codMunicipio = $codMunicipio;
         $this->nombreMunicipio = $nombreMunicipio;
+        $this->codEstado = $codEstado;
         $this->nombreEstado = $nombreEstado;
+        $this->codPais = $codPais;
         $this->nombrePais = $nombrePais;
     }
 
@@ -14,7 +17,9 @@ class MunicipioModel implements \JsonSerializable{
         return [
             'codMunicipio' => $this->codMunicipio,
             'nombreMunicipio' => $this->nombreMunicipio,
+            'codEstado' => $this->codEstado,
             'nombreEstado' => $this->nombreEstado,
+            'codPais' => $this->codPais,
             'nombrePais' => $this->nombrePais
         ];
     }

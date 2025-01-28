@@ -12,34 +12,19 @@ class MunicipioRepo{
     public function getAll(){
         $sql = queryBuilder::select()
                             ->table('municipios')
-                            ->columns(['municipios.codMunicipio', 'municipios.nombreMunicipio','estados.nombreEstado', 'paises.nombrePais'])
+                            ->columns(['municipios.codMunicipio', 'municipios.nombreMunicipio','estados.nombreEstado','estados.codEstado', 'paises.nombrePais','paises.codPais'])
                             ->join('estados', 'municipios.codEstado', '=', 'estados.codEstado')
                             ->join('paises', 'estados.codPais', '=', 'paises.codPais')
                             ->toSQL();
 
        $datosMunicipios = $this->conn->fetchAll($sql['query'], $sql['params']);
        foreach ($datosMunicipios as $key => $value) {
-           $Municipios[] = new MunicipioModel($value['codMunicipio'], $value['nombreMunicipio'], $value['nombreEstado'], $value['nombrePais']);
+           $Municipios[] = new MunicipioModel($value['codMunicipio'], $value['nombreMunicipio'], $value['codEstado'], $value['nombreEstado'], $value['codPais'], $value['nombrePais']);
        }
            
        return $Municipios;
     }
 
-    public function getByEstado($id){
-        $sql = queryBuilder::select()
-                            ->table('municipios')
-                            ->columns(['municipios.codMunicipio', 'municipios.nombreMunicipio','estados.nombreEstado', 'paises.nombrePais'])
-                            ->join('estados', 'municipios.codEstado','=', 'estados.codEstado')
-                            ->join('paises', 'estados.codPais', '=', 'paises.codPais')
-                            ->where(["municipios.codEstado" => (int)$id], ["="])
-                            ->toSQL();
-
-        $datosMunicipios = $this->conn->fetchAll($sql['query'], $sql['params']);
-        foreach ($datosMunicipios as $key => $value) {
-            $Municipios[] = new MunicipioModel($value['codMunicipio'], $value['nombreMunicipio'], $value['nombreEstado'], $value['nombrePais']);
-        }    
-        return $Municipios;
-    }
 
     public function insert($codEstado, $nombreMunicipio){
         $sql = queryBuilder::insert()
@@ -54,7 +39,7 @@ class MunicipioRepo{
     public function update($codMunicipio, $codEstado,  $nombreMunicipio){
         $sql = queryBuilder::update()
                             ->table('municipios')
-                            ->set(['dodEstado' => $codEstado, 'nombreMunicipio' => $nombreMunicipio])
+                            ->set(['codEstado' => $codEstado, 'nombreMunicipio' => $nombreMunicipio])
                             ->where(["codMunicipio" => (int)$codMunicipio], ["="])
                             ->toSQL();
 

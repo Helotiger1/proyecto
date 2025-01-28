@@ -1,18 +1,18 @@
 <?php 
 namespace App\Models;
 class PaisModel implements \JsonSerializable{
-    private $codPais, $descripcion, $estatus;
+    public $codPais, $nombrePais, $estatus;
 
-    public function __construct($codPais, $descripcion, $estatus){
+    public function __construct($codPais, $nombrePais, $estatus){
         $this->codPais = $codPais;
-        $this->descripcion = $descripcion;
+        $this->nombrePais = $nombrePais;
         $this->estatus = $estatus;
     }
 
     public function jsonSerialize(): array {
         return [
             'codPais' => $this->codPais,
-            'nombrePais' => $this->descripcion,
+            'nombrePais' => $this->nombrePais,
             'estatus' => $this->estatus
         ];
     }

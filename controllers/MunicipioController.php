@@ -1,12 +1,14 @@
 <?php 
 namespace App\Controllers;
 use App\Repositories\MunicipioRepo;
+use App\Controllers\EstadoController;
 
 class MunicipioController{
-    private $MunicipioRepo;
+    private $MunicipioRepo, $EstadoController;
 
     public function __construct(){
         $this->MunicipioRepo = new MunicipioRepo();
+        $this->EstadoController = new EstadoController;
     }
 
     public function index(){
@@ -14,12 +16,12 @@ class MunicipioController{
         return $Municipios;
     }
 
-    public function showByEstado($params){
-        $Municipios = $this->MunicipioRepo->getByEstado($params['id']);
-        return $Municipios;
-    }
-
     public function store($params, $body){
+        if($this->verifyExistance($body['nombreMunicipio'])){
+            return ['message' => 'Municipio ya existente.'];
+        }
+        $body['codEstado'] = $this->matchNameAndID($body['nombreEstado']);
+
         $this->MunicipioRepo->insert($body['codEstado'], $body['nombreMunicipio']);
         return ['message' => 'Municipio creado exitosamente'];
     }
@@ -34,5 +36,26 @@ class MunicipioController{
         return ['message' => 'Municipio eliminado exitosamente'];  
     }
 
+
+    public function verifyExistance($nombreMunicipio) {
+        $Municipios = $this->index(); 
+        foreach ($Municipios as $Municipio) { 
+            if ($Municipio->nombreMunicipio == $nombreMunicipio) { 
+                return true; 
+            }
+        }
+        return false;
+    }
+    
+
+    public function matchNameAndID($nombreEstado){
+        $estados = $this->EstadoController->index(); 
+        foreach ($estados as $estado) { 
+            if ($nombreEstado == $estado->nombreEstado) { 
+                return $estado->codEstado; 
+            }
+        }
+        return;
+    }
 }
 ?>

@@ -14,7 +14,11 @@ class PaisController{
         return $paises;
     }
 
-    public function store($params, $body){
+    public function store($params,$body){
+        if($this->verifyExistance($body['nombrePais'])){
+            return ['message' => 'Pais ya existente.'];
+        }
+
         $this->paisRepo->insert($body['nombrePais'], $body['estatus']);
         return ['message' => 'Pais creado exitosamente'];
     }
@@ -27,6 +31,16 @@ class PaisController{
     public function destroy($params, $body){
         $this->paisRepo->delete($params['id']);
         return ['message' => 'Pais eliminado exitosamente'];
+    }
+
+    public function verifyExistance($nombrePais) {
+        $paises = $this->index();
+        foreach ($paises as $pais) {
+            if ($pais->nombrePais == $nombrePais) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 ?>

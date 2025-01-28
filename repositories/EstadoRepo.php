@@ -14,34 +14,19 @@ class EstadoRepo{
     public function getAll(){
         $sql = queryBuilder::select()
                             ->table('estados')
-                            ->columns(['paises.nombrePais', 'estados.codEstado', 'estados.nombreEstado'])
+                            ->columns(['paises.nombrePais','paises.codPais', 'estados.codEstado', 'estados.nombreEstado'])
                             ->join('paises', 'estados.codPais', '=', 'paises.codPais')
                             ->toSQL();
 
        $datosEstados = $this->conn->fetchAll($sql['query'], $sql['params']);
        
        foreach ($datosEstados as $key => $value) {
-           $estados[] = new EstadoModel($value['codEstado'], $value['nombreEstado'], $value['nombrePais']);
+           $estados[] = new EstadoModel($value['codEstado'], $value['nombreEstado'], $value['nombrePais'], $value['codPais']);
        }
            
        return $estados;
     }
 
-    public function getByPais($id){
-        $sql = queryBuilder::select()
-                            ->table('estados')
-                            ->columns(['estados.codEstado', 'estados.nombreEstado','paises.nombrePais'])
-                            ->join('paises', 'estados.codPais','=', 'paises.codPais')
-                            ->where(["estados.codPais" => (int)$id], ["="])
-                            ->toSQL();
-        $datosEstados = $this->conn->fetchAll($sql['query'], $sql['params']);
-
-        foreach ($datosEstados as $key => $value) {
-            $estados[] = new EstadoModel($value['codEstado'], $value['nombreEstado'], $value['nombrePais']);
-        }    
-
-        return $estados;
-    }
 
     public function insert($codPais, $nombreEstado){
         $sql = queryBuilder::insert()

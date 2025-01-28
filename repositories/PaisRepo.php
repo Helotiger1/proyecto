@@ -24,7 +24,9 @@ class PaisRepo{
        return $paises;
     }
 
+
     public function insert($nombrePais, $estatus){
+        
         $sql = queryBuilder::insert()
                             ->table('paises')
                             ->columns(['nombrePais', 'estatus'])
@@ -49,7 +51,10 @@ class PaisRepo{
                             ->toSQL();
         $this->conn->execute($sql['query'],$sql['params']);
     }
+
+   
 }
 
+    
 
 ?>
