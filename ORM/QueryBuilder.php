@@ -1,15 +1,18 @@
-<?php
-
+<?php 
 class QueryBuilder {
     protected $pdo;
     protected $modelClass;
     protected $table;
     
-    // Estado de la consulta
     protected $type = 'select';
-    protected $columns = '*';
+    protected $columns = ['*'];
     protected $wheres = [];
-    protected $bindings = [];
+    protected $bindings = [
+        'where' => [],
+        'having' => [],
+        'insert' => [],
+        'update' => [],
+    ];
     protected $joins = [];
     protected $orderBy = [];
     protected $groupBy = [];
@@ -71,20 +74,32 @@ class QueryBuilder {
         return $this;
     }
 
-    public function join($table, $first, $operator = null, $second = null, $type = 'INNER'): self {
-        if (is_callable($first)) {
-            $join = new JoinClause($table, $type);
-            $first($join);
-            $this->joins[] = $join;
-        } else {
-            $this->joins[] = [
-                'table' => $table,
-                'first' => $first,
-                'operator' => $operator,
-                'second' => $second,
-                'type' => $type
-            ];
+    public function whereNested(\Closure $callback, $boolean = 'AND'): self {
+        $nestedQuery = new self($this->pdo, $this->modelClass, $this->table);
+        $callback($nestedQuery);
+
+        if (empty($nestedQuery->wheres)) {
+            return $this;
         }
+
+        $this->wheres[] = [
+            'type' => 'nested',
+            'query' => $nestedQuery,
+            'boolean' => $boolean
+        ];
+
+        $this->addBinding($nestedQuery->bindings['where'], 'where');
+        return $this;
+    }
+
+    public function join($table, $first, $operator = null, $second = null, $type = 'INNER'): self {
+        $this->joins[] = [
+            'table' => $table,
+            'first' => $first,
+            'operator' => $operator,
+            'second' => $second,
+            'type' => $type
+        ];
         return $this;
     }
 
@@ -131,8 +146,7 @@ class QueryBuilder {
 
     public function get(): array {
         $sql = $this->buildSelect();
-        $results = $this->run($sql, $this->bindings);
-        
+        $results = $this->run($sql);
         return array_map(function($item) {
             return $this->modelClass::hydrate($item);
         }, $results);
@@ -151,19 +165,19 @@ class QueryBuilder {
     public function insert(array $data): bool {
         $this->type = 'insert';
         $sql = $this->buildInsert($data);
-        return $this->run($sql, $this->bindings, false);
+        return $this->run($sql, false);
     }
 
     public function update(array $data): bool {
         $this->type = 'update';
         $sql = $this->buildUpdate($data);
-        return $this->run($sql, $this->bindings, false);
+        return $this->run($sql, false);
     }
 
     public function delete(): bool {
         $this->type = 'delete';
         $sql = $this->buildDelete();
-        return $this->run($sql, $this->bindings, false);
+        return $this->run($sql, false);
     }
 
     public function count(): int {
@@ -193,23 +207,28 @@ class QueryBuilder {
 
     protected function buildInsert(array $data): string {
         $columns = implode(', ', array_keys($data));
-        $placeholders = implode(', ', array_map(fn($col) => ":{$col}", array_keys($data)));
-        $this->addBinding($data);
+        $placeholders = implode(', ', array_fill(0, count($data), '?'));
+        $this->addBinding(array_values($data), 'insert');
         return "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
     }
 
     protected function buildUpdate(array $data): string {
         $setClause = implode(', ', array_map(
-            fn($col) => "{$col} = :{$col}", 
+            fn($col) => "{$col} = ?", 
             array_keys($data)
         ));
-        
-        $this->addBinding($data);
-        return "UPDATE {$this->table} SET {$setClause} " . $this->buildWheres();
+        $this->addBinding(array_values($data), 'update');
+        $whereClause = $this->buildWheres();
+        $sql = "UPDATE {$this->table} SET {$setClause}";
+        if ($whereClause) {
+            $sql .= " {$whereClause}";
+        }
+        return $sql;
     }
 
     protected function buildDelete(): string {
-        return "DELETE FROM {$this->table} " . $this->buildWheres();
+        $whereClause = $this->buildWheres();
+        return "DELETE FROM {$this->table} " . $whereClause;
     }
 
     protected function buildColumns(): string {
@@ -232,6 +251,11 @@ class QueryBuilder {
                     $placeholders = implode(', ', array_fill(0, count($where['values']), '?'));
                     $clause .= "{$where['column']} " . ($where['not'] ? 'NOT IN' : 'IN') . " ({$placeholders})";
                     break;
+                case 'nested':
+                    $nestedClause = $where['query']->buildWheres();
+                    $nestedClause = preg_replace('/^WHERE /', '', $nestedClause);
+                    $clause .= "({$nestedClause})";
+                    break;
             }
             
             $clauses[] = $clause;
@@ -240,17 +264,93 @@ class QueryBuilder {
         return implode(' ', $clauses);
     }
 
-    protected function addBinding($value, $type = 'where'): void {
+    protected function buildJoins(): string {
+        if (empty($this->joins)) return '';
+        
+        $clauses = [];
+        foreach ($this->joins as $join) {
+            $clause = "{$join['type']} JOIN {$join['table']} ON {$join['first']} {$join['operator']} {$join['second']}";
+            $clauses[] = $clause;
+        }
+        
+        return implode(' ', $clauses);
+    }
+
+    protected function buildGroupBy(): string {
+        if (empty($this->groupBy)) return '';
+        return 'GROUP BY ' . implode(', ', $this->groupBy);
+    }
+
+    protected function buildHaving(): string {
+        if (empty($this->having)) return '';
+        
+        $clauses = [];
+        foreach ($this->having as $index => $having) {
+            $clause = $index === 0 ? 'HAVING ' : "{$having['boolean']} ";
+            $clause .= "{$having['column']} {$having['operator']} ?";
+            $clauses[] = $clause;
+        }
+        
+        return implode(' ', $clauses);
+    }
+
+    protected function buildOrderBy(): string {
+        if (empty($this->orderBy)) return '';
+        
+        $clauses = [];
+        foreach ($this->orderBy as $order) {
+            $clauses[] = "{$order['column']} {$order['direction']}";
+        }
+        
+        return 'ORDER BY ' . implode(', ', $clauses);
+    }
+
+    protected function buildLimit(): string {
+        return $this->limit !== null ? "LIMIT {$this->limit}" : '';
+    }
+
+    protected function buildOffset(): string {
+        return $this->offset !== null ? "OFFSET {$this->offset}" : '';
+    }
+
+    protected function addBinding($value, string $type = 'where'): void {
+        if (!isset($this->bindings[$type])) {
+            throw new \InvalidArgumentException("Invalid binding type: {$type}");
+        }
+
         if (is_array($value)) {
-            $this->bindings = array_merge($this->bindings, $value);
+            $this->bindings[$type] = array_merge($this->bindings[$type], $value);
         } else {
-            $this->bindings[] = $value;
+            $this->bindings[$type][] = $value;
         }
     }
 
-    protected function run(string $sql, array $bindings, bool $fetch = true) {
+    protected function run(string $sql, bool $fetch = true) {
         try {
             $stmt = $this->pdo->prepare($sql);
+            
+            $bindings = [];
+            switch ($this->type) {
+                case 'insert':
+                    $bindings = $this->bindings['insert'];
+                    break;
+                case 'update':
+                    $bindings = array_merge(
+                        $this->bindings['update'],
+                        $this->bindings['where']
+                    );
+                    break;
+                case 'delete':
+                    $bindings = $this->bindings['where'];
+                    break;
+                default: // select
+                    $bindings = array_merge(
+                        $this->bindings['where'],
+                        $this->bindings['having']
+                    );
+                    break;
+            }
+            
             $stmt->execute($bindings);
             $this->reset();
             return $fetch ? $stmt->fetchAll(\PDO::FETCH_ASSOC) : true;
@@ -263,7 +363,12 @@ class QueryBuilder {
         $this->type = 'select';
         $this->columns = '*';
         $this->wheres = [];
-        $this->bindings = [];
+        $this->bindings = [
+            'where' => [],
+            'having' => [],
+            'insert' => [],
+            'update' => [],
+        ];
         $this->joins = [];
         $this->orderBy = [];
         $this->groupBy = [];
@@ -273,3 +378,5 @@ class QueryBuilder {
         $this->distinct = false;
     }
 }
+
+?>
