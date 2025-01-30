@@ -1,4 +1,5 @@
 <?php 
+namespace App\ORM;
 abstract class Model {
     protected static $pdo;
     protected static $table;

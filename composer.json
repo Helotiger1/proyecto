@@ -7,7 +7,8 @@
             "App\\Models\\": "models/",
             "App\\Repositories\\": "repositories/",
             "App\\Controllers\\": "controllers/",
-            "App\\HTTP\\": "HTTP/"
+            "App\\HTTP\\": "HTTP/",
+            "App\\ORM\\": "ORM/"
         }
     },
     "require-dev": {

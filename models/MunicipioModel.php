@@ -1,27 +1,16 @@
 <?php
 namespace App\Models;
+use App\ORM\Model;
+use App\Database\Connection;
+require_once 'vendor/autoload.php';
 
-class MunicipioModel implements \JsonSerializable {
-    public $codMunicipio, $nombreMunicipio, $codEstado, $nombreEstado, $codPais, $nombrePais;
+class MunicipioModel extends Model {
+    protected $primaryKey = 'codMunicipio';
+    protected $fillable = ['nombreMunicipio', 'codEstado', 'nombreEstado', 'codPais', 'nombrePais'];
+    protected static $table = 'municipios';
 
-    public function __construct($codMunicipio, $nombreMunicipio, $codEstado, $nombreEstado, $codPais, $nombrePais) {
-        $this->codMunicipio = $codMunicipio;
-        $this->nombreMunicipio = $nombreMunicipio;
-        $this->codEstado = $codEstado;
-        $this->nombreEstado = $nombreEstado;
-        $this->codPais = $codPais;
-        $this->nombrePais = $nombrePais;
-    }
-
-    public function jsonSerialize(): array {
-        return [
-            'codMunicipio' => $this->codMunicipio,
-            'nombreMunicipio' => $this->nombreMunicipio,
-            'codEstado' => $this->codEstado,
-            'nombreEstado' => $this->nombreEstado,
-            'codPais' => $this->codPais,
-            'nombrePais' => $this->nombrePais
-        ];
+    public function __construct() {
+        self::setConnection(Connection::connect());
     }
 }
 ?>

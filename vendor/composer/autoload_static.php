@@ -28,6 +28,7 @@ class ComposerStaticInite92aada1b8ffd4e4bbb1219fb6240d26
         array (
             'App\\SQL\\' => 8,
             'App\\Repositories\\' => 17,
+            'App\\ORM\\' => 8,
             'App\\Models\\' => 11,
             'App\\HTTP\\' => 9,
             'App\\Database\\' => 13,
@@ -55,6 +56,10 @@ class ComposerStaticInite92aada1b8ffd4e4bbb1219fb6240d26
         'App\\Repositories\\' => 
         array (
             0 => __DIR__ . '/../..' . '/repositories',
+        ),
+        'App\\ORM\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/ORM',
         ),
         'App\\Models\\' => 
         array (

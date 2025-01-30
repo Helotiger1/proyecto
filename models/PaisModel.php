@@ -1,19 +1,21 @@
 <?php 
 namespace App\Models;
-class PaisModel implements \JsonSerializable{
-    public $codPais, $nombrePais, $estatus;
+use App\ORM\Model;
+use App\Database\Connection;
+require_once 'vendor/autoload.php';
 
-    public function __construct($codPais, $nombrePais, $estatus){
-        $this->codPais = $codPais;
-        $this->nombrePais = $nombrePais;
-        $this->estatus = $estatus;
+class PaisModel extends Model {
+    protected $primaryKey = 'codPais';
+    protected $fillable = ['nombrePais','Estatus'];
+    protected static $table = 'paises';
+
+    public function __construct()
+    {
+        self::setConnection(Connection::connect());
     }
 
-    public function jsonSerialize(): array {
-        return [
-            'codPais' => $this->codPais,
-            'nombrePais' => $this->nombrePais,
-            'estatus' => $this->estatus
-        ];
-    }
+
+
+    
 }
+?>

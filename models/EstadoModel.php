@@ -1,25 +1,16 @@
-<?php 
+<?php
 namespace App\Models;
-class EstadoModel implements \JsonSerializable{
-    public $codEstado, $nombrePais, $nombreEstado, $codPais;
+use App\ORM\Model;
+use App\Database\Connection;
+require_once 'vendor/autoload.php';
 
-    public function __construct($codEstado, $nombreEstado, $nombrePais, $codPais){
-        $this->codEstado = $codEstado;
-        $this->nombreEstado = $nombreEstado;
-        $this->nombrePais = $nombrePais;
-        $this->codPais = $codPais;
-    }
+class EstadoModel extends Model {
+    protected $primaryKey = 'codEstado';
+    protected $fillable = ['nombreEstado', 'nombrePais', 'codPais'];
+    protected static $table = 'estados';
 
-    public function jsonSerialize(): array {
-        return [
-            'codEstado' => $this->codEstado,
-            'nombreEstado' => $this->nombreEstado,
-            'nombrePais' => $this->nombrePais,
-            'codPais' => $this->codPais
-        ];
+    public function __construct() {
+        self::setConnection(Connection::connect());
     }
 }
-
-
-
 ?>

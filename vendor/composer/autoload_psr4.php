@@ -11,6 +11,7 @@ return array(
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'App\\SQL\\' => array($baseDir . '/helpers/SQL'),
     'App\\Repositories\\' => array($baseDir . '/repositories'),
+    'App\\ORM\\' => array($baseDir . '/ORM'),
     'App\\Models\\' => array($baseDir . '/models'),
     'App\\HTTP\\' => array($baseDir . '/HTTP'),
     'App\\Database\\' => array($baseDir . '/database'),

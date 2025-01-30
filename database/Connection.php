@@ -5,25 +5,12 @@ use PDOException;
 require_once "configs.php";
 
 class Connection {
-    private $driver, $host, $user, $pass, $database, $charset;
-    private $pdo;
-    
-    public function __construct() {
+    public static function connect() {
         $database_cfg = getConfigs();
-        $this->driver  = $database_cfg["driver"];
-        $this->host    = $database_cfg["host"];
-        $this->user    = $database_cfg["user"];
-        $this->pass    = $database_cfg["pass"];
-        $this->database= $database_cfg["database"];
-        $this->charset = $database_cfg["charset"];
-        $this->pdo = $this->connect(); 
-    }
-
-    public function connect() {
         try {
-            $dsn = $this->driver . ":host=" . $this->host . ";dbname=" . $this->database . ";charset=" . $this->charset;
-            $username = $this->user;
-            $password = $this->pass;
+            $dsn = $database_cfg["driver"] . ":host=" . $database_cfg["host"] . ";dbname=" . $database_cfg["database"] . ";charset=" . $database_cfg["charset"];
+            $username = $database_cfg["user"];
+            $password = $database_cfg["pass"];;
             $options = [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -38,22 +25,6 @@ class Connection {
             echo json_encode(['error' => 'Database connection failed: ' . $e->getMessage()]);
             exit;
         }
-    }
-
-    public function execute($query, $params = []) {
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute($params);
-        return $stmt;
-    }
-
-    public function fetchAll($query, $params = []) {
-        $stmt = $this->execute($query, $params);
-        return $stmt->fetchAll();
-    }
-
-    public function fetchOne($query, $params = []) {
-        $stmt = $this->execute($query, $params);
-        return $stmt->fetch();
     }
 }
 ?>

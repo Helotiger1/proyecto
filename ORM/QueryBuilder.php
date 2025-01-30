@@ -1,4 +1,5 @@
 <?php 
+namespace App\ORM;
 class QueryBuilder {
     protected $pdo;
     protected $modelClass;
