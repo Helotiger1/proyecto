@@ -1,5 +1,6 @@
 <?php 
 namespace App\ORM;
+use App\Database\Connection;
 class QueryBuilder {
     protected $pdo;
     protected $modelClass;
@@ -22,8 +23,8 @@ class QueryBuilder {
     protected $offset = null;
     protected $distinct = false;
 
-    public function __construct(\PDO $pdo, string $modelClass, string $table) {
-        $this->pdo = $pdo;
+    public function __construct(string $modelClass, string $table) {
+        $this->pdo = Connection::connect();
         $this->modelClass = $modelClass;
         $this->table = $table;
     }
@@ -76,7 +77,7 @@ class QueryBuilder {
     }
 
     public function whereNested(\Closure $callback, $boolean = 'AND'): self {
-        $nestedQuery = new self($this->pdo, $this->modelClass, $this->table);
+        $nestedQuery = new self($this->modelClass, $this->table);
         $callback($nestedQuery);
 
         if (empty($nestedQuery->wheres)) {

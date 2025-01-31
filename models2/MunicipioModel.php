@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 use App\ORM\Model;
+use App\Database\Connection;
 require_once 'vendor/autoload.php';
 
 class MunicipioModel extends Model {

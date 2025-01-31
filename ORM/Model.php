@@ -7,9 +7,6 @@ abstract class Model {
     protected $fillable = [];
     protected $attributes = [];
 
-    public static function setConnection(\PDO $pdo): void {
-        static::$pdo = $pdo;
-    }
 
     protected static function getTable(): string {
         if (!static::$table) {
@@ -20,35 +17,9 @@ abstract class Model {
 
     public static function query(): QueryBuilder {
         return new QueryBuilder(
-            static::$pdo,
             static::class,
             static::getTable()
         );
-    }
-
-    public static function all(): array {
-        return static::query()->get();
-    }
-
-    public static function find($id): ?self {
-        return static::query()->where(static::getPrimaryKey(), $id)->first();
-    }
-
-    public static function where($column, $operator = null, $value = null): QueryBuilder {
-        return static::query()->where($column, $operator, $value);
-    }
-
-    public function __construct(array $attributes = []) {
-        $this->fill($attributes);
-    }
-
-    public function fill(array $attributes): self {
-        foreach ($attributes as $key => $value) {
-            if (in_array($key, $this->fillable)) {
-                $this->attributes[$key] = $value;
-            }
-        }
-        return $this;
     }
 
     public function save(): bool {
@@ -70,7 +41,6 @@ abstract class Model {
         return isset($this->attributes[$this->primaryKey]);
     }
 
-    // ==================== MÉTODOS DE ACCESO ====================
     public function __get($name) {
         return $this->attributes[$name] ?? null;
     }
@@ -84,8 +54,6 @@ abstract class Model {
     public function getKey() {
         return $this->attributes[$this->primaryKey] ?? null;
     }
-
-    // ==================== MÉTODOS INTERNOS ====================
     protected static function getPrimaryKey(): string {
         return (new static())->primaryKey;
     }
@@ -117,10 +85,25 @@ abstract class Model {
     }
 
     // ==================== HYDRATACIÓN ====================
+
+    public function __construct(array $attributes = []) {
+        $this->fill($attributes);
+    }
+
+    public function fill(array $attributes): self {
+        foreach ($attributes as $key => $value) {
+            if (in_array($key, $this->fillable)) {
+                $this->attributes[$key] = $value;
+            }
+        }
+        return $this;
+    }
+
     public static function hydrate(array $data): self {
         $model = new static();
         $model->attributes = $data;
         return $model;
     }
+
 }
 ?>
