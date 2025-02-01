@@ -10,7 +10,6 @@ class CiudadModel extends Model {
     protected static $table = 'ciudades';
 
     public function __construct() {
-        self::setConnection(Connection::connect());
     }
 }
 ?>

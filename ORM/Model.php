@@ -5,9 +5,9 @@ abstract class Model {
     protected static $table;
     protected $primaryKey = 'id';
     protected $fillable = [];
-    protected $attributes = [];
+    public $attributes = [];
 
-
+ // ==================== LOGICA DE BASE DE DATOS ====================
     protected static function getTable(): string {
         if (!static::$table) {
             throw new \Exception('Table name not defined for model: ' . static::class);
@@ -84,7 +84,7 @@ abstract class Model {
         );
     }
 
-    // ==================== HYDRATACIÓN ====================
+    // ==================== LOGICA DE MODELO ====================
 
     public function __construct(array $attributes = []) {
         $this->fill($attributes);

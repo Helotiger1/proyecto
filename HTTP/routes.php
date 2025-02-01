@@ -1,7 +1,7 @@
 <?php 
 namespace App\HTTP;
-use App\Controllers\EstadoController;
 use App\Controllers\PaisController;
+use App\Controllers\EstadoController;
 use App\Controllers\MunicipioController;
 use App\Controllers\ParroquiaController;
 use App\Controllers\CiudadController;

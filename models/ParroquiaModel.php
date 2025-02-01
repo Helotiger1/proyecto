@@ -10,7 +10,6 @@ class ParroquiaModel extends Model {
     protected static $table = 'parroquias';
 
     public function __construct() {
-        self::setConnection(Connection::connect());
     }
 }
 ?>

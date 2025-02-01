@@ -7,27 +7,18 @@ class PaisModel extends Model {
     protected $primaryKey = 'codPais';
     protected $fillable = ['nombrePais', 'estatus', 'codPais'];
     protected static $table = 'paises';
+    public $attributes = [];
 
     // ==================== LOGICA DE MODELO ====================
     public function __construct()
     {
+
     }
-
-    
-
-
-
-
-
-
-
-
 
     // ==================== LOGICA DE BASE DE DATOS ====================
     public static function getAll(){
         return self::query()->get();
     }
 }
-var_dump(PaisModel::getAll());
 
 ?>

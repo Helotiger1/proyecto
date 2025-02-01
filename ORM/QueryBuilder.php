@@ -2,7 +2,7 @@
 namespace App\ORM;
 use App\Database\Connection;
 class QueryBuilder {
-    protected $pdo;
+    protected static $pdo;
     protected $modelClass;
     protected $table;
     
@@ -24,10 +24,29 @@ class QueryBuilder {
     protected $distinct = false;
 
     public function __construct(string $modelClass, string $table) {
-        $this->pdo = Connection::connect();
+        self::$pdo = Connection::connect();
         $this->modelClass = $modelClass;
         $this->table = $table;
     }
+    
+    public function getAttributes(): array {
+        return [
+            'modelClass' => $this->modelClass,
+            'table' => $this->table,
+            'type' => $this->type,
+            'columns' => $this->columns,
+            'wheres' => $this->wheres,
+            'bindings' => $this->bindings,
+            'joins' => $this->joins,
+            'orderBy' => $this->orderBy,
+            'groupBy' => $this->groupBy,
+            'having' => $this->having,
+            'limit' => $this->limit,
+            'offset' => $this->offset,
+            'distinct' => $this->distinct,
+        ];
+    }
+    
 
     // ==================== MÉTODOS DE CONSTRUCCIÓN ====================
 
@@ -329,7 +348,7 @@ class QueryBuilder {
 
     protected function run(string $sql, bool $fetch = true) {
         try {
-            $stmt = $this->pdo->prepare($sql);
+            $stmt = self::$pdo->prepare($sql);
             
             $bindings = [];
             switch ($this->type) {

@@ -83,7 +83,7 @@ class API {
     public static function enviarRespuesta($statusCode, $data) {
         http_response_code($statusCode);
         header('Content-Type: application/json');
-        echo json_encode(['data' => $data]); // Wrap data in an object
+        echo json_encode($data); // Wrap data in an object
     }
 }
 require_once "routes.php";
