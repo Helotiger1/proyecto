@@ -2,13 +2,13 @@
     "name": "angheloaguilera/proyecto",
     "autoload": {
         "psr-4": {
-            "App\\SQL\\": "helpers/SQL/",
-            "App\\Database\\": "database/",
-            "App\\Models\\": "models/",
-            "App\\Repositories\\": "repositories/",
             "App\\Controllers\\": "controllers/",
-            "App\\HTTP\\": "HTTP/",
-            "App\\ORM\\": "ORM/"
+            "App\\Database\\": "database/",
+            "App\\Helpers\\": "helpers/",
+            "App\\ORM\\": "helpers/ORM/",
+            "App\\Models\\": "models/",
+            "App\\Routes\\": "routes/",
+            "App\\Views\\": "views/"
         }
     },
     "require-dev": {

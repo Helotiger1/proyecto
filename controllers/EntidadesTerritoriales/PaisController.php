@@ -1,6 +1,6 @@
 <?php 
 namespace App\Controllers;
-use App\Models\PaisModel;
+use App\Models\Domicilios\PaisModel;
 
 class PaisController {
     public function index() {
