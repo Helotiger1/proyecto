@@ -23,8 +23,6 @@ class PaisModel extends Model implements JsonSerializable{
 
     
 
-    
-
 
 }
 
