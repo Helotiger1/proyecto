@@ -1,5 +1,5 @@
 <?php 
-namespace App\HTTP;
+namespace App\Routes;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 class API {
@@ -32,7 +32,8 @@ class API {
         foreach (self::$routes as $route) {
             $params = [];
             if ($route['method'] === $method && self::encontrarRuta($route['route'], $path, $params)) {
-                $data = call_user_func_array($route['callback'], [$params, $body]);
+                $params["body"] = $body;
+                $data = call_user_func_array($route['callback'], [$params]);
                 return self::enviarRespuesta(200, $data);
             }
         }

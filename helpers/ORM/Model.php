@@ -3,8 +3,8 @@ namespace App\ORM;
 abstract class Model {
     protected static $pdo;
     protected static $table;
-    protected $primaryKey = 'id';
-    protected $fillable = [];
+    protected static $primaryKey = 'id';
+    protected static $fillable = [];
     public $attributes = [];
 
  // ==================== LOGICA DE BASE DE DATOS ====================
@@ -22,7 +22,11 @@ abstract class Model {
         );
     }
 
-    public function save(): bool {
+    public function save($data){
+        self::query()->insert($data);
+    }
+
+    public function saveObject(): bool {
         if ($this->exists()) {
             return $this->performUpdate();
         }

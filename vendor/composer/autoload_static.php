@@ -26,11 +26,11 @@ class ComposerStaticInite92aada1b8ffd4e4bbb1219fb6240d26
         ),
         'A' => 
         array (
-            'App\\SQL\\' => 8,
-            'App\\Repositories\\' => 17,
+            'App\\Views\\' => 10,
+            'App\\Routes\\' => 11,
             'App\\ORM\\' => 8,
             'App\\Models\\' => 11,
-            'App\\HTTP\\' => 9,
+            'App\\Helpers\\' => 12,
             'App\\Database\\' => 13,
             'App\\Controllers\\' => 16,
         ),
@@ -49,25 +49,25 @@ class ComposerStaticInite92aada1b8ffd4e4bbb1219fb6240d26
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
-        'App\\SQL\\' => 
+        'App\\Views\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/helpers/SQL',
+            0 => __DIR__ . '/../..' . '/views',
         ),
-        'App\\Repositories\\' => 
+        'App\\Routes\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/repositories',
+            0 => __DIR__ . '/../..' . '/routes',
         ),
         'App\\ORM\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/ORM',
+            0 => __DIR__ . '/../..' . '/helpers/ORM',
         ),
         'App\\Models\\' => 
         array (
             0 => __DIR__ . '/../..' . '/models',
         ),
-        'App\\HTTP\\' => 
+        'App\\Helpers\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/HTTP',
+            0 => __DIR__ . '/../..' . '/helpers',
         ),
         'App\\Database\\' => 
         array (

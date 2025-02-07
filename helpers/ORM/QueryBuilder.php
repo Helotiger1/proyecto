@@ -46,7 +46,6 @@ class QueryBuilder {
             'distinct' => $this->distinct,
         ];
     }
-    
 
     // ==================== MÉTODOS DE CONSTRUCCIÓN ====================
 
@@ -73,7 +72,6 @@ class QueryBuilder {
             'value' => $value,
             'boolean' => $boolean
         ];
-
         $this->addBinding($value, 'where');
         return $this;
     }
@@ -179,8 +177,8 @@ class QueryBuilder {
         return $results[0] ?? null;
     }
 
-    public function find($id) {
-        return $this->where('id', $id)->first();
+    public function find($nameId,$id) {
+        return $this->where($nameId, $id)->first();
     }
 
     public function insert(array $data): bool {
