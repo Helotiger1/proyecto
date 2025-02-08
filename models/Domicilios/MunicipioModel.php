@@ -1,13 +1,9 @@
 <?php
-namespace App\Models;
-use App\ORM\Model;
-require_once 'vendor/autoload.php';
+namespace App\Models\Domicilios;
 
-class MunicipioModel extends Model {
+class MunicipioModel extends ModelTerritorial {
     protected static $table = 'municipios';
-    protected $primaryKey = 'codMunicipio';
-    protected $fillable = ['nombreMunicipio', 'codEstado'];
-
-
+    protected static $primaryKey = 'codMunicipio';
+    protected static $fillable = ['nombreMunicipio', 'codEstado'];
 }
 ?>

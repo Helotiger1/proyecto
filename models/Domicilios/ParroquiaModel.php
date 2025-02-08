@@ -1,19 +1,9 @@
 <?php
-namespace App\Models;
-use App\ORM\Model;
-use App\Database\Connection;
-require_once 'vendor/autoload.php';
+namespace App\Models\Domicilios;
 
-class ParroquiaModel extends Model {
+class ParroquiaModel extends ModelTerritorial {
     protected static $table = 'parroquias';
-    protected $primaryKey = 'codParroquia';
-    protected $fillable = ['nombreParroquia', 'codMunicipio'];
-
-    public function jsonSerialize() : array{
-        return $this->attributes;
-    }
-
-    public function __construct() {
-    }
+    protected static $primaryKey = 'codParroquia';
+    protected static $fillable = ['nombreParroquia', 'codMunicipio'];
 }
 ?>

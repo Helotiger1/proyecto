@@ -1,4 +1,3 @@
-
 const API_BASE_URL = 'http://localhost/proyecto/';
 const API_ENDPOINTS = { 
     paises: 'paises',
