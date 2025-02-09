@@ -176,3 +176,133 @@ Stack trace:
 #5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
 #6 {main}
   thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 377
+[09-Feb-2025 17:06:57 UTC] PHP Fatal error:  Uncaught Exception: Query error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table ciudades' at line 1 in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php:439
+Stack trace:
+#0 C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php(210): App\ORM\QueryBuilder->run('SELECT * table ...')
+#1 C:\www\Apache24\htdocs\proyecto\models\Domicilios\ModelTerritorial.php(19): App\ORM\QueryBuilder->get()
+#2 C:\www\Apache24\htdocs\proyecto\controllers\Domicilios\ControllerFederal.php(7): App\Models\Domicilios\ModelTerritorial::getAll()
+#3 [internal function]: App\Controllers\Domicilios\ControllerFederal->index(Array)
+#4 C:\www\Apache24\htdocs\proyecto\routes\api.php(36): call_user_func_array(Array, Array)
+#5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
+#6 {main}
+  thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 439
+[09-Feb-2025 17:07:00 UTC] PHP Fatal error:  Uncaught Exception: Query error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table parroquias' at line 1 in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php:439
+Stack trace:
+#0 C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php(210): App\ORM\QueryBuilder->run('SELECT * table ...')
+#1 C:\www\Apache24\htdocs\proyecto\models\Domicilios\ModelTerritorial.php(19): App\ORM\QueryBuilder->get()
+#2 C:\www\Apache24\htdocs\proyecto\controllers\Domicilios\ControllerFederal.php(7): App\Models\Domicilios\ModelTerritorial::getAll()
+#3 [internal function]: App\Controllers\Domicilios\ControllerFederal->index(Array)
+#4 C:\www\Apache24\htdocs\proyecto\routes\api.php(36): call_user_func_array(Array, Array)
+#5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
+#6 {main}
+  thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 439
+[09-Feb-2025 17:07:11 UTC] PHP Fatal error:  Uncaught Exception: Query error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table ciudades' at line 1 in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php:439
+Stack trace:
+#0 C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php(210): App\ORM\QueryBuilder->run('SELECT * table ...')
+#1 C:\www\Apache24\htdocs\proyecto\models\Domicilios\ModelTerritorial.php(19): App\ORM\QueryBuilder->get()
+#2 C:\www\Apache24\htdocs\proyecto\controllers\Domicilios\ControllerFederal.php(7): App\Models\Domicilios\ModelTerritorial::getAll()
+#3 [internal function]: App\Controllers\Domicilios\ControllerFederal->index(Array)
+#4 C:\www\Apache24\htdocs\proyecto\routes\api.php(36): call_user_func_array(Array, Array)
+#5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
+#6 {main}
+  thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 439
+[09-Feb-2025 17:07:14 UTC] PHP Fatal error:  Uncaught Exception: Query error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table estados' at line 1 in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php:439
+Stack trace:
+#0 C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php(210): App\ORM\QueryBuilder->run('SELECT * table ...')
+#1 C:\www\Apache24\htdocs\proyecto\models\Domicilios\ModelTerritorial.php(19): App\ORM\QueryBuilder->get()
+#2 C:\www\Apache24\htdocs\proyecto\controllers\Domicilios\ControllerFederal.php(7): App\Models\Domicilios\ModelTerritorial::getAll()
+#3 [internal function]: App\Controllers\Domicilios\ControllerFederal->index(Array)
+#4 C:\www\Apache24\htdocs\proyecto\routes\api.php(36): call_user_func_array(Array, Array)
+#5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
+#6 {main}
+  thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 439
+[09-Feb-2025 17:07:16 UTC] PHP Fatal error:  Uncaught Exception: Query error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table paises' at line 1 in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php:439
+Stack trace:
+#0 C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php(210): App\ORM\QueryBuilder->run('SELECT * table ...')
+#1 C:\www\Apache24\htdocs\proyecto\models\Domicilios\ModelTerritorial.php(19): App\ORM\QueryBuilder->get()
+#2 C:\www\Apache24\htdocs\proyecto\controllers\Domicilios\ControllerFederal.php(7): App\Models\Domicilios\ModelTerritorial::getAll()
+#3 [internal function]: App\Controllers\Domicilios\ControllerFederal->index(Array)
+#4 C:\www\Apache24\htdocs\proyecto\routes\api.php(36): call_user_func_array(Array, Array)
+#5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
+#6 {main}
+  thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 439
+[09-Feb-2025 17:07:43 UTC] PHP Fatal error:  Uncaught Exception: Query error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table paises' at line 1 in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php:439
+Stack trace:
+#0 C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php(210): App\ORM\QueryBuilder->run('SELECT * table ...')
+#1 C:\www\Apache24\htdocs\proyecto\models\Domicilios\ModelTerritorial.php(19): App\ORM\QueryBuilder->get()
+#2 C:\www\Apache24\htdocs\proyecto\controllers\Domicilios\ControllerFederal.php(7): App\Models\Domicilios\ModelTerritorial::getAll()
+#3 [internal function]: App\Controllers\Domicilios\ControllerFederal->index(Array)
+#4 C:\www\Apache24\htdocs\proyecto\routes\api.php(36): call_user_func_array(Array, Array)
+#5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
+#6 {main}
+  thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 439
+[09-Feb-2025 17:07:46 UTC] PHP Fatal error:  Uncaught Exception: Query error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table paises' at line 1 in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php:439
+Stack trace:
+#0 C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php(210): App\ORM\QueryBuilder->run('SELECT * table ...')
+#1 C:\www\Apache24\htdocs\proyecto\models\Domicilios\ModelTerritorial.php(19): App\ORM\QueryBuilder->get()
+#2 C:\www\Apache24\htdocs\proyecto\controllers\Domicilios\ControllerFederal.php(7): App\Models\Domicilios\ModelTerritorial::getAll()
+#3 [internal function]: App\Controllers\Domicilios\ControllerFederal->index(Array)
+#4 C:\www\Apache24\htdocs\proyecto\routes\api.php(36): call_user_func_array(Array, Array)
+#5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
+#6 {main}
+  thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 439
+[09-Feb-2025 17:08:07 UTC] PHP Fatal error:  Uncaught Exception: Query error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table paises' at line 1 in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php:439
+Stack trace:
+#0 C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php(210): App\ORM\QueryBuilder->run('SELECT * table ...')
+#1 C:\www\Apache24\htdocs\proyecto\models\Domicilios\ModelTerritorial.php(19): App\ORM\QueryBuilder->get()
+#2 C:\www\Apache24\htdocs\proyecto\controllers\Domicilios\ControllerFederal.php(7): App\Models\Domicilios\ModelTerritorial::getAll()
+#3 [internal function]: App\Controllers\Domicilios\ControllerFederal->index(Array)
+#4 C:\www\Apache24\htdocs\proyecto\routes\api.php(36): call_user_func_array(Array, Array)
+#5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
+#6 {main}
+  thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 439
+[09-Feb-2025 17:09:04 UTC] PHP Fatal error:  Uncaught Exception: Query error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table paises' at line 1 in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php:439
+Stack trace:
+#0 C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php(210): App\ORM\QueryBuilder->run('SELECT * table ...')
+#1 C:\www\Apache24\htdocs\proyecto\models\Domicilios\ModelTerritorial.php(19): App\ORM\QueryBuilder->get()
+#2 C:\www\Apache24\htdocs\proyecto\controllers\Domicilios\ControllerFederal.php(7): App\Models\Domicilios\ModelTerritorial::getAll()
+#3 [internal function]: App\Controllers\Domicilios\ControllerFederal->index(Array)
+#4 C:\www\Apache24\htdocs\proyecto\routes\api.php(36): call_user_func_array(Array, Array)
+#5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
+#6 {main}
+  thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 439
+[09-Feb-2025 17:10:19 UTC] PHP Fatal error:  Uncaught Exception: Query error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table paises' at line 1 in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php:439
+Stack trace:
+#0 C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php(210): App\ORM\QueryBuilder->run('SELECT * table ...')
+#1 C:\www\Apache24\htdocs\proyecto\models\Domicilios\ModelTerritorial.php(18): App\ORM\QueryBuilder->get()
+#2 C:\www\Apache24\htdocs\proyecto\controllers\Domicilios\ControllerFederal.php(7): App\Models\Domicilios\ModelTerritorial::getAll()
+#3 [internal function]: App\Controllers\Domicilios\ControllerFederal->index(Array)
+#4 C:\www\Apache24\htdocs\proyecto\routes\api.php(36): call_user_func_array(Array, Array)
+#5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
+#6 {main}
+  thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 439
+[09-Feb-2025 17:21:32 UTC] PHP Fatal error:  Uncaught Exception: Query error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= ?' at line 1 in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php:435
+Stack trace:
+#0 C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php(235): App\ORM\QueryBuilder->run('UPDATE ciudades...', false)
+#1 C:\www\Apache24\htdocs\proyecto\models\Domicilios\ModelTerritorial.php(36): App\ORM\QueryBuilder->update(Array)
+#2 C:\www\Apache24\htdocs\proyecto\controllers\Domicilios\ControllerFederal.php(26): App\Models\Domicilios\ModelTerritorial::update(48, Array)
+#3 [internal function]: App\Controllers\Domicilios\ControllerFederal->update(Array)
+#4 C:\www\Apache24\htdocs\proyecto\routes\api.php(36): call_user_func_array(Array, Array)
+#5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
+#6 {main}
+  thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 435
+[09-Feb-2025 17:21:53 UTC] PHP Fatal error:  Uncaught Exception: Query error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= ?' at line 1 in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php:435
+Stack trace:
+#0 C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php(235): App\ORM\QueryBuilder->run('UPDATE paises S...', false)
+#1 C:\www\Apache24\htdocs\proyecto\models\Domicilios\ModelTerritorial.php(36): App\ORM\QueryBuilder->update(Array)
+#2 C:\www\Apache24\htdocs\proyecto\controllers\Domicilios\ControllerFederal.php(26): App\Models\Domicilios\ModelTerritorial::update(1, Array)
+#3 [internal function]: App\Controllers\Domicilios\ControllerFederal->update(Array)
+#4 C:\www\Apache24\htdocs\proyecto\routes\api.php(36): call_user_func_array(Array, Array)
+#5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
+#6 {main}
+  thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 435
+[09-Feb-2025 17:22:56 UTC] PHP Fatal error:  Uncaught Exception: Query error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= ?' at line 1 in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php:435
+Stack trace:
+#0 C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php(235): App\ORM\QueryBuilder->run('UPDATE paises S...', false)
+#1 C:\www\Apache24\htdocs\proyecto\models\Domicilios\ModelTerritorial.php(36): App\ORM\QueryBuilder->update(Array)
+#2 C:\www\Apache24\htdocs\proyecto\controllers\Domicilios\ControllerFederal.php(26): App\Models\Domicilios\ModelTerritorial::update(3, Array)
+#3 [internal function]: App\Controllers\Domicilios\ControllerFederal->update(Array)
+#4 C:\www\Apache24\htdocs\proyecto\routes\api.php(36): call_user_func_array(Array, Array)
+#5 C:\www\Apache24\htdocs\proyecto\index.php(4): App\Routes\API::manejarSolicitud()
+#6 {main}
+  thrown in C:\www\Apache24\htdocs\proyecto\helpers\ORM\QueryBuilder.php on line 435

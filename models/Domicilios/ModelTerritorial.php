@@ -8,13 +8,15 @@ abstract class ModelTerritorial extends Model implements JsonSerializable
     protected static $table = '';
     protected static $primaryKey = '';
     protected static $fillable = [];
+    protected static $cascadeJoins = [];
+    
     public function jsonSerialize() : array{
         return $this->attributes;
     }
 
     // ==================== LOGICA DE BASE DE DATOS ====================
     public static function getAll(){
-        return self::query()->get();
+        return self::query()->joinNested(static::$cascadeJoins)->get();
     }
     
     public static function getById($id){
