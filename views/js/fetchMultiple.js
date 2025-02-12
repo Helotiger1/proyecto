@@ -1,7 +1,6 @@
 async function fetchMultiple(item, method, currentSection, body) {
 let bodyData
 let endpoint;
-console.log(item)
     if (method == "PUT") {
       if (currentSection == "ciudades") {
         endpoint = `ciudades/${item.codCiudad}`;

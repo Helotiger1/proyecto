@@ -21,6 +21,7 @@ abstract class ControllerFederal{
     }
 
     public function update($params){
+        echo var_dump($params);
         $id = intval($params["id"]);
         $body = $params["body"];
        $entidad = static::$nombreEntidad::update($id, $body);

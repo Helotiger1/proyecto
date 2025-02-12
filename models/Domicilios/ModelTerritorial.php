@@ -47,7 +47,6 @@ abstract class ModelTerritorial implements JsonSerializable
     }
 
     public static function update($id, $data){
-        var_dump($id);
         return static::query()->where(static::$primaryKey, $id)->update($data);
     }
 
