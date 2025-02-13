@@ -7,18 +7,22 @@ function showLoading(show) {
 }
 
 export async function loadData(section) {
+
     try {
         showLoading(true);
         const response = await fetchRequest(section);
         renderTable(response.data, section);
-    } catch (error) {
+    } 
+    catch (error) {
         console.error("Error:", error);
         document.getElementById("mainContent").innerHTML = `
             <div class="alert alert-danger">Error cargando los datos</div>
         `;
-    } finally {
+    } 
+    finally {
         showLoading(false);
     }
+    
 }
 
 function renderTable(data, section) {
@@ -27,31 +31,21 @@ function renderTable(data, section) {
     const tbody = table.querySelector("tbody");
     const title = document.getElementById("tableTitle");
 
-    // Limpiar tabla
     thead.innerHTML = "";
     tbody.innerHTML = "";
+    title.innerHTML = ""; 
 
-    // Configurar título y botón de agregar
-    // Obtener el elemento del título
-    title.innerHTML = ""; // Limpiar contenido previo
-
-    // Crear el texto para el título
     const titleText = document.createTextNode(`Tabla de ${section}`);
-
-    // Crear el botón
     const button = document.createElement("button");
+
     button.className = "btn btn-sm btn-success ms-3";
     button.textContent = "Agregar";
     button.onclick = () => showAddForm(section);
 
-    // Agregar elementos al título
     title.appendChild(titleText);
     title.appendChild(button);
 
-    // Obtener campos permitidos para la sección
     const allowedFields = FIELDS_ALLOW[section] || [];
-
-    // Crear headers basados en campos permitidos
     const headerRow = document.createElement("tr");
 
     allowedFields.forEach((header) => {
@@ -60,13 +54,13 @@ function renderTable(data, section) {
         headerRow.appendChild(th);
     });
 
-    // Agregar columna de acciones
     const thActions = document.createElement("th");
     thActions.textContent = "Acciones";
     headerRow.appendChild(thActions);
+
     thead.appendChild(headerRow);
 
-    // Llenar datos usando campos permitidos
+
     data.forEach((item) => {
         const row = document.createElement("tr");
         allowedFields.forEach((header) => {
@@ -75,7 +69,6 @@ function renderTable(data, section) {
             row.appendChild(td);
         });
 
-        // Botones de acciones
         const tdActions = document.createElement("td");
         const mainId = FIELDS_CONVERSION[section];
         const itemId = item[mainId];
@@ -88,13 +81,11 @@ function renderTable(data, section) {
         const editBtn = document.createElement("button");
         editBtn.className = "btn btn-sm btn-warning";
         editBtn.innerHTML = "Editar";
-        console.log(section, item);
         editBtn.onclick = () => showEditForm(section, item);
 
         tdActions.appendChild(deleteBtn);
         tdActions.appendChild(editBtn);
         row.appendChild(tdActions);
-
         tbody.appendChild(row);
     });
 }

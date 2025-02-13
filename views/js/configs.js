@@ -44,3 +44,4 @@ export const FIELDS_CONVERSION = {
     "parroquias": 'codParroquia',
     "ciudades": 'codCiudad'
 };
+

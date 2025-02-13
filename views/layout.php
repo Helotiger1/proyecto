@@ -43,10 +43,8 @@
         </div>
 </body>
 <script type="module" src="./js/main.js"></script>
-<script src="./js/fetchMultiple.js"></script>
 <script type="module" src="./js/configs.js"></script>
 <script type="module" src="./js/fetch.js"></script>
 <script type="module" src="./js/renderTable.js"></script>
 <script type="module" src="./js/eventListeners.js"></script>
-
 </html>
