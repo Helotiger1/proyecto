@@ -1,8 +1,6 @@
 import { fetchRequest, deleteItem, saveItem } from "./fetch.js";
 import { showAddForm, showEditForm } from "./modalForms.js";
-import { FIELDS_ALLOW, FIELD_NAMES, FIELDS_CONVERSION } from './configs.js';
-
-
+import { FIELDS_ALLOW, FIELD_NAMES, FIELDS_CONVERSION } from "./configs.js";
 
 function showLoading(show) {
     document.getElementById("loading").classList.toggle("d-none", !show);
@@ -34,12 +32,21 @@ function renderTable(data, section) {
     tbody.innerHTML = "";
 
     // Configurar título y botón de agregar
-    title.innerHTML = `
-          Tabla de ${section}
-          <button class="btn btn-sm btn-success ms-3" onclick="showAddForm('${section}')">
-              Agregar
-          </button>
-      `;
+    // Obtener el elemento del título
+    title.innerHTML = ""; // Limpiar contenido previo
+
+    // Crear el texto para el título
+    const titleText = document.createTextNode(`Tabla de ${section}`);
+
+    // Crear el botón
+    const button = document.createElement("button");
+    button.className = "btn btn-sm btn-success ms-3";
+    button.textContent = "Agregar";
+    button.onclick = () => showAddForm(section);
+
+    // Agregar elementos al título
+    title.appendChild(titleText);
+    title.appendChild(button);
 
     // Obtener campos permitidos para la sección
     const allowedFields = FIELDS_ALLOW[section] || [];

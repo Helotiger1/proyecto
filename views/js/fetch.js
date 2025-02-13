@@ -1,3 +1,5 @@
+import { FIELDS_CONFIG, API_ENDPOINTS } from "./configs.js";
+
 export async function fetchRequest(endpoint, method = "GET", body = null) {
     const API_BASE_URL = "http://localhost/proyecto/";
     const url = API_BASE_URL + endpoint;
@@ -18,7 +20,7 @@ export async function fetchRequest(endpoint, method = "GET", body = null) {
     }
 }
 
-export async function saveItem(item = null) {
+export async function saveItem(item = null, currentSection, currentId = null) {
     const fields = FIELDS_CONFIG[currentSection];
     const body = {};
 
@@ -26,14 +28,14 @@ export async function saveItem(item = null) {
         body[field] = document.getElementById(field).value;
     });
 
-    console.log(body);
+    console.log(body, currentSection, currentId, item);
 
     const method = currentId ? "PUT" : "POST";
     const endpoint = currentId
         ? `${API_ENDPOINTS[currentSection]}/${currentId}`
         : API_ENDPOINTS[currentSection];
     try {
-        await fetchMultiple(item, method, currentSection, body);
+        await fetchRequest(endpoint, method, body);
         await loadData(currentSection);
         new bootstrap.Modal(document.getElementById("formModal")).hide();
     } catch (error) {

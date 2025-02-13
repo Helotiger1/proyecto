@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <script src="../js/bootstrap.min.js"></script>
 </head>
+
 <body>
     <div class="grid-container">
         <nav class="navbar">
@@ -26,12 +28,25 @@
         <footer class="footer">
             <?php require_once "components/footer.php" ?>
         </footer>
-    </div>
+        <div class="modal fade" id="formModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" id="modalBody">
+                        <!-- Formulario dinámico se insertará aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 <script type="module" src="./js/main.js"></script>
 <script src="./js/fetchMultiple.js"></script>
-<script type="module" src="./js/configs.js" ></script>
-<script type="module" src="./js/fetch.js" ></script>
-<script type="module" src="./js/renderTable.js" ></script>
+<script type="module" src="./js/configs.js"></script>
+<script type="module" src="./js/fetch.js"></script>
+<script type="module" src="./js/renderTable.js"></script>
 <script type="module" src="./js/eventListeners.js"></script>
+
 </html>
