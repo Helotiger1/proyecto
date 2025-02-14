@@ -12,35 +12,19 @@
 
 <body>
     <div class="grid-container">
+
         <nav class="navbar">
             <?php require_once "components/navbar.php" ?>
         </nav>
+
         <section class="main-content" id="mainContent">
-            <div class="table-container">
-                <h4 id="tableTitle"></h4>
-                <div id="loading" class="d-none">Cargando...</div>
-                <table class="table table-striped" id="dataTable">
-                    <thead></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
         </section>
+
+
         <footer class="footer">
             <?php require_once "components/footer.php" ?>
         </footer>
-        <div class="modal fade" id="formModal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalTitle"></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body" id="modalBody">
-                        <!-- Formulario dinámico se insertará aquí -->
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
 </body>
 <script type="module" src="./js/main.js"></script>
 <script type="module" src="./js/configs.js"></script>

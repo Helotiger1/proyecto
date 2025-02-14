@@ -1,6 +1,7 @@
 import { fetchRequest, deleteItem, saveItem } from "./fetch.js";
 import { showAddForm, showEditForm } from "./modalForms.js";
 import { FIELDS_ALLOW, FIELD_NAMES, FIELDS_CONVERSION } from "./configs.js";
+import { initTable } from "./init.js";
 
 function showLoading(show) {
     document.getElementById("loading").classList.toggle("d-none", !show);
@@ -27,17 +28,17 @@ export async function loadData(section) {
 
 function renderTable(data, section) {
     const table = document.getElementById("dataTable");
+    const title = document.getElementById("tableTitle");
     const thead = table.querySelector("thead");
     const tbody = table.querySelector("tbody");
-    const title = document.getElementById("tableTitle");
 
     thead.innerHTML = "";
     tbody.innerHTML = "";
     title.innerHTML = ""; 
 
     const titleText = document.createTextNode(`Tabla de ${section}`);
-    const button = document.createElement("button");
 
+    const button = document.createElement("button");
     button.className = "btn btn-sm btn-success ms-3";
     button.textContent = "Agregar";
     button.onclick = () => showAddForm(section);

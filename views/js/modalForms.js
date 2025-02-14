@@ -45,7 +45,6 @@ export function showAddForm(section) {
 
 
 export function showEditForm(section, item) {
-    console.log("showEditForm", section, item);
     let currentId = item[FIELDS_CONVERSION[section]];
     const fields = FIELDS_CONFIG[section];
 
