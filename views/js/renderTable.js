@@ -1,7 +1,6 @@
 import { fetchRequest, deleteItem, saveItem } from "./fetch.js";
 import { showAddForm, showEditForm } from "./modalForms.js";
 import { FIELDS_ALLOW, FIELD_NAMES, FIELDS_CONVERSION } from "./configs.js";
-import { initTable } from "./init.js";
 
 function showLoading(show) {
     document.getElementById("loading").classList.toggle("d-none", !show);

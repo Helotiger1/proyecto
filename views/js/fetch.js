@@ -20,15 +20,13 @@ export async function fetchRequest(endpoint, method = "GET", body = null) {
     }
 }
 
-export async function saveItem(item = null, currentSection, currentId = null) {
+export async function saveItem(currentSection, item = null, currentId = null) {
     const fields = FIELDS_CONFIG[currentSection];
     const body = {};
 
     fields.forEach((field) => {
         body[field] = document.getElementById(field).value;
     });
-
-    console.log(body, currentSection, currentId, item);
 
     const method = currentId ? "PUT" : "POST";
     const endpoint = currentId

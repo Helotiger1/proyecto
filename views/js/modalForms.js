@@ -36,7 +36,7 @@ export function showAddForm(section) {
     button.className = "btn btn-primary";
     button.textContent = "Guardar";
 
-    button.addEventListener("click", () => saveItem(item, section));
+    button.addEventListener("click", () => saveItem(section));
 
     modalBody.appendChild(button);
 
@@ -77,7 +77,7 @@ export function showEditForm(section, item) {
     saveButton.className = "btn btn-primary";
     saveButton.textContent = "Guardar";
     saveButton.onclick = function () {
-        saveItem(item, section, item[FIELDS_CONVERSION[section]]);
+        saveItem(section, item, item[FIELDS_CONVERSION[section]]);
     };
 
     const modalBody = document.getElementById("modalBody");

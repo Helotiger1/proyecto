@@ -10,6 +10,7 @@ abstract class ModelTerritorial implements JsonSerializable
     public $attributes = [];
 
     protected static $primaryKey = '';
+    protected static $fk = '';
     protected static $table = '';
 
     protected static $ORM = null;
@@ -22,7 +23,6 @@ abstract class ModelTerritorial implements JsonSerializable
 
         if (!static::$ORM) {
             static::$ORM = new QueryBuilder(
-                static::class,
                 static::$table
             );
         }
@@ -31,11 +31,16 @@ abstract class ModelTerritorial implements JsonSerializable
     }
 
     public static function getAll(){
-        return static::query()->joinNested(static::$cascadeJoins)->get();
+        $nose = static::query()->joinNested(static::$cascadeJoins)->get();
+        return self::hydrate($nose);
     }
     
     public static function getById($id){
         return static::query()->find(static::$primaryKey, $id);
+    }
+    
+    public static function getByParent($parentId){
+        return static::query()->where(self::$fk,$parentId)->get();
     }
 
     public static function verifyExistance($id){
@@ -53,11 +58,22 @@ abstract class ModelTerritorial implements JsonSerializable
     public static function deleteByID($id){
         return static::query()->where(static::$primaryKey, $id)->delete();
     }
-
-    public static function hydrate(array $data): self {
+   
+    public static function hydrate($data) {
+        // Si $data es un arreglo de arreglos (varios registros)
+        if (isset($data[0]) && is_array($data[0])) {
+            return array_map(function ($item) {
+                $model = new static();
+                $model->attributes = $item;
+                return $model;
+            }, $data);
+        }
+        
+        // Si $data es un arreglo simple (un único registro)
         $model = new static();
         $model->attributes = $data;
         return $model;
     }
+    
 }
 ?>

@@ -6,6 +6,7 @@ class Container
 {
     protected $bindings = [];
     protected $instances = [];
+    protected static $instance;
 
     /**
      * Registra un binding en el contenedor.
@@ -14,6 +15,16 @@ class Container
      * @param callable $concrete  Función que crea la instancia.
      * @param bool     $singleton Indica si se debe almacenar la instancia para uso único.
      */
+
+
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
     public function bind(string $abstract, callable $concrete, bool $singleton = false)
     {
         $this->bindings[$abstract] = [

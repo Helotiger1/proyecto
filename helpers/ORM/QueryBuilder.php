@@ -7,7 +7,6 @@ use App\Database\Connection;
 class QueryBuilder
 {
     protected static $pdo;
-    protected $modelClass;
     protected $table;
 
     protected $type = 'select';
@@ -27,17 +26,15 @@ class QueryBuilder
     protected $offset = null;
     protected $distinct = false;
 
-    public function __construct(string $modelClass, string $table)
+    public function __construct( string $table)
     {
         self::$pdo = Connection::connect();
-        $this->modelClass = $modelClass;
         $this->table = $table;
     }
 
     public function getAttributes(): array
     {
         return [
-            'modelClass' => $this->modelClass,
             'table' => $this->table,
             'type' => $this->type,
             'columns' => $this->columns,
@@ -64,9 +61,6 @@ class QueryBuilder
 
     public function where($column, $operator = null, $value = null, $boolean = 'AND'): self
     {
-        if (is_callable($column)) {
-            return $this->whereNested($column, $boolean);
-        }
 
         if (func_num_args() === 2) {
             $value = $operator;
@@ -84,43 +78,6 @@ class QueryBuilder
         return $this;
     }
 
-    public function orWhere($column, $operator = null, $value = null): self
-    {
-        return $this->where($column, $operator, $value, 'OR');
-    }
-
-    public function whereIn($column, array $values, $boolean = 'AND', $not = false): self
-    {
-        $this->wheres[] = [
-            'type' => 'in',
-            'column' => $column,
-            'values' => $values,
-            'boolean' => $boolean,
-            'not' => $not
-        ];
-
-        $this->addBinding($values, 'where');
-        return $this;
-    }
-
-    public function whereNested(\Closure $callback, $boolean = 'AND'): self
-    {
-        $nestedQuery = new self($this->modelClass, $this->table);
-        $callback($nestedQuery);
-
-        if (empty($nestedQuery->wheres)) {
-            return $this;
-        }
-
-        $this->wheres[] = [
-            'type' => 'nested',
-            'query' => $nestedQuery,
-            'boolean' => $boolean
-        ];
-
-        $this->addBinding($nestedQuery->bindings['where'], 'where');
-        return $this;
-    }
 
     public function join($table, $first, $operator = null, $second = null, $type = 'INNER'): self
     {
@@ -203,10 +160,9 @@ class QueryBuilder
     public function get(): array
     {
         $sql = $this->buildSelect();
+        var_dump($sql);
         $results = $this->run($sql);
-        return array_map(function ($item) {
-            return $this->modelClass::hydrate($item);
-        }, $results);
+        return $results;
     }
 
     public function first()
