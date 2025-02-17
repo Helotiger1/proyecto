@@ -1,6 +1,5 @@
 <?php 
 namespace App\Routes;
-require_once __DIR__ . '/../vendor/autoload.php';
 
 class API {
     private static $routes = [];
@@ -33,6 +32,7 @@ class API {
             $params = [];
             if ($route['method'] === $method && self::encontrarRuta($route['route'], $path, $params)) {
                 $params["body"] = $body;
+                $params = sanitizeData($params);
                 $data = call_user_func_array($route['callback'], [$params]);
                 return self::enviarRespuesta(200, $data);
             }
@@ -84,8 +84,24 @@ class API {
     public static function enviarRespuesta($statusCode, $data) {
         http_response_code($statusCode);
         header('Content-Type: application/json');
-        echo json_encode(["data" => $data]); // Wrap data in an object
+        echo json_encode(["data" => $data]); 
     }
 }
+
+function sanitizeData(array $data) {
+    foreach ($data as $key => $value) {
+
+        if (is_array($value)) {
+            $data[$key] = sanitizeData($value);
+        } 
+
+        else if (is_string($value) && filter_var($value, FILTER_VALIDATE_INT) !== false) {
+            $data[$key] = (int)$value;
+        }
+    }
+    return $data;
+}
+
+
 require_once "routes.php";
 ?>

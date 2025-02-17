@@ -71,12 +71,10 @@ class Container
             return $this->instances[$abstract];
         }
 
-        // Si se definió un binding, se utiliza para crear la instancia
         if (isset($this->bindings[$abstract])) {
             $binding = $this->bindings[$abstract];
             $object = call_user_func_array($binding['concrete'], $parameters);
             
-            // Si es singleton, se guarda la instancia
             if ($binding['singleton']) {
                 $this->instances[$abstract] = $object;
             }

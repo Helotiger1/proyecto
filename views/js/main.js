@@ -1,5 +1,4 @@
-import { initEventListeners } from "./eventListeners.js";
-import { initModal, initTable } from "./init.js";
+import { initModal, initTable, initEventListeners } from "./init.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     initTable();

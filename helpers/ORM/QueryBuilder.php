@@ -1,57 +1,49 @@
 <?php
-
 namespace App\ORM;
 
-use App\Database\Connection;
+use PDO;
+use PDOException;
+use InvalidArgumentException;
 
 class QueryBuilder
 {
-    protected static $pdo;
-    protected $table;
+    // ==================== PROPIEDADES ====================
+    protected PDO $pdo;
+    protected ?string $table = null;
 
-    protected $type = 'select';
-    protected $columns = ['*'];
-    protected $wheres = [];
-    protected $bindings = [
+    protected string $type = 'select';
+    protected array $columns = ['*'];
+    protected array $wheres = [];
+    protected array $bindings = [
         'where' => [],
         'having' => [],
         'insert' => [],
         'update' => [],
     ];
-    protected $joins = [];
-    protected $orderBy = [];
-    protected $groupBy = [];
-    protected $having = [];
-    protected $limit = null;
-    protected $offset = null;
-    protected $distinct = false;
+    protected array $joins = [];
+    protected array $orderBy = [];
+    protected array $groupBy = [];
+    protected array $having = [];
+    protected ?int $limit = null;
+    protected ?int $offset = null;
+    protected bool $distinct = false;
 
-    public function __construct( string $table)
+    // ==================== CONSTRUCTOR ====================
+    public function __construct(PDO $pdo)
     {
-        self::$pdo = Connection::connect();
+        $this->pdo = $pdo;
+    }
+
+    // ==================== MÉTODOS PÚBLICOS ====================
+    
+    // ------------ Configuración inicial ------------
+    public function table(string $table): self
+    {
         $this->table = $table;
+        return $this;
     }
 
-    public function getAttributes(): array
-    {
-        return [
-            'table' => $this->table,
-            'type' => $this->type,
-            'columns' => $this->columns,
-            'wheres' => $this->wheres,
-            'bindings' => $this->bindings,
-            'joins' => $this->joins,
-            'orderBy' => $this->orderBy,
-            'groupBy' => $this->groupBy,
-            'having' => $this->having,
-            'limit' => $this->limit,
-            'offset' => $this->offset,
-            'distinct' => $this->distinct,
-        ];
-    }
-
-    // ==================== MÉTODOS DE CONSTRUCCIÓN ====================
-
+    // ------------ Métodos de construcción ------------
     public function select($columns = ['*']): self
     {
         $this->type = 'select';
@@ -59,9 +51,13 @@ class QueryBuilder
         return $this;
     }
 
-    public function where($column, $operator = null, $value = null, $boolean = 'AND'): self
+    public function where($column, $operator = null, $value = null, string $boolean = 'AND'): self
     {
 
+        if (empty($column)) {
+            throw new InvalidArgumentException("Column name cannot be empty");
+        }
+        
         if (func_num_args() === 2) {
             $value = $operator;
             $operator = '=';
@@ -74,12 +70,12 @@ class QueryBuilder
             'value' => $value,
             'boolean' => $boolean
         ];
+        
         $this->addBinding($value, 'where');
         return $this;
     }
 
-
-    public function join($table, $first, $operator = null, $second = null, $type = 'INNER'): self
+    public function join(string $table, string $first, ?string $operator = null, ?string $second = null, string $type = 'INNER'): self
     {
         $this->joins[] = [
             'table' => $table,
@@ -96,21 +92,19 @@ class QueryBuilder
         if (empty($relations)) return $this;
 
         $previousTable = $this->table;
-
         foreach ($relations as $table => $column) {
             $this->join(
                 $table,
-                "{$previousTable}.{$column}",
+                "$previousTable.$column",
                 '=',
-                "{$table}.{$column}"
+                "$table.$column"
             );
             $previousTable = $table;
         }
-
         return $this;
     }
 
-    public function orderBy($column, $direction = 'ASC'): self
+    public function orderBy(string $column, string $direction = 'ASC'): self
     {
         $this->orderBy[] = [
             'column' => $column,
@@ -125,7 +119,7 @@ class QueryBuilder
         return $this;
     }
 
-    public function having($column, $operator, $value, $boolean = 'AND'): self
+    public function having(string $column, string $operator, $value, string $boolean = 'AND'): self
     {
         $this->having[] = [
             'column' => $column,
@@ -155,58 +149,53 @@ class QueryBuilder
         return $this;
     }
 
-    // ==================== MÉTODOS DE EJECUCIÓN ====================
-
+    // ------------ Métodos de ejecución ------------
     public function get(): array
     {
         $sql = $this->buildSelect();
-        var_dump($sql);
-        $results = $this->run($sql);
-        return $results;
+        return $this->run($sql);
     }
 
-    public function first()
+    public function first(): ?array
     {
         $this->limit(1);
         $results = $this->get();
         return $results[0] ?? null;
     }
 
-    public function find($nameId, $id)
+    public function find(string $column, $value): ?array
     {
-        return $this->where($nameId, $id)->first();
+        return $this->where($column, $value)->first();
     }
 
     public function insert(array $data): bool
     {
         $this->type = 'insert';
-        $sql = $this->buildInsert($data);
-        return $this->run($sql, false);
+        return $this->run($this->buildInsert($data), false);
     }
 
     public function update(array $data): bool
     {
         $this->type = 'update';
-        $sql = $this->buildUpdate($data);
-        return $this->run($sql, false);
+        return $this->run($this->buildUpdate($data), false);
     }
 
     public function delete(): bool
     {
         $this->type = 'delete';
-        $sql = $this->buildDelete();
-        return $this->run($sql, false);
+        return $this->run($this->buildDelete(), false);
     }
 
     public function count(): int
     {
         $this->columns = ['COUNT(*) as count'];
         $result = $this->first();
-        return $result->count ?? 0;
+        return (int) ($result['count'] ?? 0);
     }
 
-    // ==================== MÉTODOS INTERNOS ====================
-
+    // ==================== MÉTODOS PROTEGIDOS ====================
+    
+    // ------------ Construcción de queries ------------
     protected function buildSelect(): string
     {
         $components = [
@@ -230,172 +219,138 @@ class QueryBuilder
         $columns = implode(', ', array_keys($data));
         $placeholders = implode(', ', array_fill(0, count($data), '?'));
         $this->addBinding(array_values($data), 'insert');
-        return "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
+        return "INSERT INTO $this->table ($columns) VALUES ($placeholders)";
     }
 
     protected function buildUpdate(array $data): string
     {
         $setClause = implode(', ', array_map(
-            fn($col) => "{$col} = ?",
+            fn($col) => "$col = ?",
             array_keys($data)
         ));
+        
         $this->addBinding(array_values($data), 'update');
         $whereClause = $this->buildWheres();
-        $sql = "UPDATE {$this->table} SET {$setClause}";
-        if ($whereClause) {
-            $sql .= " {$whereClause}";
-        }
-        return $sql;
+        
+        return "UPDATE $this->table SET $setClause" . ($whereClause ? " $whereClause" : '');
     }
 
     protected function buildDelete(): string
     {
-        $whereClause = $this->buildWheres();
-        return "DELETE FROM {$this->table} " . $whereClause;
+        return "DELETE FROM $this->table" . $this->buildWheres();
     }
 
+    // ------------ Componentes de queries ------------
     protected function buildColumns(): string
     {
-        if ($this->columns === ['*']) return '*';
         return implode(', ', $this->columns);
     }
 
     protected function buildWheres(): string
     {
         if (empty($this->wheres)) return '';
-
+        
         $clauses = [];
         foreach ($this->wheres as $index => $where) {
             $clause = $index === 0 ? 'WHERE ' : "{$where['boolean']} ";
-
-            switch ($where['type']) {
-                case 'basic':
-                    $clause .= "{$where['column']} {$where['operator']} ?";
-                    break;
-                case 'in':
-                    $placeholders = implode(', ', array_fill(0, count($where['values']), '?'));
-                    $clause .= "{$where['column']} " . ($where['not'] ? 'NOT IN' : 'IN') . " ({$placeholders})";
-                    break;
-                case 'nested':
-                    $nestedClause = $where['query']->buildWheres();
-                    $nestedClause = preg_replace('/^WHERE /', '', $nestedClause);
-                    $clause .= "({$nestedClause})";
-                    break;
-            }
-
+            $clause .= "{$where['column']} {$where['operator']} ?";
             $clauses[] = $clause;
         }
-
+        
         return implode(' ', $clauses);
     }
 
     protected function buildJoins(): string
     {
         if (empty($this->joins)) return '';
-
-        $clauses = [];
-        foreach ($this->joins as $join) {
-            $clause = "{$join['type']} JOIN {$join['table']} ON {$join['first']} {$join['operator']} {$join['second']}";
-            $clauses[] = $clause;
-        }
-
-        return implode(' ', $clauses);
+        
+        return implode(' ', array_map(
+            fn($join) => "{$join['type']} JOIN {$join['table']} ON {$join['first']} {$join['operator']} {$join['second']}",
+            $this->joins
+        ));
     }
 
     protected function buildGroupBy(): string
     {
-        if (empty($this->groupBy)) return '';
-        return 'GROUP BY ' . implode(', ', $this->groupBy);
+        return empty($this->groupBy) ? '' : 'GROUP BY ' . implode(', ', $this->groupBy);
     }
 
     protected function buildHaving(): string
     {
         if (empty($this->having)) return '';
-
+        
         $clauses = [];
         foreach ($this->having as $index => $having) {
             $clause = $index === 0 ? 'HAVING ' : "{$having['boolean']} ";
             $clause .= "{$having['column']} {$having['operator']} ?";
             $clauses[] = $clause;
         }
-
+        
         return implode(' ', $clauses);
     }
 
     protected function buildOrderBy(): string
     {
-        if (empty($this->orderBy)) return '';
-
-        $clauses = [];
-        foreach ($this->orderBy as $order) {
-            $clauses[] = "{$order['column']} {$order['direction']}";
-        }
-
-        return 'ORDER BY ' . implode(', ', $clauses);
+        return empty($this->orderBy) ? '' : 'ORDER BY ' . implode(', ', array_map(
+            fn($order) => "{$order['column']} {$order['direction']}",
+            $this->orderBy
+        ));
     }
 
     protected function buildLimit(): string
     {
-        return $this->limit !== null ? "LIMIT {$this->limit}" : '';
+        return $this->limit ? "LIMIT $this->limit" : '';
     }
 
     protected function buildOffset(): string
     {
-        return $this->offset !== null ? "OFFSET {$this->offset}" : '';
+        return $this->offset ? "OFFSET $this->offset" : '';
     }
 
+    // ------------ Gestión de bindings ------------
     protected function addBinding($value, string $type = 'where'): void
     {
-        if (!isset($this->bindings[$type])) {
-            throw new \InvalidArgumentException("Invalid binding type: {$type}");
+        if (!array_key_exists($type, $this->bindings)) {
+            throw new InvalidArgumentException("Invalid binding type: $type");
         }
 
-        if (is_array($value)) {
-            $this->bindings[$type] = array_merge($this->bindings[$type], $value);
-        } else {
-            $this->bindings[$type][] = $value;
-        }
+        $this->bindings[$type] = array_merge(
+            $this->bindings[$type],
+            is_array($value) ? $value : [$value]
+        );
     }
 
+    // ------------ Ejecución y reset ------------
     protected function run(string $sql, bool $fetch = true)
     {
         try {
-            $stmt = self::$pdo->prepare($sql);
-
-            $bindings = [];
-            switch ($this->type) {
-                case 'insert':
-                    $bindings = $this->bindings['insert'];
-                    break;
-                case 'update':
-                    $bindings = array_merge(
-                        $this->bindings['update'],
-                        $this->bindings['where']
-                    );
-                    break;
-                case 'delete':
-                    $bindings = $this->bindings['where'];
-                    break;
-                default: // select
-                    $bindings = array_merge(
-                        $this->bindings['where'],
-                        $this->bindings['having']
-                    );
-                    break;
-            }
-
+            $stmt = $this->pdo->prepare($sql);
+            $bindings = $this->prepareBindings();
+            
             $stmt->execute($bindings);
+            $result = $fetch ? $stmt->fetchAll(PDO::FETCH_ASSOC) : true;
+            
             $this->reset();
-            return $fetch ? $stmt->fetchAll(\PDO::FETCH_ASSOC) : true;
-        } catch (\PDOException $e) {
-            throw new \Exception("Query error: " . $e->getMessage());
+            return $result;
+        } catch (PDOException $e) {
+            throw new PDOException("Query error: " . $e->getMessage());
         }
+    }
+
+    protected function prepareBindings(): array
+    {
+        return match ($this->type) {
+            'insert' => $this->bindings['insert'],
+            'update' => array_merge($this->bindings['update'], $this->bindings['where']),
+            'delete' => $this->bindings['where'],
+            default => array_merge($this->bindings['where'], $this->bindings['having']),
+        };
     }
 
     protected function reset(): void
     {
         $this->type = 'select';
-        $this->columns = '*';
+        $this->columns = ['*'];
         $this->wheres = [];
         $this->bindings = [
             'where' => [],
@@ -412,3 +367,4 @@ class QueryBuilder
         $this->distinct = false;
     }
 }
+?>

@@ -1,6 +1,6 @@
-import { fetchRequest, deleteItem, saveItem } from "./fetch.js";
+import { fetchRequest, deleteItem } from "../fetch.js";
 import { showAddForm, showEditForm } from "./modalForms.js";
-import { FIELDS_ALLOW, FIELD_NAMES, FIELDS_CONVERSION } from "./configs.js";
+import { FIELDS_ALLOW, FIELD_NAMES, FIELDS_CONVERSION } from "../../configs.js";
 
 function showLoading(show) {
     document.getElementById("loading").classList.toggle("d-none", !show);
@@ -14,10 +14,9 @@ export async function loadData(section) {
         renderTable(response.data, section);
     } 
     catch (error) {
+        let errorHtml = `<div class="alert alert-danger">Error cargando los datos</div>`
         console.error("Error:", error);
-        document.getElementById("mainContent").innerHTML = `
-            <div class="alert alert-danger">Error cargando los datos</div>
-        `;
+        document.getElementById("mainContent").innerHTML = errorHtml;
     } 
     finally {
         showLoading(false);

@@ -1,5 +1,7 @@
 <?php
 namespace App\Models\Domicilios;
+
+use App\Helpers\Container;
 use App\ORM\QueryBuilder;
 use JsonSerializable;
 
@@ -15,19 +17,25 @@ abstract class ModelTerritorial implements JsonSerializable
 
     protected static $ORM = null;
     
+    public static $instance;
+
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+    
     public function jsonSerialize() : array{
         return $this->attributes;
     }
-
+    
     public static function query(): QueryBuilder {
-
         if (!static::$ORM) {
-            static::$ORM = new QueryBuilder(
-                static::$table
-            );
+            static::$ORM = Container::getInstance()->make('QueryBuilder');
         }
-
-        return static::$ORM;
+        return static::$ORM->table(static::$table);
     }
 
     public static function getAll(){
@@ -36,11 +44,13 @@ abstract class ModelTerritorial implements JsonSerializable
     }
     
     public static function getById($id){
-        return static::query()->find(static::$primaryKey, $id);
+        $data = static::query()->find(static::$primaryKey, $id);
+        return self::hydrate($data);
     }
     
     public static function getByParent($parentId){
-        return static::query()->where(self::$fk,$parentId)->get();
+        $data = static::query()->where(static::$fk, $parentId)->get();
+        return self::hydrate($data);
     }
 
     public static function verifyExistance($id){
@@ -60,7 +70,6 @@ abstract class ModelTerritorial implements JsonSerializable
     }
    
     public static function hydrate($data) {
-        // Si $data es un arreglo de arreglos (varios registros)
         if (isset($data[0]) && is_array($data[0])) {
             return array_map(function ($item) {
                 $model = new static();
@@ -69,7 +78,6 @@ abstract class ModelTerritorial implements JsonSerializable
             }, $data);
         }
         
-        // Si $data es un arreglo simple (un único registro)
         $model = new static();
         $model->attributes = $data;
         return $model;

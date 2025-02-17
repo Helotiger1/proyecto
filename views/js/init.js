@@ -1,4 +1,4 @@
-import { loadData } from "./renderTable.js";
+import { loadData } from "./features/domicilios/renderTable.js";
 
 export function initEventListeners() {
     document.querySelectorAll(".nav-link").forEach((link) => {

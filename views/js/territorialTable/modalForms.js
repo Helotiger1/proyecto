@@ -1,5 +1,5 @@
-import { FIELDS_CONVERSION, FIELDS_CONFIG, FIELD_NAMES } from "./configs.js";
-import { saveItem } from "./fetch.js";
+import { FIELDS_CONVERSION, FIELDS_CONFIG, FIELD_NAMES } from "../features/Domicilios/configs.js";
+import { saveItem } from "../fetch.js";
 
 
 export function showAddForm(section) {
@@ -11,7 +11,7 @@ export function showAddForm(section) {
 
     
     const fragment = document.createDocumentFragment();
-
+    
     fields.forEach((field) => {
         const div = document.createElement("div");
         div.className = "mb-3";
