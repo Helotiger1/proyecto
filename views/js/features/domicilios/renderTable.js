@@ -1,6 +1,6 @@
-import { fetchRequest, deleteItem } from "../fetch.js";
+import { fetchRequest} from "../../api.js";
 import { showAddForm, showEditForm } from "./modalForms.js";
-import { FIELDS_ALLOW, FIELD_NAMES, FIELDS_CONVERSION } from "../../configs.js";
+import { FIELDS_ALLOW, FIELD_NAMES, FIELDS_CONVERSION } from "./configs.js";
 
 function showLoading(show) {
     document.getElementById("loading").classList.toggle("d-none", !show);
@@ -70,12 +70,12 @@ function renderTable(data, section) {
 
         const tdActions = document.createElement("td");
         const mainId = FIELDS_CONVERSION[section];
-        const itemId = item[mainId];
+        const id = item[mainId];
 
         const deleteBtn = document.createElement("button");
         deleteBtn.className = "btn btn-sm btn-danger me-2";
         deleteBtn.innerHTML = "Eliminar";
-        deleteBtn.onclick = () => deleteItem(section, itemId);
+        deleteBtn.onclick = () => deleteItem(section, id);
 
         const editBtn = document.createElement("button");
         editBtn.className = "btn btn-sm btn-warning";

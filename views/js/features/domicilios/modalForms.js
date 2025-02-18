@@ -1,4 +1,4 @@
-import { FIELDS_CONVERSION, FIELDS_CONFIG, FIELD_NAMES } from "../../configs.js";
+import { FIELDS_CONVERSION, FIELDS_CONFIG, FIELD_NAMES } from "./configs.js";
 
 
 export function showAddForm(section) {

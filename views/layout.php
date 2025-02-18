@@ -27,8 +27,9 @@
     </div>
 </body>
 <script type="module" src="./js/main.js"></script>
-<script type="module" src="./js/configs.js"></script>
-<script type="module" src="./js/fetch.js"></script>
-<script type="module" src="./js/renderTable.js"></script>
-<script type="module" src="./js/eventListeners.js"></script>
+<script type="module" src="./js/init.js"></script>
+<script type="module" src="./js/api.js"></script>
+<script type="module" src="./js/features/domicilios/modalForms.js"></script>
+<script type="module" src="./js/features/domicilios/renderTable.js"></script>
+<script type="module" src="./js/features/domicilios/configs.js"></script>
 </html>
