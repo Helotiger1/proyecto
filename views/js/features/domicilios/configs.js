@@ -7,6 +7,22 @@ export const API_ENDPOINTS = {
     ciudades: 'ciudades'
 };
 
+export const FIELDS_TO_SELECT = {
+    paises: null,
+    estados: ['paises'],
+    municipios: ['paises','estados'],
+    parroquias: [ 'paises', 'estados','municipios'],
+    ciudades: ['paises', 'estados','municipios', 'parroquias']
+};
+
+export const FIELDS_TO_FILL = {
+    paises: ['nombrePais', 'estatus'],
+    estados: ['nombreEstado'],
+    municipios: ['nombreMunicipio'],
+    parroquias: ['nombreParroquia'],
+    ciudades: ['nombreCiudad']
+};
+
 export const FIELDS_ALLOW = {
     paises: ['codPais', 'nombrePais', 'estatus'],
     estados: ['codEstado', 'nombreEstado', 'nombrePais'],
@@ -14,6 +30,7 @@ export const FIELDS_ALLOW = {
     parroquias: ['codParroquia', 'nombreParroquia', 'nombreMunicipio', 'nombreEstado', 'nombrePais'],
     ciudades: ['codCiudad', 'nombreCiudad', 'nombreParroquia', 'nombreMunicipio', 'nombreEstado', 'nombrePais']
 };
+
 
 export const FIELD_NAMES = {
     codPais: 'Código País',

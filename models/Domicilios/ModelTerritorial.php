@@ -14,6 +14,7 @@ abstract class ModelTerritorial implements JsonSerializable
     protected static $primaryKey = '';
     protected static $fk = '';
     protected static $table = '';
+    protected static $nameEntity = '';
 
     protected static $ORM = null;
     
@@ -49,7 +50,8 @@ abstract class ModelTerritorial implements JsonSerializable
     }
     
     public static function getByParent($parentId){
-        $data = static::query()->where(static::$fk, $parentId)->get();
+
+        $data = static::query()->select([static::$nameEntity,static::$fk])->where(static::$fk, $parentId)->get();
         return self::hydrate($data);
     }
 
@@ -66,7 +68,7 @@ abstract class ModelTerritorial implements JsonSerializable
     }
 
     public static function deleteByID($id){
-        return static::query()->where(static::$primaryKey, $id)->delete();
+        return static::query()->where(static::$primaryKey, intval($id))->delete();
     }
    
     public static function hydrate($data) {

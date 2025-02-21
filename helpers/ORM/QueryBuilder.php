@@ -252,7 +252,7 @@ class QueryBuilder
         
         $clauses = [];
         foreach ($this->wheres as $index => $where) {
-            $clause = $index === 0 ? 'WHERE ' : "{$where['boolean']} ";
+            $clause = $index === 0 ? ' WHERE ' : "{$where['boolean']} ";
             $clause .= "{$where['column']} {$where['operator']} ?";
             $clauses[] = $clause;
         }

@@ -1,6 +1,6 @@
 import { fetchRequest} from "../../api.js";
-import { showAddForm, showEditForm } from "./modalForms.js";
-import { FIELDS_ALLOW, FIELD_NAMES, FIELDS_CONVERSION } from "./configs.js";
+import { showAddForm, showEditForm, deleteItem } from "./modalForms.js";
+import { FIELDS_ALLOW, FIELDS_CONVERSION } from "./configs.js";
 
 function showLoading(show) {
     document.getElementById("loading").classList.toggle("d-none", !show);
@@ -49,7 +49,7 @@ function renderTable(data, section) {
 
     allowedFields.forEach((header) => {
         const th = document.createElement("th");
-        th.textContent = FIELD_NAMES[header] || header;
+        th.textContent = header;
         headerRow.appendChild(th);
     });
 

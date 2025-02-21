@@ -7,5 +7,6 @@ class MunicipioModel extends ModelTerritorial {
     protected static $fk = 'codEstado';
     protected static $fillable = ['nombreMunicipio', 'codEstado'];
     protected static $cascadeJoins = ['estados' => 'codEstado', 'paises' => 'codPais'];
+    protected static $nameEntity = 'nombreMunicipio';
 }
 ?>
