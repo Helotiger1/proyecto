@@ -5,25 +5,35 @@
         "footer footer";
     grid-template-columns: 250px 1fr;
     min-height: 100vh;
+
 }
-.navbar {
+
+
+#mainNavAccordion{
     grid-area: navbar;
-    position:  sticky;
+    position: fixed;
+    overflow: visible;
     background-color: #f8f9fa;
     padding: 20px;
     border-right: 1px solid #dee2e6;
+    height: fit-content;
 }
+
+
 .main-content {
     grid-area: main;
     padding: 20px;
     background-color: white;
 }
+
 .footer {
     grid-area: footer;
     background-color: #f8f9fa;
     padding: 15px;
     border-top: 1px solid #dee2e6;
+    align-self: flex-end;
 }
+
 .accordion-button:not(.collapsed) {
     background-color: #e9ecef;
 }

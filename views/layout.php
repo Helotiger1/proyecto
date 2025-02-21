@@ -12,19 +12,17 @@
 
 <body>
     <div class="grid-container">
-
-        <nav class="navbar">
-            <?php require_once "components/navbar.php" ?>
-        </nav>
+        
+        <?php require_once "components/navbar.php" ?>
 
         <section class="main-content" id="mainContent">
         </section>
 
 
-        <footer class="footer">
+    </div>
+    <footer class="footer">
             <?php require_once "components/footer.php" ?>
         </footer>
-    </div>
 </body>
 <script type="module" src="./js/main.js"></script>
 <script type="module" src="./js/init.js"></script>
