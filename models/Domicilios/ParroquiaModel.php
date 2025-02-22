@@ -4,9 +4,9 @@ namespace App\Models\Domicilios;
 class ParroquiaModel extends ModelTerritorial {
     protected static $table = 'parroquias';
     protected static $primaryKey = 'codParroquia';
-    protected static $fk = 'codMunicipio';
+    protected static $fk = 'municipios_codMunicipio';
     protected static $nameEntity = 'nombreParroquia';
     protected static $fillable = ['nombreParroquia', 'codMunicipio'];
-    protected static $cascadeJoins = ['municipios' => 'codMunicipio', 'estados' => 'codEstado', 'paises' => 'codPais'];
+    protected static $cascadeJoins = ['municipios' => 'municipios_codMunicipio', 'estados' => 'estados_codEstado', 'paises' => 'paises_codPais'];
 }
 ?>

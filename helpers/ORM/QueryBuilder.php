@@ -87,22 +87,26 @@ class QueryBuilder
         return $this;
     }
 
-    public function joinNested(array $relations): self
-    {
-        if (empty($relations)) return $this;
 
-        $previousTable = $this->table;
-        foreach ($relations as $table => $column) {
-            $this->join(
-                $table,
-                "$previousTable.$column",
-                '=',
-                "$table.$column"
-            );
-            $previousTable = $table;
-        }
-        return $this;
+    public function joinNested(array $relations): self
+{
+    if (empty($relations)) return $this;
+
+    $previousTable = $this->table;
+    foreach ($relations as $table => $column) {
+        // Extraer la clave foránea limpia
+        $cleanColumn = preg_replace('/^' . preg_quote($table . '_', '/') . '/', '', $column);
+
+        $this->join(
+            $table,
+            "$previousTable.$column",
+            '=',
+            "$table.$cleanColumn"
+        );
+        $previousTable = $table;
     }
+    return $this;
+}
 
     public function orderBy(string $column, string $direction = 'ASC'): self
     {

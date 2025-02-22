@@ -5,7 +5,7 @@ function getConfigs(){
         "host"     => "localhost",
         "user"     => "root",
         "pass"     => "",
-        "database" => "inscripciones",
+        "database" => "mydb",
         "charset"  => "utf8mb4"
     ];
     

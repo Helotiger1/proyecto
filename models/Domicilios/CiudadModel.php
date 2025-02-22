@@ -5,8 +5,8 @@ class CiudadModel extends ModelTerritorial {
     protected static $table = 'ciudades';
     protected static $primaryKey = 'codCiudad';
     protected static $nameEntity = 'nombreCiudad';
-    protected static $fk = 'codCiudad';
+    protected static $fk = 'parroquias_codCiudad';
     protected static $fillable = ['nombreCiudad', 'codParroquia'];
-    protected static $cascadeJoins = ['parroquias' => 'codParroquia', 'municipios' => 'codMunicipio', 'estados' => 'codEstado', 'paises' => 'codPais'];
+    protected static $cascadeJoins = ['parroquias' => 'parroquias_codParroquia', 'municipios' => 'municipios_codMunicipio', 'estados' => 'estados_codEstado', 'paises' => 'paises_codPais'];
 }
 ?>
