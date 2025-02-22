@@ -1,19 +1,18 @@
 <?php
-namespace App\Models\Domicilios;
 
+namespace App\Models;
 use App\Helpers\Container;
 use App\ORM\QueryBuilder;
 use JsonSerializable;
+require "../vendor/autoload.php";
 
-abstract class ModelTerritorial implements JsonSerializable
+class MaestroModel implements JsonSerializable
 {
-    protected static $cascadeJoins = [];
-    protected static $fillable = [];
-    public $attributes = [];
+    protected static $attributes = [];
 
-    protected static $primaryKey = '';
+    protected static $primaryKey = 'idMaestro';
     protected static $fk = '';
-    protected static $table = '';
+    protected static $table = 'maestros';
     protected static $nameEntity = '';
 
     protected static $ORM = null;
@@ -36,7 +35,7 @@ abstract class ModelTerritorial implements JsonSerializable
         if (!static::$ORM) {
             static::$ORM = Container::getInstance()->make('QueryBuilder');
         }
-        return static::$ORM->table(static::$table)->joinNested(static::$cascadeJoins);
+        return static::$ORM->table(static::$table);
     }
 
     public static function getAll(){
@@ -86,4 +85,6 @@ abstract class ModelTerritorial implements JsonSerializable
     }
     
 }
+
+
 ?>

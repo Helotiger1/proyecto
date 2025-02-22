@@ -5,6 +5,7 @@ use App\Controllers\Domicilios\EstadoController;
 use App\Controllers\Domicilios\MunicipioController;
 use App\Controllers\Domicilios\ParroquiaController;
 use App\Controllers\Domicilios\CiudadController;
+use App\Controllers\MaestroController;
 
 $rutas = [
 
@@ -135,6 +136,29 @@ $rutas = [
         'uri'    => '/ciudades/{id}',
         'action' => [CiudadController::class, 'destroy']
     ],
+
+    [
+        'method' => 'GET',
+        'uri'    => '/maestros',
+        'action' => [MaestroController::class, 'index']
+    ],
+    [
+        'method' => 'POST',
+        'uri'    => '/maestros',
+        'action' => [MaestroController::class, 'store']
+    ],
+    [
+        'method' => 'PUT',
+        'uri'    => '/maestros/{id}',
+        'action' => [MaestroController::class, 'update']
+    ],
+    [
+        'method' => 'DELETE',
+        'uri'    => '/maestros/{id}',
+        'action' => [MaestroController::class, 'destroy']
+    ],
+    
+
 ];
 
 foreach ($rutas as $ruta) {

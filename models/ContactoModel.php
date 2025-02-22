@@ -1,11 +1,11 @@
 <?php
-namespace App\Models\Domicilios;
 
 use App\Helpers\Container;
 use App\ORM\QueryBuilder;
 use JsonSerializable;
 
-abstract class ModelTerritorial implements JsonSerializable
+
+abstract class ContactoModel implements JsonSerializable
 {
     protected static $cascadeJoins = [];
     protected static $fillable = [];
@@ -36,11 +36,11 @@ abstract class ModelTerritorial implements JsonSerializable
         if (!static::$ORM) {
             static::$ORM = Container::getInstance()->make('QueryBuilder');
         }
-        return static::$ORM->table(static::$table)->joinNested(static::$cascadeJoins);
+        return static::$ORM->table(static::$table);
     }
 
     public static function getAll(){
-        $nose = static::query()->get();
+        $nose = static::query()->joinNested(static::$cascadeJoins)->get();
         return self::hydrate($nose);
     }
     
@@ -86,4 +86,5 @@ abstract class ModelTerritorial implements JsonSerializable
     }
     
 }
+
 ?>
