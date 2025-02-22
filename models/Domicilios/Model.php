@@ -5,7 +5,7 @@ use App\Helpers\Container;
 use App\ORM\QueryBuilder;
 use JsonSerializable;
 
-abstract class ModelTerritorial implements JsonSerializable
+abstract class Model implements JsonSerializable
 {
     protected static $cascadeJoins = [];
     protected static $fillable = [];

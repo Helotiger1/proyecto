@@ -1,7 +1,7 @@
 <?php
 namespace App\Models\Domicilios;
 
-class EstadoModel extends ModelTerritorial {
+class EstadoModel extends Model {
     protected static $table = 'estados';
     protected static $primaryKey = 'codEstado';
     protected static $fk = 'paises_codPais';

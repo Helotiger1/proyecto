@@ -5,7 +5,7 @@ use App\Controllers\Domicilios\EstadoController;
 use App\Controllers\Domicilios\MunicipioController;
 use App\Controllers\Domicilios\ParroquiaController;
 use App\Controllers\Domicilios\CiudadController;
-use App\Controllers\MaestroController;
+use App\Controllers\Domicilios\MaestroController;
 
 $rutas = [
 

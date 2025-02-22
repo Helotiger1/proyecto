@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models\Domicilios;
 
 class MunicipioModel extends Model {
@@ -9,4 +10,5 @@ class MunicipioModel extends Model {
     protected static $cascadeJoins = ['estados' => 'estados_codEstado', 'paises' => 'paises_codPais'];
     protected static $nameEntity = 'nombreMunicipio';
 }
+
 ?>

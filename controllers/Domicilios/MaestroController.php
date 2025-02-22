@@ -1,11 +1,12 @@
 <?php 
-namespace App\Controllers;
-use App\Models\MaestroModel;
+namespace App\Controllers\Domicilios;
+use App\Models\Domicilios\MaestroModel;
 
 
 class MaestroController{
-    protected static $nombreEntidad = 'MaestroModel';
-    public static  $instance;
+    protected static $nombreEntidad = MaestroModel::class;
+    public static $instance;
+    
 
     public static  function getInstance()
     {
@@ -20,11 +21,6 @@ class MaestroController{
         $entidades = static::$nombreEntidad::getAll();
 
         return $entidades;
-    }
-
-    public static function showByIdParent($params){
-        $id = $params["id"];
-        return static::$nombreEntidad::getByParent($id);
     }
 
     public static function store($params){

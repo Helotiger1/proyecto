@@ -1,7 +1,7 @@
 <?php
 namespace App\Models\Domicilios;
 
-class ParroquiaModel extends ModelTerritorial {
+class ParroquiaModel extends Model {
     protected static $table = 'parroquias';
     protected static $primaryKey = 'codParroquia';
     protected static $fk = 'municipios_codMunicipio';
