@@ -1,8 +1,8 @@
 <?php
-namespace App\Controllers\Domicilios;
+namespace App\Controllers\Inscripciones;
 
-class ControllerRepresentante{
-    protected static $nombreEntidad = 'MaestrosModel';
+abstract class Controller{
+    protected static $nombreEntidad = '';
     public static  $instance;
 
     public static  function getInstance()

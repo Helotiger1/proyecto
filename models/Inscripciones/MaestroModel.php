@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Domicilios;
+namespace App\Models\Inscripciones;
 
 class MaestroModel extends Model {
     protected static $primaryKey = 'idMaestro';

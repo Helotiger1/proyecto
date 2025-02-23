@@ -5,7 +5,12 @@ use App\Controllers\Domicilios\EstadoController;
 use App\Controllers\Domicilios\MunicipioController;
 use App\Controllers\Domicilios\ParroquiaController;
 use App\Controllers\Domicilios\CiudadController;
-use App\Controllers\Domicilios\MaestroController;
+use App\Controllers\Inscripciones\MaestroController;
+use App\Controllers\Inscripciones\PersonaController;
+use App\Controllers\Inscripciones\ContactoController;
+use App\Controllers\Inscripciones\EstudiantesController;
+use App\Controllers\Inscripciones\RepresentanteController;
+use App\Controllers\Inscripciones\InscripcionController;
 
 $rutas = [
 
@@ -158,6 +163,114 @@ $rutas = [
         'action' => [MaestroController::class, 'destroy']
     ],
     
+    [
+        'method' => 'GET',
+        'uri'    => '/personas',
+        'action' => [PersonaController::class, 'index']
+    ],
+    [
+        'method' => 'POST',
+        'uri'    => '/personas',
+        'action' => [PersonaController::class, 'store']
+    ],
+    [
+        'method' => 'PUT',
+        'uri'    => '/personas/{id}',
+        'action' => [PersonaController::class, 'update']
+    ],
+    [
+        'method' => 'DELETE',
+        'uri'    => '/personas/{id}',
+        'action' => [PersonaController::class, 'destroy']
+    ],
+
+    [
+        'method' => 'GET',
+        'uri'    => '/contactos',
+        'action' => [ContactoController::class, 'index']
+    ],
+    [
+        'method' => 'POST',
+        'uri'    => '/contactos',
+        'action' => [ContactoController::class, 'store']
+    ],
+    [
+        'method' => 'PUT',
+        'uri'    => '/contactos/{id}',
+        'action' => [ContactoController::class, 'update']
+    ],
+    [
+        'method' => 'DELETE',
+        'uri'    => '/contactos/{id}',
+        'action' => [ContactoController::class, 'destroy']
+    ],
+    
+    [
+        'method' => 'GET',
+        'uri'    => '/estudiantes',
+        'action' => [EstudiantesController::class, 'index']
+    ],
+    [
+        'method' => 'POST',
+        'uri'    => '/estudiantes',
+        'action' => [EstudiantesController::class, 'store']
+    ],
+    [
+        'method' => 'PUT',
+        'uri'    => '/estudiantes/{id}',
+        'action' => [EstudiantesController::class, 'update']
+    ],
+    [
+        'method' => 'DELETE',
+        'uri'    => '/estudiantes/{id}',
+        'action' => [EstudiantesController::class, 'destroy']
+    ],
+
+
+    [
+        'method' => 'GET',
+        'uri'    => '/representantes',
+        'action' => [RepresentanteController::class, 'index']
+    ],
+    [
+        'method' => 'POST',
+        'uri'    => '/representantes',
+        'action' => [RepresentanteController::class, 'store']
+    ],
+    [
+        'method' => 'PUT',
+        'uri'    => '/representantes/{id}',
+        'action' => [RepresentanteController::class, 'update']
+    ],
+    [
+        'method' => 'DELETE',
+        'uri'    => '/representantes/{id}',
+        'action' => [RepresentanteController::class, 'destroy']
+    ],
+
+    [
+        'method' => 'GET',
+        'uri'    => '/inscripciones',
+        'action' => [InscripcionController::class, 'index']
+    ],
+    [
+        'method' => 'POST',
+        'uri'    => '/inscripciones',
+        'action' => [InscripcionController::class, 'store']
+    ],
+    [
+        'method' => 'PUT',
+        'uri'    => '/inscripciones/{id}',
+        'action' => [InscripcionController::class, 'update']
+    ],
+    [
+        'method' => 'DELETE',
+        'uri'    => '/inscripciones/{id}',
+        'action' => [InscripcionController::class, 'destroy']
+    ],
+
+
+
 
 ];
 
