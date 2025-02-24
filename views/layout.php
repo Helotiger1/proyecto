@@ -26,11 +26,8 @@
     </footer>
     </div> 
 <script type="module" src="./js/main.js" defer></script>
-<script type="module" src="./js/init.js" defer></script>
-<script type="module" src="./js/api.js" defer></script>
-<script type="module" src="./js/features/modalForms.js" defer></script>
-<script type="module" src="./js/features/renderTable.js" defer></script>
-<script type="module" src="./js/features/configs.js" defer></script>
+<script type="module" src="./js/table.js" defer></script>
+
 </body>
 </html>
 
