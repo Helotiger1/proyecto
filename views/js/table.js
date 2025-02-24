@@ -18,6 +18,15 @@ export class TableView {
   
     // Método para renderizar la tabla
     render() {
+      if (this.options.addButton) {
+        const addButton = document.createElement('button');
+        addButton.textContent = 'Agregar';
+        addButton.className = 'btn-add';
+        addButton.setAttribute('data-action', 'add');
+        // Puedes agregar un evento aquí o delegarlo fuera
+        this.container.appendChild(addButton);
+      }
+
       // Limpiar contenedor
       this.container.innerHTML = '';
   
@@ -59,7 +68,7 @@ export class TableView {
           this.options.actions.forEach(action => {
             const btn = document.createElement('button');
             btn.textContent = action.charAt(0).toUpperCase() + action.slice(1);
-            btn.className = `btn btn-${action === 'Eliminar' ? 'danger' : 'primary'} me-2`;
+            btn.className = `${action === 'Eliminar' ? 'btn btn-sm btn-danger me-2' : 'btn btn-sm btn-warning'} m-1 `;
             // Agregar data attributes para identificar el registro y la acción
             btn.setAttribute('data-id', item.id);
             btn.setAttribute('data-action', action);

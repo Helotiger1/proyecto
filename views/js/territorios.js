@@ -30,10 +30,10 @@ const TERRITORIAL_TABLE = {
 export async function crearTablaTerritorial(section) {
     try {
         let fields = TERRITORIAL_TABLE[section];
-        console.log(fields);
         let response = await fetchRequest(section);
         let options = {
             actions: ["Modificar", "Eliminar"],
+            addButton : true
         };
 
         let tableGenerator = new TableView(fields, response.data, options);
