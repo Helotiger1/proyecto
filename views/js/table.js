@@ -23,7 +23,7 @@ export class TableView {
   
       // Crear tabla y su cuerpo
       const table = document.createElement('table');
-      table.className = 'table-view'; // Puedes asignarle clases para estilos
+      table.className = 'table table-striped table-bordered table-hover'; // Puedes asignarle clases para estilos
   
       // Cabecera
       const thead = document.createElement('thead');
@@ -59,7 +59,7 @@ export class TableView {
           this.options.actions.forEach(action => {
             const btn = document.createElement('button');
             btn.textContent = action.charAt(0).toUpperCase() + action.slice(1);
-            btn.className = `btn-${action}`;
+            btn.className = `btn btn-${action === 'Eliminar' ? 'danger' : 'primary'} me-2`;
             // Agregar data attributes para identificar el registro y la acción
             btn.setAttribute('data-id', item.id);
             btn.setAttribute('data-action', action);
