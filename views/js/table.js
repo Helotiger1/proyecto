@@ -1,4 +1,4 @@
-class TableView {
+export class TableView {
     /**
      * @param {string} containerId - ID del elemento contenedor donde se renderizará la tabla.
      * @param {Object[]} columns - Array de objetos que describen las columnas. Ej:
