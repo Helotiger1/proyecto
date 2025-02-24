@@ -1,6 +1,5 @@
-import { fetchRequest} from "../../api.js";
-import { showAddForm, showEditForm, deleteItem } from "./modalForms.js";
-import { FIELDS_ALLOW, FIELDS_CONVERSION } from "./configs.js";
+import { fetchRequest} from "../api.js";
+import { FIELDS_ALLOW, FIELDS_CONVERSION } from "../configs.js";
 
 function showLoading(show) {
     document.getElementById("loading").classList.toggle("d-none", !show);
@@ -39,7 +38,7 @@ function renderTable(data, section) {
     const button = document.createElement("button");
     button.className = "btn btn-sm btn-success ms-3";
     button.textContent = "Agregar";
-    button.onclick = () => showAddForm(section);
+    //button.onclick = () => showAddForm(section);
 
     title.appendChild(titleText);
     title.appendChild(button);
@@ -75,12 +74,12 @@ function renderTable(data, section) {
         const deleteBtn = document.createElement("button");
         deleteBtn.className = "btn btn-sm btn-danger me-2";
         deleteBtn.innerHTML = "Eliminar";
-        deleteBtn.onclick = () => deleteItem(section, id);
+        //deleteBtn.onclick = () => deleteItem(section, id);
 
         const editBtn = document.createElement("button");
         editBtn.className = "btn btn-sm btn-warning";
         editBtn.innerHTML = "Editar";
-        editBtn.onclick = () => showEditForm(section, item);
+        //editBtn.onclick = () => showEditForm(section, item);
 
         tdActions.appendChild(deleteBtn);
         tdActions.appendChild(editBtn);

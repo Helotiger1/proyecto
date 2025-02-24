@@ -5,7 +5,7 @@ import {
     FIELDS_TO_SELECT,
     FIELDS_TO_FILL,
     FIELDS_ALLOW,
-} from "./configs.js";
+} from "../../configs.js";
 import { fetchRequest } from "../../api.js";
 
 

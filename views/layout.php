@@ -7,27 +7,30 @@
     <title>Layout con Grid y Bootstrap</title>
     <link href="styles/base.css" rel="stylesheet">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
 </head>
 
-<body>
-    <div class="grid-container">
-        
-        <?php require_once "components/navbar.php" ?>
+<body class="d-flex flex-column min-vh-100">
+    <div class="container-fluid">
+        <div class="row">
+            
+            <nav class="col-12 col-md-3 col-lg-2 p-0">
+                <?php require_once "components/navbar.php" ?>
+            </nav>
 
-        <section class="main-content" id="mainContent">
-        </section>
-
-
-    </div>
-    <footer class="footer">
-            <?php require_once "components/footer.php" ?>
-        </footer>
+            <section class="col-12 col-md-9 col-lg-10 p-3" id="mainContent">
+            </section>
+        </div>
+        <footer class="footer mt-auto py-3 bg-light">
+        <?php require_once "components/footer.php" ?>
+    </footer>
+    </div> 
+<script type="module" src="./js/main.js" defer></script>
+<script type="module" src="./js/init.js" defer></script>
+<script type="module" src="./js/api.js" defer></script>
+<script type="module" src="./js/features/modalForms.js" defer></script>
+<script type="module" src="./js/features/renderTable.js" defer></script>
+<script type="module" src="./js/features/configs.js" defer></script>
 </body>
-<script type="module" src="./js/main.js"></script>
-<script type="module" src="./js/init.js"></script>
-<script type="module" src="./js/api.js"></script>
-<script type="module" src="./js/features/domicilios/modalForms.js"></script>
-<script type="module" src="./js/features/domicilios/renderTable.js"></script>
-<script type="module" src="./js/features/domicilios/configs.js"></script>
 </html>
+

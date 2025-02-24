@@ -1,4 +1,4 @@
-import { loadData } from "./features/domicilios/renderTable.js";
+import { loadData } from "./features/renderTable.js";
 
 export function initEventListeners() {
     document.querySelectorAll(".nav-link").forEach((link) => {
@@ -39,5 +39,3 @@ export function initModal(){
     document.body.innerHTML += modal; 
 }
 
-
-export default initEventListeners;

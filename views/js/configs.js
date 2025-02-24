@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'http://localhost/proyecto/';
+
 export const API_ENDPOINTS = { 
     paises: 'paises',
     estados: 'estados',

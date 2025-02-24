@@ -1,5 +1,4 @@
-<footer class="footer mt-auto py-3 bg-light">
-    <div class="container">
+<div class="container">
         <div class="accordion">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -39,4 +38,3 @@
             </div>
         </div>
     </div>
-</footer>
