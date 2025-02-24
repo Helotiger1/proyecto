@@ -30,7 +30,7 @@ export class TableView {
       const headerRow = document.createElement('tr');
       this.columns.forEach(col => {
         const th = document.createElement('th');
-        th.textContent = col.header;
+        th.textContent = col;
         headerRow.appendChild(th);
       });
   
@@ -50,7 +50,7 @@ export class TableView {
         // Genera las celdas de datos según las columnas definidas
         this.columns.forEach(col => {
           const td = document.createElement('td');
-          td.textContent = item[col.field];
+          td.textContent = item[col];
           row.appendChild(td);
         });
         // Botones de acción
