@@ -1,7 +1,9 @@
-import {TableView} from "./table";
+import {TableView} from "./table.js";
 
+const TERRITORIAL_TABLE = {
 
+}
 
-function crearTablaTerritorial(section){
-
+export function crearTablaTerritorial(section){
+console.log(section);
 }
