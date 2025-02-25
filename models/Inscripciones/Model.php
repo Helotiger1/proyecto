@@ -10,6 +10,7 @@ abstract class Model implements JsonSerializable
     protected static $cascadeJoins = [];
     protected static $fillable = [];
     public $attributes = [];
+    protected static $select = ['*'];
 
     protected static $primaryKey = '';
     protected static $fk = '';
@@ -18,6 +19,7 @@ abstract class Model implements JsonSerializable
     protected static $joins = [];
     protected static $ORM = null;
     protected static $nestedJoins = [];
+    protected static $subquerie = null;
     
     public static $instance;
 
@@ -37,7 +39,12 @@ abstract class Model implements JsonSerializable
         if (!static::$ORM) {
             static::$ORM = Container::getInstance()->make('QueryBuilder');
         }
-        return static::$ORM->table(static::$table)->cascadeJoins(static::$cascadeJoins)->joins(static::$joins)->nestedJoins(static::$nestedJoins);
+
+        if (!empty(static::$subquerie)) {
+            static::$select[] = static::$subquerie;
+        }
+
+        return static::$ORM->table(static::$table)->cascadeJoins(static::$cascadeJoins)->joins(static::$joins)->nestedJoins(static::$nestedJoins)->select(static::$select);
     }
 
     public static function getAll(){

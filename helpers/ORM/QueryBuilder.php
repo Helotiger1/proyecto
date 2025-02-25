@@ -364,7 +364,7 @@ class QueryBuilder
 
     // ------------ Ejecución y reset ------------
     protected function run(string $sql, bool $fetch = true)
-    {
+    { //echo $sql;
         try {
             $stmt = $this->pdo->prepare($sql);
             $bindings = $this->prepareBindings();

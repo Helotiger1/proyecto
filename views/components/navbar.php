@@ -1,7 +1,7 @@
 <div class="accordion" id="mainNavAccordion">
     <div class="accordion-item">
         <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#agendaCollapse">Agenda</button>
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#agendaCollapse">Relleno</button>
         </h2>
         <div id="agendaCollapse" class="accordion-collapse collapse" data-bs-parent="#mainNavAccordion">
             <div class="accordion-body p-0">
@@ -17,7 +17,7 @@
             <button class="accordion-button collapsed" type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#modulosCollapse">
-                Módulos
+                Relleno
             </button>
         </h2>
         <div id="modulosCollapse" class="accordion-collapse collapse"
@@ -35,14 +35,14 @@
             <button class="accordion-button collapsed" type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#seguridadCollapse">
-                Seguridad
+                Inscripciones
             </button>
         </h2>
         <div id="seguridadCollapse" class="accordion-collapse collapse"
             data-bs-parent="#mainNavAccordion">
             <div class="accordion-body p-0">
                 <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item list-group-item-action">Principal</a>
+                    <a href="#" class="list-group-item list-group-item-action nav-inscripciones" data-section="inscripciones">Listar</a>
                 </div>
             </div>
         </div>
@@ -54,14 +54,14 @@
             <button class="accordion-button collapsed" type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#personalizacionCollapse">
-                Personalización
+                Estudiantes
             </button>
         </h2>
         <div id="personalizacionCollapse" class="accordion-collapse collapse"
             data-bs-parent="#mainNavAccordion">
             <div class="accordion-body p-0">
                 <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item list-group-item-action">Principal</a>
+                    <a href="#" class="list-group-item list-group-item-action nav-estudiantes" data-section="estudiantes">Listar</a>
                 </div>
             </div>
         </div>
@@ -73,14 +73,14 @@
             <button class="accordion-button collapsed" type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#contabilidadCollapse">
-                Estudiantes
+                Representantes
             </button>
         </h2>
         <div id="contabilidadCollapse" class="accordion-collapse collapse"
             data-bs-parent="#mainNavAccordion">
             <div class="accordion-body p-0">
                 <div class="list-group list-group-flush">
-                <a href="#" class="list-group-item list-group-item-action nav-estudiantes" data-section="estudiantes">Listar</a>
+                    <a href="#" class="list-group-item list-group-item-action nav-representantes" data-section="representantes">Listar</a>
                 </div>
             </div>
         </div>

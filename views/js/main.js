@@ -1,21 +1,18 @@
-import {crearTablaTerritorial} from './territorios.js'
-import {crearTablaMaestros} from './maestros.js'
+import { crearTabla } from "./crearTablas.js";
+const navConfigs = [
+    ".nav-representantes",
+    ".nav-maestros",
+    ".nav-territorios",
+    ".nav-estudiantes",
+    ".nav-inscripciones"
+];
 
-
-document.querySelectorAll(".nav-maestros").forEach((link) => {
-    link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const section = e.target.dataset.section;
-        console.log("sera?");
-        crearTablaMaestros(section)
-    });
-});
-
-
-document.querySelectorAll(".nav-territorios").forEach((link) => {
-    link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const section = e.target.dataset.section;
-        crearTablaTerritorial(section);
+navConfigs.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((link) => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const section = e.target.dataset.section;
+            crearTabla(section);
+        });
     });
 });
