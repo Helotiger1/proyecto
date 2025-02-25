@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\Domicilios;
+namespace App\Models\Inscripciones;
 
 use App\Helpers\Container;
 use App\ORM\QueryBuilder;
@@ -15,8 +15,9 @@ abstract class Model implements JsonSerializable
     protected static $fk = '';
     protected static $table = '';
     protected static $nameEntity = '';
-    protected static $nestedJoins = [];
+    protected static $joins = [];
     protected static $ORM = null;
+    protected static $nestedJoins = [];
     
     public static $instance;
 
@@ -36,7 +37,7 @@ abstract class Model implements JsonSerializable
         if (!static::$ORM) {
             static::$ORM = Container::getInstance()->make('QueryBuilder');
         }
-        return static::$ORM->table(static::$table)->cascadeJoins(static::$cascadeJoins)->joins(static::$nestedJoins);
+        return static::$ORM->table(static::$table)->cascadeJoins(static::$cascadeJoins)->joins(static::$joins)->nestedJoins(static::$nestedJoins);
     }
 
     public static function getAll(){

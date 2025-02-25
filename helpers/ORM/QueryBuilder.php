@@ -1,4 +1,5 @@
 <?php
+
 namespace App\ORM;
 
 use PDO;
@@ -35,7 +36,7 @@ class QueryBuilder
     }
 
     // ==================== MÉTODOS PÚBLICOS ====================
-    
+
     // ------------ Configuración inicial ------------
     public function table(string $table): self
     {
@@ -57,7 +58,7 @@ class QueryBuilder
         if (empty($column)) {
             throw new InvalidArgumentException("Column name cannot be empty");
         }
-        
+
         if (func_num_args() === 2) {
             $value = $operator;
             $operator = '=';
@@ -70,7 +71,7 @@ class QueryBuilder
             'value' => $value,
             'boolean' => $boolean
         ];
-        
+
         $this->addBinding($value, 'where');
         return $this;
     }
@@ -86,27 +87,64 @@ class QueryBuilder
         ];
         return $this;
     }
+    
+    public function joins(array $relations): self
+    {
+        if (empty($relations)) return $this;
 
+        foreach ($relations as $table => $fk) {
 
-    public function joinNested(array $relations): self
-{
-    if (empty($relations)) return $this;
+            $primaryKey = str_replace("{$table}_", '', $fk);
 
-    $previousTable = $this->table;
-    foreach ($relations as $table => $column) {
-        // Extraer la clave foránea limpia
-        $cleanColumn = preg_replace('/^' . preg_quote($table . '_', '/') . '/', '', $column);
+            $first = "{$this->table}.{$fk}";
+            $second = "{$table}.{$primaryKey}";
 
-        $this->join(
-            $table,
-            "$previousTable.$column",
-            '=',
-            "$table.$cleanColumn"
-        );
-        $previousTable = $table;
+            $this->join($table, $first, "=", $second);
+        }
+
+        return $this;
     }
-    return $this;
-}
+
+    public function nestedJoins(array $relations): self
+    {
+        if (empty($relations)) return $this;
+
+        foreach ($relations as $table => $relation) {
+            // Separar la tabla y columna de la relación (Ej: "personas.ciudades_codCiudad")
+            [$originTable, $foreignKey] = explode('.', $relation, 2);
+        
+            // Obtener la clave primaria eliminando el prefijo "ciudades_"
+            $primaryKey = substr($foreignKey, strpos($foreignKey, '_') + 1);
+        
+            // Construir las condiciones del JOIN
+            $first = "{$originTable}.{$foreignKey}";
+            $second = "{$table}.{$primaryKey}";
+        
+            $this->join($table, $first, "=", $second);
+        }
+        
+        return $this;
+    }
+
+    public function cascadeJoins(array $relations): self
+    {
+        if (empty($relations)) return $this;
+
+        $previousTable = $this->table;
+        foreach ($relations as $table => $column) {
+            // Extraer la clave foránea limpia
+            $cleanColumn = preg_replace('/^' . preg_quote($table . '_', '/') . '/', '', $column);
+
+            $this->join(
+                $table,
+                "$previousTable.$column",
+                '=',
+                "$table.$cleanColumn"
+            );
+            $previousTable = $table;
+        }
+        return $this;
+    }
 
     public function orderBy(string $column, string $direction = 'ASC'): self
     {
@@ -198,7 +236,7 @@ class QueryBuilder
     }
 
     // ==================== MÉTODOS PROTEGIDOS ====================
-    
+
     // ------------ Construcción de queries ------------
     protected function buildSelect(): string
     {
@@ -232,10 +270,10 @@ class QueryBuilder
             fn($col) => "$col = ?",
             array_keys($data)
         ));
-        
+
         $this->addBinding(array_values($data), 'update');
         $whereClause = $this->buildWheres();
-        
+
         return "UPDATE $this->table SET $setClause" . ($whereClause ? " $whereClause" : '');
     }
 
@@ -253,21 +291,21 @@ class QueryBuilder
     protected function buildWheres(): string
     {
         if (empty($this->wheres)) return '';
-        
+
         $clauses = [];
         foreach ($this->wheres as $index => $where) {
             $clause = $index === 0 ? ' WHERE ' : "{$where['boolean']} ";
             $clause .= "{$where['column']} {$where['operator']} ?";
             $clauses[] = $clause;
         }
-        
+
         return implode(' ', $clauses);
     }
 
     protected function buildJoins(): string
     {
         if (empty($this->joins)) return '';
-        
+
         return implode(' ', array_map(
             fn($join) => "{$join['type']} JOIN {$join['table']} ON {$join['first']} {$join['operator']} {$join['second']}",
             $this->joins
@@ -282,14 +320,14 @@ class QueryBuilder
     protected function buildHaving(): string
     {
         if (empty($this->having)) return '';
-        
+
         $clauses = [];
         foreach ($this->having as $index => $having) {
             $clause = $index === 0 ? 'HAVING ' : "{$having['boolean']} ";
             $clause .= "{$having['column']} {$having['operator']} ?";
             $clauses[] = $clause;
         }
-        
+
         return implode(' ', $clauses);
     }
 
@@ -330,13 +368,14 @@ class QueryBuilder
         try {
             $stmt = $this->pdo->prepare($sql);
             $bindings = $this->prepareBindings();
-            
+
             $stmt->execute($bindings);
             $result = $fetch ? $stmt->fetchAll(PDO::FETCH_ASSOC) : true;
-            
+
             $this->reset();
             return $result;
         } catch (PDOException $e) {
+            echo $sql;
             throw new PDOException("Query error: " . $e->getMessage());
         }
     }
@@ -371,4 +410,3 @@ class QueryBuilder
         $this->distinct = false;
     }
 }
-?>

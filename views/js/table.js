@@ -8,32 +8,35 @@ export class TableView {
      *    Ej: { actions: ['edit', 'delete'] }
      */
 
-    constructor(columns, data, options = {}) {
+    constructor(columns, data, section) {
       this.container = document.getElementById('mainContent');
       if (!this.container) throw new Error('Contenedor no encontrado');
       this.columns = columns;
       this.data = data;
-      this.options = options;
+      this.options = {actions: ["Modificar", "Eliminar"], addButton : true};
+      this.section = section;
     }
   
     // Método para renderizar la tabla
     render() {
-      if (this.options.addButton) {
-        const addButton = document.createElement('button');
-        addButton.textContent = 'Agregar';
-        addButton.className = 'btn-add';
-        addButton.setAttribute('data-action', 'add');
-        // Puedes agregar un evento aquí o delegarlo fuera
-        this.container.appendChild(addButton);
-      }
-
       // Limpiar contenedor
       this.container.innerHTML = '';
-  
-      // Crear tabla y su cuerpo
+    
+      const h2 = document.createElement('h2');
+      h2.textContent = `Tabla de ${this.section}`;
+      h2.className = 'text-primary my-1 fw-bold text-dark' 
+      this.container.appendChild(h2);
+
+      const btnAgregar = document.createElement('button');
+      btnAgregar.textContent = 'Agregar';
+      btnAgregar.className = 'btn btn-sm btn-primary mb-3 p-1 m-2';
+      btnAgregar.setAttribute('id', 'btnAgregar');
+      this.container.appendChild(btnAgregar);
+
+
       const table = document.createElement('table');
       table.className = 'table table-striped table-bordered table-hover'; // Puedes asignarle clases para estilos
-  
+    
       // Cabecera
       const thead = document.createElement('thead');
       const headerRow = document.createElement('tr');
@@ -42,7 +45,7 @@ export class TableView {
         th.textContent = col;
         headerRow.appendChild(th);
       });
-  
+    
       // Si se han definido acciones, se agrega columna adicional
       if (this.options.actions && this.options.actions.length > 0) {
         const th = document.createElement('th');
@@ -51,7 +54,7 @@ export class TableView {
       }
       thead.appendChild(headerRow);
       table.appendChild(thead);
-  
+    
       // Cuerpo de la tabla
       const tbody = document.createElement('tbody');
       this.data.forEach(item => {
@@ -68,7 +71,7 @@ export class TableView {
           this.options.actions.forEach(action => {
             const btn = document.createElement('button');
             btn.textContent = action.charAt(0).toUpperCase() + action.slice(1);
-            btn.className = `${action === 'Eliminar' ? 'btn btn-sm btn-danger me-2' : 'btn btn-sm btn-warning'} m-1 `;
+            btn.className = `${action === 'Eliminar' ? 'btn btn-sm btn-danger me-2' : 'btn btn-sm btn-warning'} m-1`;
             // Agregar data attributes para identificar el registro y la acción
             btn.setAttribute('data-id', item.id);
             btn.setAttribute('data-action', action);
@@ -80,9 +83,9 @@ export class TableView {
         tbody.appendChild(row);
       });
       table.appendChild(tbody);
-  
+    
       // Agregar la tabla al contenedor
       this.container.appendChild(table);
     }
-  }
+}
   

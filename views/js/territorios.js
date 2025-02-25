@@ -2,23 +2,23 @@ import { fetchRequest } from "./api.js";
 import { TableView } from "./table.js";
 
 const TERRITORIAL_TABLE = {
-    paises: ["codPais", "nombrePais", "estatus"],
-    estados: ["codEstado", "nombreEstado", "nombrePais"],
+    paises: ["idPais", "nombrePais", "estatus"],
+    estados: ["idEstado", "nombreEstado", "nombrePais"],
     municipios: [
-        "codMunicipio",
+        "idMunicipio",
         "nombreMunicipio",
         "nombreEstado",
         "nombrePais",
     ],
     parroquias: [
-        "codParroquia",
+        "idParroquia",
         "nombreParroquia",
         "nombreMunicipio",
         "nombreEstado",
         "nombrePais",
     ],
     ciudades: [
-        "codCiudad",
+        "idCiudad",
         "nombreCiudad",
         "nombreParroquia",
         "nombreMunicipio",
@@ -31,15 +31,10 @@ export async function crearTablaTerritorial(section) {
     try {
         let fields = TERRITORIAL_TABLE[section];
         let response = await fetchRequest(section);
-        let options = {
-            actions: ["Modificar", "Eliminar"],
-            addButton : true
-        };
-
-        let tableGenerator = new TableView(fields, response.data, options);
+        let tableGenerator = new TableView(fields, response.data, section);
         tableGenerator.render();
     } 
     catch(error){
-        console.error("nose papi, resuelve el peo", section, fields, response, options)
+        console.error(error)
     }
 }

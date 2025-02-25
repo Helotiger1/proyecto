@@ -27,7 +27,6 @@
         <?php require_once "components/footer.php" ?>
     </footer>
     <script type="module" src="./js/main.js" defer></script>
-    <script type="module" src="./js/table.js" defer></script>
 </body>
 
 </html>
