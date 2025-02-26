@@ -14,6 +14,8 @@ export const FIELDS_REPRESENTANTES = [
     "status",
 ];
 
+
+
 export const FIELDS_ESTUDIANTES = [
     "idEstudiante",
     "nombrePersona",
@@ -86,7 +88,20 @@ export const FIELDS_INSCRIPCIONES = [
     "cedulaPersona",
 ];
 
-export const FIELD_LABELS = {
+export const FIELD_PRIMARY_KEY = {
+    paises : "idPais",
+    estados : "idEstado",
+    municipios : "idMunicipio",
+    parroquias : "idParroquia",
+    ciudades : "idCiudad",
+
+    maestros : "idMaestros",
+    representantes : "idRepresentante",
+    estudiantes : "idEstudiantes",
+    inscripciones : "idInscripciones"
+}
+
+export const FIELD_HEADERS = {
     nombrePersona: "Nombre",
     apellidoPersona: "Apellido",
     cedulaPersona: "Cédula",
@@ -121,5 +136,5 @@ export const FIELD_LABELS = {
     cargoActual: "Cargo Actual",
     calificaciones: "Calificaciones",
     fechaInscripcion: "Fecha de Inscripción",
-    rango: "Rango",
+    rango: "Rango del semestre",
 };

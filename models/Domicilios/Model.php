@@ -36,7 +36,7 @@ abstract class Model implements JsonSerializable
         if (!static::$ORM) {
             static::$ORM = Container::getInstance()->make('QueryBuilder');
         }
-        return static::$ORM->table(static::$table)->cascadeJoins(static::$cascadeJoins)->joins(static::$nestedJoins);
+        return static::$ORM->table(static::$table)->cascadeJoins(static::$cascadeJoins)->joins(static::$nestedJoins)->orderBy(static::$primaryKey, 'ASC');
     }
 
     public static function getAll(){

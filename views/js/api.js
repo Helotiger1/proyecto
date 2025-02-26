@@ -1,6 +1,8 @@
 export async function fetchRequest(endpoint, method = "GET", body = null) {
     const API_BASE_URL = "http://localhost/proyecto/";
+    
     const url = API_BASE_URL + endpoint;
+    console.log(url, method);
     const options = {
         method,
         headers: { "Content-Type": "application/json" },
@@ -17,6 +19,8 @@ export async function fetchRequest(endpoint, method = "GET", body = null) {
         throw error;
     }
 }
+
+
 
 
 
