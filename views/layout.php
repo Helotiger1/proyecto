@@ -12,14 +12,15 @@
 
 <body class="d-flex flex-column min-vh-100">
     <div class="container-fluid">
-        <div class="row">
+        <div class="row flex-nowrap">
 
-            <nav class="col-12 col-md-3 col-lg-2 p-0 ">
+            <nav class="col-12 col-md-3 col-lg-2 d-md-block bg-light sidebar vh-100 overflow-auto">
                 <?php require_once "components/navbar.php" ?>
             </nav>
-
-            <section class="col-12 col-md-9 col-lg-10 p-3" id="mainContent">
-            </section>
+            <main class="col-md-9 col-lg-10 d-flex flex-column">
+                <section class="col-12 col-md-9 col-lg-10 p-3 100vw" id="mainContent">
+                </section>
+            </main>
         </div>
 
     </div>

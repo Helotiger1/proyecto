@@ -5,6 +5,7 @@ import {
     FIELDS_REPRESENTANTES,
     FIELDS_TERRITORIOS,
     FIELDS_ESTUDIANTES,
+    FIELDS_INSCRIPCIONES
 } from "./configs.js";
 
 export async function crearTabla(section) {

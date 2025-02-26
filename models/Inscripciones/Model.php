@@ -20,6 +20,7 @@ abstract class Model implements JsonSerializable
     protected static $ORM = null;
     protected static $nestedJoins = [];
     protected static $subquerie = null;
+    protected static $cascadeJoins2 = [];
     
     public static $instance;
 
@@ -44,7 +45,7 @@ abstract class Model implements JsonSerializable
             static::$select[] = static::$subquerie;
         }
 
-        return static::$ORM->table(static::$table)->cascadeJoins(static::$cascadeJoins)->joins(static::$joins)->nestedJoins(static::$nestedJoins)->select(static::$select);
+        return static::$ORM->table(static::$table)->cascadeJoins(static::$cascadeJoins)->cascadeJoins(static::$cascadeJoins2)->joins(static::$joins)->nestedJoins(static::$nestedJoins)->select(static::$select);
     }
 
     public static function getAll(){

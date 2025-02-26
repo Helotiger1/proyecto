@@ -1,3 +1,5 @@
+import { FIELD_LABELS } from "./configs.js";
+
 export class TableView {
     /**
      * @param {string} containerId - ID del elemento contenedor donde se renderizará la tabla.
@@ -21,6 +23,7 @@ export class TableView {
     render() {
       // Limpiar contenedor
       this.container.innerHTML = '';
+      this.container.className = "table-responsive flex-grow-1 p-3"
     
       const h2 = document.createElement('h2');
       h2.textContent = `Tabla de ${this.section}`;
@@ -42,7 +45,7 @@ export class TableView {
       const headerRow = document.createElement('tr');
       this.columns.forEach(col => {
         const th = document.createElement('th');
-        th.textContent = col;
+        th.textContent = FIELD_LABELS[col];
         headerRow.appendChild(th);
       });
     
