@@ -2,7 +2,7 @@ import { API_CONFIG } from "./configs.js";
 
 export async function fetchRequest(endpoint, method = "GET", body = null) {
     const API_BASE_URL = "http://localhost/proyecto/";
-
+    
     let splitted = endpoint.split("/")[0];
 
     if(body){
@@ -14,9 +14,7 @@ export async function fetchRequest(endpoint, method = "GET", body = null) {
         method,
         headers: { "Content-Type": "application/json" },
         body: body ? JSON.stringify(body) : null,
-    };
-
-    console.log(options);
+    }
 
     try {
         const response = await fetch(url, options);

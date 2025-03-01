@@ -1,21 +1,31 @@
 /* ---CONFIGURACIONES DE API--- */
 
-const API_MUNICIPIOS = ["nombreMunicipio", "estados_idEstado"];
-const API_PARROQUIAS = ["nombreParroquia", "municipios_idMunicipio"];
-
 export const API_CONFIG = {
-municipios : API_MUNICIPIOS,
-parroquias : API_PARROQUIAS,
+paises : ["nombrePais", "estatus"],
+estados : ["nombreEstado", "paises_idPais"],
+municipios : ["nombreMunicipio", "estados_idEstado"],
+parroquias : ["nombreParroquia", "municipios_idMunicipio"],
+ciudades : ["nombreCiudad", "parroquias_idParroquia"],
+
 }
+
 
 /* ---CONFIGURACIONES DE SELECTS--- */
 export const SELECT_CONFIG = {
     paises: ["idPais", "nombrePais"],
     estados: ["idEstado", "nombreEstado"],
     municipios: ["idMunicipio", "nombreMunicipio"],
+    parroquias: ["idParroquia", "nombreParroquia"],
+    ciudades: ["idCiudad", "nombreCiudad"],
+    maestros: ["idMaestros", "nombrePersona"],
+    representantes: ["idRepresentante", "nombrePersona"],
+    estudiantes: ["idEstudiante", "nombrePersona"],
+    inscripciones: ["idInscripciones", "nombrePersona"]
 };
 
-/* ---CONFIGURACIONES DE MODALES--- */
+
+
+/* ---CONFIGURACIONES DE MODALES TERRITORIALES--- */
 import { fetchRequest } from "./api.js";
 
 const MODAL_PAISES = {
@@ -68,7 +78,7 @@ const MODAL_MUNICIPIOS = {
 };
 
 const MODAL_PARROQUIAS = {
-    title: "Agregar Municipio",
+    title: "Agregar Parroquia",
     fields: [
         {
             label: "País",
@@ -98,29 +108,105 @@ const MODAL_PARROQUIAS = {
         },
         { label: "Nombre de la Parroquia", name: "nombreParroquia", type: "text"},
     ],
-    section: "municipios",
+    section: "parroquias",
 };
 
 const MODAL_CIUDADES = {
-    title: "Agregar Ciudad",
+    title: "Agregar Municipio",
     fields: [
-        { label: "ID Ciudad", name: "idCiudad", type: "text" },
-        { label: "Nombre de la Ciudad", name: "nombreCiudad", type: "text" },
         {
-            label: "Nombre de la Parroquia",
-            name: "nombreParroquia",
-            type: "text",
+            label: "País",
+            name: "paises_idPais",
+            type: "select",
+            fetch: "paises",
+            placeholder: "Seleccione un país",
+            cascade : {
+                target: "estados_idEstado",
+                apiUrl: "estados/",
+                placeholder: "Seleccione un estado",
+            }
         },
         {
-            label: "Nombre del Municipio",
-            name: "nombreMunicipio",
-            type: "text",
+            label: "estado",
+            name: "estados_idEstado",
+            type: "select",
+            cascade : {
+                target: "municipios_idMunicipio",
+                apiUrl: "municipios/",
+                placeholder: "Seleccione un municipio",
+            }
         },
-        { label: "Nombre del Estado", name: "nombreEstado", type: "text" },
-        { label: "Nombre del País", name: "nombrePais", type: "text" },
+        {
+            label: "municipio",
+            name: "municipios_idMunicipio",
+            type: "select",
+            cascade : {
+                target: "parroquias_idParroquia",
+                apiUrl: "parroquias/",
+                placeholder: "Seleccione una parroquia",
+            }
+        },
+        { label: "parroquias",
+            name: "parroquias_idParroquia",
+            type: "select",
+        },
+        { label: "Nombre de la Ciudad", name: "nombreCiudad", type: "text"},
     ],
     section: "ciudades",
 };
+
+const CIUDAD_INYECTION = [
+    {
+        label: "País",
+        name: "paises_idPais",
+        type: "select",
+        fetch: "paises",
+        placeholder: "Seleccione un país",
+        cascade : {
+            target: "estados_idEstado",
+            apiUrl: "estados/",
+            placeholder: "Seleccione un estado",
+        }
+    },
+    {
+        label: "estado",
+        name: "estados_idEstado",
+        type: "select",
+        cascade : {
+            target: "municipios_idMunicipio",
+            apiUrl: "municipios/",
+            placeholder: "Seleccione un municipio",
+        }
+    },
+    {
+        label: "municipio",
+        name: "municipios_idMunicipio",
+        type: "select",
+        cascade : {
+            target: "parroquias_idParroquia",
+            apiUrl: "parroquias/",
+            placeholder: "Seleccione una parroquia",
+        }
+    },
+    {
+        label: "parroquia",
+        name: "parroquias_idParroquia",
+        type: "select",
+        cascade : {
+            target: "ciudades_idCiudad",
+            apiUrl: "ciudades/",
+            placeholder: "Seleccione una Ciudad",
+        }
+    },
+    { label: "Ciudades",
+        name: "ciudades_idCiudad",
+        type: "select",
+    },
+]
+
+
+
+/*-----CONFIGURACIONES DE MODALES PERSONALES--- */
 
 const MODAL_MAESTROS = {
     title: "Agregar Maestro",
@@ -129,10 +215,10 @@ const MODAL_MAESTROS = {
         { label: "Apellido", name: "apellidoPersona", type: "text" },
         { label: "Cédula", name: "cedulaPersona", type: "text" },
         { label: "Cargo Actual", name: "cargoActual", type: "text" },
-        { label: "Estado Civil", name: "estadoCivil", type: "text" },
-        { label: "Sexo", name: "sexoPersona", type: "text" },
+        { label: "Estado Civil", name: "estadoCivil", type: "select", options: ["Soltero", "Casado", "Divorciado", "Viudo"] },
+        { label: "Sexo", name: "sexoPersona", type: "select", options: ["Masculino", "Femenino", "Otro"] },
         { label: "Fecha de Nacimiento", name: "fechaNac", type: "date" },
-        { label: "Ciudad", name: "nombreCiudad", type: "text" },
+        ...CIUDAD_INYECTION,
         {
             label: "Teléfono Principal",
             name: "telefonoPrincipal",
@@ -155,12 +241,6 @@ const MODAL_MAESTROS = {
             ],
         },
     ],
-    onSubmit: (formData) => {
-        console.log("Datos enviados:", formData);
-    },
-    onCancel: () => {
-        console.log("Operación cancelada");
-    },
 };
 
 const MODAL_REPRESENTANTES = {
@@ -188,12 +268,6 @@ const MODAL_REPRESENTANTES = {
         { label: "Ciudad", name: "nombreCiudad", type: "text" },
         { label: "Estado", name: "status", type: "text" },
     ],
-    onSubmit: (formData) => {
-        console.log("Datos enviados:", formData);
-    },
-    onCancel: () => {
-        console.log("Operación cancelada");
-    },
 };
 
 const MODAL_ESTUDIANTES = {
@@ -231,12 +305,6 @@ const MODAL_ESTUDIANTES = {
         { label: "Talla de Pantalón", name: "tallaPantalon", type: "text" },
         { label: "Estado", name: "status", type: "text" },
     ],
-    onSubmit: (formData) => {
-        console.log("Datos enviados:", formData);
-    },
-    onCancel: () => {
-        console.log("Operación cancelada");
-    },
 };
 
 const MODAL_INSCRIPCIONES = {
@@ -253,15 +321,17 @@ const MODAL_INSCRIPCIONES = {
         { label: "Apellido", name: "apellidoPersona", type: "text" },
         { label: "Cédula", name: "cedulaPersona", type: "text" },
     ],
-    onSubmit: (formData) => {
-        console.log("Datos enviados:", formData);
-    },
-    onCancel: () => {
-        console.log("Operación cancelada");
-    },
 };
 
-/* ---CONFIGURACIONES DE TABLAS--- */
+
+
+
+
+
+
+
+
+/* ---CONFIGURACIONES DE TABLAS TERRITORIALES--- */
 
 const FIELDS_PAISES = ["idPais", "nombrePais", "estatus"];
 const FIELDS_ESTADOS = ["idEstado", "nombreEstado", "nombrePais"];
@@ -286,6 +356,12 @@ const FIELDS_CIUDADES = [
     "nombreEstado",
     "nombrePais",
 ];
+
+
+
+
+
+/*---CONFIGURACIONES DE TABLAS PERSONALES--- */
 const FIELDS_MAESTROS = [
     "nombrePersona",
     "apellidoPersona",

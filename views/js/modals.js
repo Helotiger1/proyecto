@@ -94,8 +94,8 @@ export class ModalForm {
                 if (field.options && Array.isArray(field.options)) {
                     field.options.forEach((opt) => {
                         const option = document.createElement("option");
-                        option.value = opt.value;
-                        option.textContent = opt.text;
+                        option.value = opt;
+                        option.textContent = opt;
                         input.appendChild(option);
                     });
                 }
@@ -183,7 +183,6 @@ export class ModalForm {
             }
 
             let section = endpoint.split("/")[0];
-
             let [value, text] = SELECT_CONFIG[section];
             response.data.forEach((item) => {
                 const option = document.createElement("option");
@@ -242,6 +241,7 @@ export class ModalForm {
     }
 
     async onSubmit(formData, id) {
+        console.log("Datos del formulario:", formData);
         let endpoint = this.section; 
         let method;
 
