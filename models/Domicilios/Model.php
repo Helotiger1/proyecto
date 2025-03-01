@@ -51,7 +51,7 @@ abstract class Model implements JsonSerializable
     
     public static function getByParent($parentId){
 
-        $data = static::query()->select([static::$nameEntity,static::$fk])->where(static::$fk, $parentId)->get();
+        $data = static::query()->where(static::$fk, $parentId)->get();
         return self::hydrate($data);
     }
 

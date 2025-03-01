@@ -1,6 +1,7 @@
 import { fetchRequest } from "./api.js";
 import { FIELD_HEADERS, FIELD_PRIMARY_KEY, MODAL_CONFIGS } from "./configs.js";
 import { ModalForm } from "./modals.js";
+import { crearTabla } from "./crearTablas.js";
 
 export class TableView {
     constructor(columns, data, section) {
@@ -27,6 +28,16 @@ export class TableView {
         btnAgregar.setAttribute("id", "btnAgregar");
         btnAgregar.onclick = () => mostrarFormulario(this.section);
         this.container.appendChild(btnAgregar);
+
+        // Crea el botón de refrescar
+        const refreshButton = document.createElement('button');
+        refreshButton.type = 'button';
+        refreshButton.className = 'btn btn-sm btn-primary mb-3 p-1 m-2';
+        // Asegúrate de tener incluidos Bootstrap Icons o usa otro método para el ícono
+        refreshButton.innerHTML = 'Refrescar';
+        refreshButton.onclick = () => crearTabla(this.section);
+        
+        this.container.appendChild(refreshButton);
 
         const table = document.createElement("table");
         table.className = "table table-striped table-bordered table-hover";

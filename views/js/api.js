@@ -1,13 +1,22 @@
+import { API_CONFIG } from "./configs.js";
+
 export async function fetchRequest(endpoint, method = "GET", body = null) {
     const API_BASE_URL = "http://localhost/proyecto/";
-    
+
+    let splitted = endpoint.split("/")[0];
+
+    if(body){
+        body = pick(body, API_CONFIG[splitted]);
+    }
+
     const url = API_BASE_URL + endpoint;
-    console.log(url, method);
     const options = {
         method,
         headers: { "Content-Type": "application/json" },
         body: body ? JSON.stringify(body) : null,
     };
+
+    console.log(options);
 
     try {
         const response = await fetch(url, options);
@@ -19,6 +28,9 @@ export async function fetchRequest(endpoint, method = "GET", body = null) {
         throw error;
     }
 }
+
+
+const pick = (obj, keys) => Object.fromEntries(keys.map(k => [k, obj[k]]));
 
 
 

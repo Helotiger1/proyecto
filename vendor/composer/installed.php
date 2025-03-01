@@ -3,7 +3,7 @@
         'name' => 'angheloaguilera/proyecto',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '6c2719617baea6ac0acb91f4b19ea2bb984e421f',
+        'reference' => 'cbcc1f61dfa0c5abf297306aa8fd3054d49fcd5e',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'angheloaguilera/proyecto' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '6c2719617baea6ac0acb91f4b19ea2bb984e421f',
+            'reference' => 'cbcc1f61dfa0c5abf297306aa8fd3054d49fcd5e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -270,6 +270,15 @@
             'install_path' => __DIR__ . '/../theseer/tokenizer',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'twbs/bootstrap-icons' => array(
+            'pretty_version' => 'v1.11.3',
+            'version' => '1.11.3.0',
+            'reference' => '8d88686c03c3768a2d82ba4f20c3c4e1b100fa29',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../twbs/bootstrap-icons',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
     ),
 );
